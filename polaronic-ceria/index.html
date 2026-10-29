@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polaronic ceria</title>
+<meta name="description" content="Ce3+ small polarons, not only oxygen vacancies, drive giant electrostriction in nanocrystalline doped ceria films. Buratto Tinti et al., J. Phys. Energy 2025, winner of the JPhys Energy EL Award 2025.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img,video{max-width:100%}
+/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. Polaronic ceria page. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;
+  --plot:#e9ecef;
+  --night:#07090d;       /* film band, same in both themes */
+  --night-ink:#dfe5ee;
+  --night-muted:#8b95a3;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6}
+.pad{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{padding-block:44px 36px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:end}
+.intro h1{font-size:clamp(2.6rem,7vw,4.2rem);letter-spacing:.12em}
+.intro .sub{font-family:var(--display);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
+.intro p.body{max-width:36em;margin:18px 0 0}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:0;font-family:var(--display);font-size:.88rem}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+
+.film{background:var(--night);color:var(--night-ink)}
+.film .wrap{padding-block:28px 22px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:var(--night);border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--night-muted)}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:var(--night-ink);border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:var(--night-ink)}
+.film button:focus-visible{outline:2px solid var(--night-ink);outline-offset:2px}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+.lede{max-width:44em;margin:0 0 20px}
+
+.tablewrap{overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;font-size:.97rem;min-width:520px}
+table.cmp th,table.cmp td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.cmp thead th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+table.cmp tbody th{font-family:var(--display);font-weight:600;font-size:.92rem;white-space:nowrap}
+table.cmp td.new{color:var(--ink)}
+table.cmp td.old{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:s}
+ol.steps li{counter-increment:s;border-top:2px solid var(--accent);padding-top:12px}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+ol.steps h3{font-size:1rem;margin:4px 0 6px}
+ol.steps p{margin:0;font-size:.95rem;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.two h3{font-size:1.02rem;margin:6px 0 6px}
+.two p{margin:0}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:6px}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:24px;padding-block:32px 28px}
+  ol.steps{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:8px}
+}
+@media (max-width:460px){ol.steps{grid-template-columns:1fr}}
+.lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;padding:22px 24px;border:1px solid var(--rule);border-top:2px solid var(--accent);background:var(--plot);margin-bottom:24px}
+.lead h3{font-size:1.4rem;margin:6px 0 4px}
+.lead .aff{font-family:var(--display);font-size:.88rem;color:var(--muted);margin:0}
+.lead ul{margin:0;padding-left:18px}
+.lead li{margin:2px 0}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:12px;border-top:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 2px}
+.person p{margin:0;font-size:.93rem;color:var(--muted)}
+.funding{margin-top:24px;font-family:var(--display);font-size:.84rem;color:var(--muted);max-width:60em}
+@media (max-width:780px){.lead{grid-template-columns:1fr;gap:12px}.people{grid-template-columns:1fr}}
+
+.award{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin:18px 0 0;padding:10px 14px;border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--plot);font-family:var(--display);font-size:.92rem;max-width:36em}
+.award strong{font-weight:600}
+</style>
+
+</head>
+<body>
+<div class="pad"><div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Polaronic ceria</div>
+    <nav aria-label="Sections">
+      <a href="#findings">Findings</a>
+      <a href="#people">People</a>
+      <a href="#paper">Paper</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <span class="label">Journal of Physics: Energy, 2025</span>
+      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Electromechanical coupling in polaronic ceria</h1>
+      <p class="body">Ceria should be a poor electromechanical material: low permittivity, high stiffness, centrosymmetric. Yet doped ceria shows electrostriction more than a hundred times above the empirical rule, usually credited to oxygen vacancies. Here, nanocrystalline Gd- and Ca-doped ceria films, with vacancies frozen at grain boundaries, still reach M<sub>33</sub> above 10<sup>−16</sup>&nbsp;m<sup>2</sup>&nbsp;V<sup>−2</sup>, with the same response for both dopants. Conduction is electronic, by Ce<sup>3+</sup> small polarons, and each hop swells a cerium ion from 0.97 to 1.14&nbsp;Å. Cation-site defects, not vacancies alone, carry the coupling.</p>
+      <p class="award"><span class="label">Award</span><span><strong>JPhys Energy EL Award 2025</strong>, given to Victor Buratto Tinti for this paper.</span></p>
+    </div>
+    <dl class="facts">
+      <dt>Films</dt><dd>10 % Gd- and 5 % Ca-doped CeO<sub>2</sub>, 275–500 nm, same nominal 5 % oxygen vacancies</dd>
+      <dt>Growth</dt><dd>RF sputtering at room temperature on 147 µm borosilicate glass, TiN electrodes</dd>
+      <dt>Grains</dt><dd>≈ 10 nm, columnar</dd>
+      <dt>Probes</dt><dd>Cantilever interferometry with FEM model, in situ synchrotron XRD at MAX IV DanMAX, EIS, Raman, SEM</dd>
+    </dl>
+  </div>
+</div></div>
+
+<figure class="film pad" style="margin:0">
+  <div class="wrap">
+    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of how hopping Ce3+ small polarons couple electric field and strain in nanocrystalline ceria films">
+      <source src="Polaronic_ceria.mp4" type="video/mp4">
+    </video>
+    <figcaption><span>Why ceria stretches when its electrons hop, in 37 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+  </div>
+</figure>
+
+<div class="pad"><div class="wrap">
+  <section id="findings">
+    <div class="sechead">
+      <h2>Findings</h2>
+      <p>Key quantity on the left.</p>
+    </div>
+    <article class="entry">
+      <div class="num">5.3 × 10<sup>−16</sup><small>|M<sub>33</sub>| in m<sup>2</sup> V<sup>−2</sup>, 10 % Gd film,<br>below 10 Hz</small></div>
+      <div><h3>Giant electrostriction in disordered films</h3><p>Cantilevers driven at about 100&nbsp;kV&nbsp;cm<sup>−1</sup> with less than 10&nbsp;V, under dc bias, were fitted with a finite-element model that includes the Maxwell stress. The Gd film gives |M<sub>33</sub>| = 5.3&nbsp;×&nbsp;10<sup>−16</sup> and a much smaller M<sub>31</sub>. In the Ca film M<sub>31</sub> (2.3&nbsp;×&nbsp;10<sup>−19</sup>) is large enough to dominate the bending. The response weakens above 700&nbsp;Hz and vanishes above 5&nbsp;kHz.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">Gd ≈ Ca<small>frequency response of the<br>two films</small></div>
+      <div><h3>The dopant no longer matters</h3><p>In bulk ceramics, Gd-doped ceria relaxes at low frequency while Ca-doped ceria is frequency independent, a difference linked to dopant–vacancy association. In these films the two behave alike, so another mechanism dominates.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">+0.06 %<small>out-of-plane expansion, 10 % Gd,<br>in situ XRD under bias</small></div>
+      <div><h3>Expansion along the field, contraction across it</h3><p>Synchrotron diffraction during a 0–15&nbsp;V ramp shows no phase change, but anisotropic strain: the lattice expands parallel to the field and contracts in plane, in both compositions. This rules out isotropic causes such as Joule heating or global reduction and links the strain to M<sub>33</sub> and M<sub>31</sub>.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">0.49–0.57 eV<small>activation energy of conduction,<br>pristine films</small></div>
+      <div><h3>Electrons hop, ions stay put</h3><p>Impedance shows n-type electronic conduction by small-polaron hopping, with no significant oxygen-ion contribution. Bias raises carrier mobility, reversibly in the Gd film and with non-volatile switching in the Ca film. XRD and Raman show expanded lattices and strong defect bands, pointing to a high Ce<sup>3+</sup> population stabilized by the nanograins.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">0.97 → 1.14 Å<small>ionic radius, Ce<sup>4+</sup> → Ce<sup>3+</sup><br>at each polaron hop</small></div>
+      <div><h3>A polaronic route to giant electrostriction</h3><p>Each hop changes the size of a cation, so charge transport carries a local strain. The work proposes that dynamic electro-elastic sites on the cation lattice, Ce<sup>3+</sup> polarons and dopants, drive the coupling together with oxygen vacancies, a design route for lead-free electromechanical oxides.</p></div>
+    </article>
+  </section>
+
+  <section id="people">
+    <div class="sechead">
+      <h2>People</h2>
+      <p>Affiliations and roles as stated in the paper.</p>
+    </div>
+    <div class="lead">
+      <div>
+        <span class="label">First author</span>
+        <h3>Victor Buratto Tinti</h3>
+        <p class="aff">DTU Energy. Co-corresponding author.</p>
+      </div>
+      <ul>
+        <li>Conceptualization with Vincenzo Esposito, methodology, investigation and visualization</li>
+        <li>Wrote the original draft</li>
+        <li>Winner of the JPhys Energy EL Award 2025 for this paper</li>
+      </ul>
+    </div>
+    <div class="people">
+      <div class="person"><h3>Milica Vasiljevic</h3><p>DTU Energy. Investigation.</p></div>
+      <div class="person"><h3>Mathias Grønborg</h3><p>DTU Physics. Investigation, visualization.</p></div>
+      <div class="person"><h3>Huaiyu Chen</h3><p>Lund University, NanoLund. Methodology, investigation, visualization.</p></div>
+      <div class="person"><h3>Valdemar Frederiksen</h3><p>DTU Physics. Methodology, investigation.</p></div>
+      <div class="person"><h3>Innokenty Kantor</h3><p>DTU Physics and MAX IV Laboratory. Methodology.</p></div>
+      <div class="person"><h3>Jesper Wallentin</h3><p>Lund University, NanoLund. Investigation, supervision.</p></div>
+      <div class="person"><h3>Henrik Bruus</h3><p>DTU Physics. Methodology, investigation, supervision, review and editing.</p></div>
+      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy. Conceptualization, funding, supervision. Co-corresponding author.</p></div>
+    </div>
+    <p class="funding">Funding acknowledged in the paper includes the EIC projects PRISMA and ACOUSOME, Villum Fonden, M-ERA.NET (DEMETRA), the Horizon Europe MSCA project PIEZO 2D and DanScatt. Beamtime at DanMAX, MAX IV Laboratory.</p>
+  </section>
+
+  <section id="paper">
+    <div class="sechead"><h2>Paper</h2></div>
+    <article class="entry">
+      <div class="num">2025<small>J. Phys. Energy 7, 035002<br>Open access</small></div>
+      <div>
+        <h3>Electromechanical coupling in polaronic ceria</h3>
+        <div class="meta">V. Buratto Tinti, M. Vasiljevic, M. Grønborg, H. Chen, V. Frederiksen, I. Kantor, J. Wallentin, H. Bruus, V. Esposito. Journal of Physics: Energy 7, 035002 (2025). JPhys Energy EL Award 2025.</div>
+        <div class="links"><a href="https://doi.org/10.1088/2515-7655/adc628" target="_blank" rel="noopener">doi:10.1088/2515-7655/adc628</a><a href="https://doi.org/10.11583/DTU.27952401" target="_blank" rel="noopener">Data at DTU Data</a></div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a></p></div>
+    <div><span class="label">Related</span><p><a href="../ysz/">YSZ</a> · <a href="../hzo/">HZO</a> · <a href="../ferroionics/">Ferroionics</a> · <a href="../exsolution/">Exsolution</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div></div>
+
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>
