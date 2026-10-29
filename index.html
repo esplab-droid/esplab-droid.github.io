@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vincenzo Esposito</title>
+<meta name="description" content="Vincenzo Esposito, DTU Energy. Functional metal oxides: recent results, open questions and research lines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: technical report. Narrow masthead with a gyroid cross-section plot, then a two-column ledger: key quantity in the margin, text on the right. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;      /* single accent: links and plot lines */
+  --plot:#e9ecef;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.who{font-family:var(--display);font-weight:600;font-size:1rem}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:48px;align-items:start;padding-block:44px 48px}
+.intro h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+.intro p{max-width:36em;margin:16px 0 0}
+.intro dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:22px 0 0;font-family:var(--display);font-size:.88rem}
+.intro dt{color:var(--muted)}
+.intro dd{margin:0}
+figure.gyro{margin:0}
+figure.gyro canvas{display:block;width:100%;aspect-ratio:1;max-width:100%;background:var(--plot);border:1px solid var(--rule)}
+figure.gyro figcaption{margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--muted);line-height:1.5}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:22px;border-bottom:1px solid var(--rule)}
+.entry:last-child{border-bottom:0}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3;font-variant-numeric:tabular-nums}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.q{padding-block:14px;border-top:1px solid var(--rule)}
+.q h3{font-size:1rem;margin:6px 0 6px}
+.q p{margin:0;font-size:.97rem;color:var(--muted)}
+
+.lede{max-width:44em;margin:0 0 24px}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pillar{border:1px solid var(--rule);border-top:2px solid var(--accent);padding:16px 18px;background:var(--plot)}
+.pillar h3{font-size:1.05rem;margin:6px 0 8px}
+.pillar p{margin:0;font-size:.97rem}
+.pillar .sys{margin-top:12px;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+table.lines{width:100%;border-collapse:collapse;font-size:.97rem}
+.tablewrap{overflow-x:auto}
+table.lines th,table.lines td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.lines th{font-family:var(--display);font-weight:600;font-size:.95rem;white-space:nowrap}
+table.lines td.sys{font-family:var(--mono);font-size:.8rem;color:var(--muted);white-space:nowrap}
+table.lines tr:last-child th,table.lines tr:last-child td{border-bottom:0}
+
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+.mail{font-family:var(--mono);user-select:all}
+button.copy{font-family:var(--mono);font-size:.72rem;margin-left:8px;padding:2px 8px;background:transparent;color:var(--ink);border:1px solid var(--rule);cursor:pointer}
+button.copy:hover{border-color:var(--ink)}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:28px;padding-block:32px 36px}
+  figure.gyro{max-width:300px}
+  .entry{grid-template-columns:1fr;gap:8px}
+  .qs{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="who">Vincenzo Esposito</span>
+    <nav aria-label="Sections">
+      <a href="#defects">Defects and interfaces</a>
+      <a href="#results">Results</a>
+      <a href="#questions">Open questions</a>
+      <a href="#lines">Research lines</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <span class="label">DTU Energy, Technical University of Denmark</span>
+      <h1 style="margin-top:10px">Functional metal oxides for energy conversion, electromechanics and ionic devices</h1>
+      <p>Our group studies how point defects, interfaces and three-dimensional architecture set the properties of functional metal oxides. We work from defective bulk oxides to epitaxial thin films and engineered heterostructures, and on to solid oxide and protonic ceramic cells. This page collects recent results and the questions currently open in the lab.</p>
+      <dl>
+        <dt>Position</dt><dd>Professor, Ceramic Science and Engineering</dd>
+        <dt>Department</dt><dd>DTU Energy, Kongens Lyngby</dd>
+      </dl>
+    </div>
+    <figure class="gyro">
+      <canvas id="gyroid" width="400" height="400" aria-label="Level-set contours of a gyroid cross-section"></canvas>
+      <figcaption>Gyroid, G(x,y,z) = sin x cos y + sin y cos z + sin z cos x. Contours of G at fixed z; bold line G = 0.</figcaption>
+    </figure>
+  </div>
+
+  <section id="defects">
+    <div class="sechead">
+      <h2>Defects, thin films and heterostructures</h2>
+      <p>The common thread across our work.</p>
+    </div>
+    <p class="lede">Many of the properties we study do not come from the ideal lattice. They come from oxygen vacancies, polarons and dopant–vacancy pairs, and from what happens to them under strain or at an interface. We grow epitaxial films and multilayers to control these defects at the nanometre scale, and we compare them with bulk ceramics of the same composition.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="label">Point defects</span>
+        <h3>Defective metal oxides</h3>
+        <p>Oxygen-deficient fluorites and perovskites, where vacancy concentration, ordering and association with dopants set ionic transport, redox activity and electromechanical response.</p>
+        <div class="sys">CeO<sub>2−δ</sub>, doped CeO<sub>2</sub>, δ-Bi<sub>2</sub>O<sub>3</sub>, SrTiO<sub>3</sub></div>
+      </div>
+      <div class="pillar">
+        <span class="label">Epitaxy and strain</span>
+        <h3>Thin films</h3>
+        <p>Pulsed laser deposition of epitaxial films with controlled orientation, termination and strain, used to tune defect chemistry and lattice distortion directly.</p>
+        <div class="sys">PLD, tetragonal CeO<sub>2</sub>, GPa-level interface stress</div>
+      </div>
+      <div class="pillar">
+        <span class="label">Interfaces</span>
+        <h3>Heterostructures</h3>
+        <p>Multilayers and bilayers where lattice discontinuity or a buried polarization reorganizes the defects of the adjacent layer, giving properties neither material has alone.</p>
+        <div class="sys">CGO/ESB multilayers, CeO<sub>2</sub>/BaTiO<sub>3</sub></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="sechead">
+      <h2>Recent results</h2>
+      <p>Key quantity on the left.</p>
+    </div>
+
+    <article class="entry">
+      <div class="num">≈ 1 W g<sup>−1</sup><small>specific power, monolithic cell;<br>≈ 0.2 W g<sup>−1</sup> for planar stacks</small></div>
+      <div>
+        <h3>Monolithic gyroidal solid oxide cells by additive manufacturing</h3>
+        <div class="meta">Nature Energy, 2025. With DTU Construct.</div>
+        <p>An 8YSZ solid oxide cell printed as a single gyroid lattice, without metallic interconnects or stack seals. The architecture gives uniform gas and heat distribution. Cells withstood 100&nbsp;°C thermal swings and repeated switching between SOFC and SOEC operation. Scale-up is in progress under the name GYROX.</p>
+        <div class="links"><a href="https://www.eurekalert.org/news-releases/1098626" target="_blank" rel="noopener">DTU press release</a><a href="https://3dadept.com/how-lcm-enabled-a-monolithic-ceramic-gyroid-that-delivers-five-times-the-power-to-weight-ratio-of-conventional-solid-oxide-fuel-cells/" target="_blank" rel="noopener">Fabrication (LCM)</a></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="num">M<sub>11</sub> ≈ 3.6 × 10<sup>−15</sup><small>m<sup>2</sup> V<sup>−2</sup>, in-plane compressed<br>CeO<sub>2</sub> films, stress &gt; 3 GPa</small></div>
+      <div>
+        <h3>Enhanced non-classical electrostriction in strained tetragonal ceria</h3>
+        <div class="meta">Nature Communications, 2025.</div>
+        <p>Positive tetragonality in compressively strained ceria films orients the defect-related elastic dipoles and Ce<sup>3+</sup> centres, raising the electrostriction coefficient well above values for unstrained material.</p>
+        <div class="links"><a href="https://doi.org/10.1038/s41467-024-55393-6" target="_blank" rel="noopener">doi:10.1038/s41467-024-55393-6</a></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="num">± 400 mV<small>tunable water-splitting<br>overpotential, room temperature</small></div>
+      <div>
+        <h3>Tunable ferroionic properties in CeO<sub>2</sub>/BaTiO<sub>3</sub> heterostructures</h3>
+        <div class="meta">ACS Applied Materials &amp; Interfaces, 2024.</div>
+        <p>A 5&nbsp;nm CeO<sub>2−δ</sub> layer on a 10&nbsp;nm BaTiO<sub>3</sub> film replicates the buried polarization through reconfiguration of oxygen vacancies and small polarons. The polarity sets the surface redox character and the water adsorption and splitting behaviour.</p>
+        <div class="links"><a href="https://iris.cnr.it/handle/20.500.14243/515363" target="_blank" rel="noopener">Open-access version</a></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="num">10<sup>−1</sup> to 10<sup>3</sup> Hz<small>stable M<sub>33</sub> &gt; 10<sup>−18</sup> m<sup>2</sup> V<sup>−2</sup>,<br>Ce<sub>1−x</sub>Ca<sub>x</sub>O<sub>2−x</sub></small></div>
+      <div>
+        <h3>Non-classical electrostriction in calcium-doped cerium oxide ceramics</h3>
+        <div class="meta">Journal of Materials Chemistry A, 2024.</div>
+        <p>Unlike trivalent-doped ceria, whose response decays above 1 to 10&nbsp;Hz, divalent Ca doping gives a frequency-stable electrostrictive strain, attributed to strongly bound Ca–vacancy pairs.</p>
+        <div class="links"><a href="https://doi.org/10.1039/d3ta07512e" target="_blank" rel="noopener">doi:10.1039/d3ta07512e</a></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="num">M ≈ 2.4 × 10<sup>−14</sup><small>m<sup>2</sup> V<sup>−2</sup>, CGO/ESB multilayers;<br>≈ 10<sup>3</sup> × best relaxors</small></div>
+      <div>
+        <h3>Atomically engineered interfaces yield extraordinary electrostriction</h3>
+        <div class="meta">Nature, 2022. With DTU Energy colleagues and partners in Belgium, Israel and Switzerland.</div>
+        <p>Alternating epitaxial layers of gadolinia-doped CeO<sub>2</sub> and erbia-stabilized δ-Bi<sub>2</sub>O<sub>3</sub> on NdGaO<sub>3</sub>. Coherent strain from the lattice discontinuity at the interfaces raises electrostriction far above values for simple oxides, which are normally below 10<sup>−19</sup> m<sup>2</sup> V<sup>−2</sup>.</p>
+        <div class="links"><a href="https://doi.org/10.1038/s41586-022-05073-6" target="_blank" rel="noopener">doi:10.1038/s41586-022-05073-6</a></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="questions">
+    <div class="sechead">
+      <h2>Open questions</h2>
+    </div>
+    <div class="qs">
+      <div class="q">
+        <span class="label">Architecture</span>
+        <h3>To what extent does geometry determine electrochemical function?</h3>
+        <p>Separating the contribution of 3D architecture from that of composition and microstructure in oxide cells.</p>
+      </div>
+      <div class="q">
+        <span class="label">External fields</span>
+        <h3>Can ionic transport in oxides be driven without electrical contacts?</h3>
+        <p>Coupling of light, acoustic and radio-frequency fields to defect chemistry in oxygen-deficient lattices.</p>
+      </div>
+      <div class="q">
+        <span class="label">Abundant elements</span>
+        <h3>Can oxide-ion storage replace critical metals?</h3>
+        <p>Electrode oxides for oxygen-ion batteries built from earth-abundant elements.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="lines">
+    <div class="sechead">
+      <h2>Research lines</h2>
+    </div>
+    <div class="tablewrap">
+      <table class="lines">
+        <tr><th scope="row">Solid oxide and protonic ceramic cells</th><td>Reversible fuel cells and electrolysers at high and intermediate temperature.</td><td class="sys">YSZ, CGO, BZCY</td></tr>
+        <tr><th scope="row">Architected oxides</th><td>Triply periodic minimal surfaces, printed in one piece and co-sintered.</td><td class="sys">TPMS, LCM</td></tr>
+        <tr><th scope="row">Thin films and heterostructures</th><td>Epitaxial films and multilayers for strain and interface control of defect chemistry.</td><td class="sys">PLD, multilayers</td></tr>
+        <tr><th scope="row">Ferroionics</th><td>Coupling of ferroelectric polarization and mobile ionic defects at oxide interfaces.</td><td class="sys">CeO₂/BaTiO₃</td></tr>
+        <tr><th scope="row">Electro-chemo-mechanics</th><td>Non-classical electrostriction in lead-free, oxygen-defective oxides.</td><td class="sys">doped CeO₂</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div>
+      <span class="label">Contact</span>
+      <p><span class="mail" id="mail">vies@dtu.dk</span><button class="copy" id="copybtn" type="button">Copy</button></p>
+      <p>Enquiries from prospective PhD students and postdocs are welcome.</p>
+    </div>
+    <div>
+      <span class="label">Links</span>
+      <p><a href="https://orbit.dtu.dk/" target="_blank" rel="noopener">DTU Orbit publications</a></p>
+      <p><a href="https://www.energy.dtu.dk/" target="_blank" rel="noopener">DTU Energy</a></p>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  // Contour plot of the gyroid function on a slice of constant z.
+  const cv=document.getElementById('gyroid');
+  if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const N=160;
+  const img=ctx.createImageData(N,N);
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function hex(v){v=v.trim();return v[0]==='#'?[1,3,5].map(i=>parseInt(v.slice(i,i+2),16)):[31,79,143]}
+  function colors(){const s=getComputedStyle(document.documentElement);return{l:hex(s.getPropertyValue('--accent')),m:hex(s.getPropertyValue('--muted')),p:hex(s.getPropertyValue('--plot'))}}
+  let C=colors();
+  const off=document.createElement('canvas');off.width=N;off.height=N;const octx=off.getContext('2d');
+  function draw(z){
+    const d=img.data,k=Math.PI*2*1.5/N,sz=Math.sin(z),cz=Math.cos(z);
+    for(let j=0;j<N;j++){for(let i=0;i<N;i++){
+      const x=i*k,y=j*k;
+      const g=Math.sin(x)*Math.cos(y)+Math.sin(y)*cz+sz*Math.cos(x);
+      const p=(j*N+i)*4;
+      let col=C.p,t=0;
+      const a=Math.abs(g);
+      if(a<0.07){col=C.l;t=1}
+      else{const f=Math.abs((g*2.5)-Math.round(g*2.5));if(f<0.06){col=C.m;t=0.45}}
+      for(let c=0;c<3;c++)d[p+c]=C.p[c]+(col[c]-C.p[c])*t;
+      d[p+3]=255;
+    }}
+    octx.putImageData(img,0,0);
+    ctx.imageSmoothingEnabled=true;
+    ctx.drawImage(off,0,0,cv.width,cv.height);
+  }
+  let z=0.7;draw(z);
+  if(!reduce){(function loop(){z+=0.004;draw(z);requestAnimationFrame(loop)})()}
+  const mq=window.matchMedia('(prefers-color-scheme: dark)');
+  const refresh=()=>{C=colors();draw(z)};
+  mq.addEventListener&&mq.addEventListener('change',refresh);
+  new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+  const btn=document.getElementById('copybtn');
+  btn.addEventListener('click',()=>{
+    const el=document.getElementById('mail');
+    const sel=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(el.textContent).then(()=>{btn.textContent='Copied'},sel)}else sel();
+  });
+})();
+</script>
+</body>
+</html>
