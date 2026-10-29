@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shaped Piezoceramics</title>
-<meta name="description" content="Shape engineering and manufacturing of piezoceramics for energy conversion. Selicani et al., J. Phys. Energy 2025, topical review.">
+<title>TPMS Piezoceramics</title>
+<meta name="description" content="Topology-driven electromechanical actuation in 3D-printed TPMS piezoelectric ceramics. Didilis, Selicani et al., Acta Materialia 2025.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 body{margin:0}img,video{max-width:100%}
-/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. Piezoceramic shapes page. */
+/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. TPMS piezoceramics page. */
 :root{
   --paper:#f5f6f7;
   --ink:#16191d;
@@ -129,9 +129,9 @@ footer p{margin:4px 0}
 <body>
 <div class="pad"><div class="wrap">
   <header class="top">
-    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Shaped piezoceramics</div>
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>TPMS piezoceramics</div>
     <nav aria-label="Sections">
-      <a href="#findings">Key points</a>
+      <a href="#findings">Findings</a>
       <a href="#people">People</a>
       <a href="#paper">Paper</a>
     </nav>
@@ -139,93 +139,97 @@ footer p{margin:4px 0}
 
   <div class="intro">
     <div>
-      <span class="label">Journal of Physics: Energy, 2025 · Topical review</span>
-      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Shape engineering and manufacturing of piezoceramics for energy conversion</h1>
-      <p class="body">For most of their history, piezoceramics were discs, plates, rings and stacks, because that is what pressing and tape casting could make. The shape still matters: it selects the vibration mode, the coupling factor and how far a device moves or how well it listens. This review follows piezoceramic geometry from multilayers, benders and flextensional transducers to tubes, spirals, helices, shells, topology-optimised elements and metamaterials, and asks what additive manufacturing now makes possible.</p>
+      <span class="label">Acta Materialia, 2025</span>
+      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Topology-driven electromechanical actuation in 3D-printed TPMS piezoelectric ceramics</h1>
+      <p class="body">A piezoelectric ceramic normally stretches along the applied field. We printed lead-free K<sub>0.5</sub>Na<sub>0.5</sub>NbO<sub>3</sub> into triply periodic minimal surface lattices and coated both of the lattice's internal surfaces as electrodes. The field then runs across each thin wall, the walls shrink along their own plane through the transverse d<sub>31</sub> effect, and the whole cube contracts in every direction: auxetic actuation from geometry alone, at a fraction of the voltage a solid block would need.</p>
     </div>
     <dl class="facts">
-      <dt>Type</dt><dd>Topical review, open access (CC BY 4.0)</dd>
-      <dt>Scope</dt><dd>Device shapes and composite or metamaterial designs, macroscale modelling, figures of merit by application</dd>
-      <dt>Methods</dt><dd>Analytical and FEM models, parametric, shape and topology optimisation</dd>
-      <dt>Manufacturing</dt><dd>Pressing, tape casting, injection moulding; vat photopolymerisation and other AM routes; negative AM</dd>
+      <dt>Material</dt><dd>K<sub>0.5</sub>Na<sub>0.5</sub>NbO<sub>3</sub> (KNN), lead-free</dd>
+      <dt>Printing</dt><dd>Lithography-based ceramic manufacturing (Lithoz CeraFab Multi 2M30), 25 µm layers, sintered 1130 °C</dd>
+      <dt>Lattices</dt><dd>Schwarz Primitive, Schoen Gyroid, I-WP, Schwarz Diamond, Neovius; 10 mm cubes, 2 × 2 × 2 cells</dd>
+      <dt>Probes</dt><dd>P–E loops, laser interferometry, CT, SEM; nonlinear ferroelectric–electrostrictive FEM</dd>
     </dl>
   </div>
 </div></div>
 
 <figure class="film pad" style="margin:0">
   <div class="wrap">
-    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of how shape sets the response of piezoelectric ceramics, from simple blocks to spirals, shells and printed lattices">
-      <source src="Piezo_shapes.mp4" type="video/mp4">
+    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of auxetic actuation in 3D-printed TPMS piezoelectric ceramics with internal electrodes">
+      <source src="TPMS_piezo.mp4" type="video/mp4">
     </video>
-    <figcaption><span>Why shape matters for a piezoceramic, in 36 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+    <figcaption><span>A ceramic lattice that shrinks in every direction, in 36 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
   </div>
 </figure>
 
 <div class="pad"><div class="wrap">
   <section id="findings">
     <div class="sechead">
-      <h2>Key points</h2>
+      <h2>Findings</h2>
       <p>Key quantity on the left.</p>
     </div>
     <article class="entry">
-      <div class="num">≤ 30 %<small>drop in measured d<sub>33</sub>,<br>thin PZT discs</small></div>
-      <div><h3>Shape sets the mode and the measured coefficient</h3><p>Aspect ratio decides which vibration modes a piezoelectric element supports. A thin disc has a lower coupling factor (k<sub>t</sub>) than a plate (k<sub>33</sub>′) or a rod (k<sub>33</sub>) of the same ceramic. Off-standard aspect ratios mix modes and complicate impedance analysis, and the effective d<sub>33</sub> of thin discs can fall up to 30&nbsp;% below the material value.</p></div>
+      <div class="num">0.5 mm<small>wall the field crosses,<br>inside a 10 mm cube</small></div>
+      <div><h3>Electrodes inside the lattice</h3><p>A TPMS divides space into two interpenetrating labyrinths. Metallising the two surfaces that face them, and stripping the outer faces, turns each wall into a capacitor. The field runs through the ≈&nbsp;0.5&nbsp;mm wall rather than the full 10&nbsp;mm height, so a large ceramic volume is activated at low voltage. In effect it is a low-density multilayer actuator folded into 3D.</p></div>
     </article>
     <article class="entry">
-      <div class="num">+50 %<small>radial displacement, zigzag<br>bellows vs straight tubes</small></div>
-      <div><h3>Curvature amplifies motion</h3><p>In a curved cross-section the transverse d<sub>31</sub> strain produces a larger bending moment than in a straight beam, which is why curved benders such as RAINBOW, THUNDER and LIPCA outperform flat ones. Printed bellow tubes with zigzag walls gave up to 50&nbsp;% more radial displacement than straight tubes, at the cost of 20–30&nbsp;% less axial displacement.</p></div>
+      <div class="num">24 vs 13 ppm<small>volumetric strain at 16 µC cm<sup>−2</sup>,<br>gyroid vs KNN cylinder</small></div>
+      <div><h3>Auxetic actuation</h3><p>Cylinders of the same KNN expand along the field, the usual “wings-up” butterfly loop. The printed gyroids contract on all six faces, with an inverted “wings-down” loop, and their volumetric strain is nearly double. Both show the same ferroelectric signature, remanent polarization ≈&nbsp;10&nbsp;µC&nbsp;cm<sup>−2</sup> and coercive field ≈&nbsp;10&nbsp;kV&nbsp;cm<sup>−1</sup>. The contraction is visible by eye with the sample in silicone oil.</p></div>
     </article>
     <article class="entry">
-      <div class="num">≈ 12×<small>tip motion of a printed PZT spiral<br>vs a strip of the same size</small></div>
-      <div><h3>Spirals and helices accumulate strain</h3><p>A 32&nbsp;mm PZT spiral printed by FDM moved 1.9&nbsp;mm at about 11.6&nbsp;kV&nbsp;cm<sup>−1</sup>, roughly twelve times a straight strip of the same dimensions. Narrow, long spirals also bring resonance down to a few hertz, into the ambient vibration band for energy harvesting; a spiral bimorph powering electronics on a beetle delivered 22&nbsp;µW (1.86&nbsp;mW&nbsp;cm<sup>−3</sup>). Helices and the double-wound super-helix (3&nbsp;mm stroke, 0.2&nbsp;N, 2002) extend the same effect to 3D.</p></div>
+      <div class="num">Q<sub>12</sub>/Q<sub>11</sub> ≈ 0.27<small>measured transverse-to-longitudinal<br>electrostriction ratio</small></div>
+      <div><h3>Why it shrinks</h3><p>Each wall expands across its thickness (n-mode, Q<sub>11</sub> and d<sub>33</sub>) and contracts in its own plane (t-mode, Q<sub>12</sub> and d<sub>31</sub>). Through-thickness expansion barely changes the outer size of the lattice, while in-plane contraction pulls the whole network inward. A nonlinear ferroelectric–electrostrictive model, fitted to the measured loops, reproduces the polarization and displacement curves.</p></div>
     </article>
     <article class="entry">
-      <div class="num">concave · convex<small>focusing vs omnidirectional<br>acoustic response</small></div>
-      <div><h3>Shells focus and listen</h3><p>Shells and domes amplify stress and spread it more evenly. Concave shells focus ultrasound for therapy, near-field diagnostics and acoustic tweezers. Convex and spherical shells give omnidirectional hydrophones, with the highest sensitivity from thin, radially poled shells.</p></div>
+      <div class="num">957 → 1717<small>|u<sub>z</sub>|/V<sub>0</sub> in pm V<sup>−1</sup>, Primitive<br>to Diamond, modelled at 1 kV</small></div>
+      <div><h3>Five lattices, one rule</h3><p>All five TPMS types, printed and tested, contract. At equal volume fraction (0.29) the thinnest walls move most: Schwarz Diamond (h&nbsp;=&nbsp;0.38&nbsp;mm) reaches 1717&nbsp;pm&nbsp;V<sup>−1</sup> and d<sub>eff</sub> ≈ −107&nbsp;pC&nbsp;N<sup>−1</sup>, Schwarz Primitive (0.64&nbsp;mm) 957&nbsp;pm&nbsp;V<sup>−1</sup> and −45&nbsp;pC&nbsp;N<sup>−1</sup>. Thinner walls see a higher field at the same voltage, at the cost of more current.</p></div>
     </article>
     <article class="entry">
-      <div class="num">up to 1.2 × 10<sup>5</sup><small>d<sub>h</sub>g<sub>h</sub> relative to bulk,<br>auxetic rod lattice design</small></div>
-      <div><h3>Less ceramic, more response</h3><p>Topology-optimised composites, cellular lattices, auxetic structures and TPMS networks raise hydrostatic figures of merit by orders of magnitude over dense ceramic while lowering acoustic impedance. Printed BaTiO<sub>3</sub> spinodoids matched the bulk d<sub>33</sub> with 30&nbsp;% of the material and raised g<sub>33</sub> more than tenfold. The review cautions that many designs do not yet account for manufacturability, strength or cost.</p></div>
+      <div class="num">Gyroid &gt; Neovius<small>same mean wall thickness,<br>more uniform walls</small></div>
+      <div><h3>Uniform walls win</h3><p>Uneven wall thickness creates gradients in polarization and stress that waste strain. The gyroid outperforms the Neovius lattice although both have nearly the same average thickness, because its walls vary less. Each thickness also has an optimal driving voltage, beyond which polarization saturates. Constant-thickness “shellular” TPMS walls are the next step.</p></div>
     </article>
     <article class="entry">
-      <div class="num">&gt; 95 %<small>density of conventional ceramics,<br>still hard to reach by AM</small></div>
-      <div><h3>Printed, not machined</h3><p>Vat photopolymerisation is the most established ceramic AM route and has produced PZT, BaTiO<sub>3</sub>, KNN and PMN-PT pillar arrays, annular arrays, shells, helices and gyroids. Machining of conventional parts adds stress, grain pull-out and depolarisation; AM avoids it but still struggles with defects and density. Next steps named in the review: multi-material and 4D printing, printed electrodes for tailored poling, and grain texturing as a design variable alongside shape.</p></div>
+      <div class="num">≈ 1.6×<small>volumetric strain of the TPMS<br>structures vs bulk</small></div>
+      <div><h3>Geometry as a design parameter</h3><p>Response scales with geometry, not just with composition: wall thickness and TPMS type tune the effective coefficients, and the figures of merit improve as mass goes down. The platform targets volumetric actuators for adaptive optics, reconfigurable microsystems and hydrostatic acoustics, in a lead-free ceramic.</p></div>
     </article>
   </section>
 
   <section id="people">
     <div class="sechead">
       <h2>People</h2>
-      <p>All authors at DTU Energy.</p>
+      <p>Affiliations and roles as stated in the paper.</p>
     </div>
     <div class="lead">
       <div>
-        <span class="label">First author</span>
-        <h3>Guilherme Victor Selicani</h3>
+        <span class="label">Equal first authors</span>
+        <h3>Kyriakos Didilis and Guilherme V. Selicani</h3>
         <p class="aff">DTU Energy.</p>
       </div>
       <ul>
-        <li>Works on architected piezoelectric ceramics: modelling of poling in complex structures and 3D-printed TPMS piezoceramics</li>
-        <li>Lead author of this review</li>
+        <li>Didilis: methodology, investigation, visualization, writing</li>
+        <li>Selicani: conceptualization, methodology, modelling software, investigation, visualization, writing</li>
       </ul>
     </div>
     <div class="people">
-      <div class="person"><h3>Mahmoud Mobin</h3><p>DTU Energy.</p></div>
-      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy.</p></div>
-      <div class="person"><h3>Andrea Roberto Insinga</h3><p>DTU Energy.</p></div>
-      <div class="person"><h3>Astri Bjørnetun Haugen</h3><p>DTU Energy. Corresponding author.</p></div>
+      <div class="person"><h3>Victor B. Tinti</h3><p>DTU Energy. Methodology, investigation, visualization, funding, project administration.</p></div>
+      <div class="person"><h3>Mahmoud Mobin</h3><p>DTU Energy. Methodology, investigation.</p></div>
+      <div class="person"><h3>Dominik Brouczek</h3><p>Lithoz, Vienna. Methodology.</p></div>
+      <div class="person"><h3>Lasse Staal</h3><p>Nexa3D, Taastrup. Methodology.</p></div>
+      <div class="person"><h3>Debora Marani</h3><p>Nexa3D, Taastrup. Methodology.</p></div>
+      <div class="person"><h3>Andrea R. Insinga</h3><p>DTU Energy. Conceptualization, software, supervision, writing.</p></div>
+      <div class="person"><h3>Astri B. Haugen</h3><p>DTU Energy. Funding, project administration, supervision, review.</p></div>
+      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy. Conceptualization, supervision, writing. Corresponding author.</p></div>
     </div>
-    <p class="funding">Funding acknowledged in the paper: Villum Fonden, research grant 37520.</p>
+    <p class="funding">Funding acknowledged in the paper: Novo Nordisk Foundation Pioneer Innovator Grant TEMPO (NNF23OC0083251), Villum Fonden (37520) and Innovation Fund Denmark (9065-00196B). Printing at the E-MAT national infrastructure. A patent application on TPMS electromechanical metamaterials is pending to DTU.</p>
   </section>
 
   <section id="paper">
     <div class="sechead"><h2>Paper</h2></div>
     <article class="entry">
-      <div class="num">2025<small>J. Phys. Energy 7, 022004<br>Open access</small></div>
+      <div class="num">2025<small>Acta Materialia,<br>article 121724</small></div>
       <div>
-        <h3>Shape engineering and manufacturing of piezoceramics for energy conversion: a review</h3>
-        <div class="meta">G. V. Selicani, M. Mobin, V. Esposito, A. R. Insinga, A. B. Haugen. Journal of Physics: Energy 7, 022004 (2025).</div>
-        <div class="links"><a href="https://doi.org/10.1088/2515-7655/adb0ee" target="_blank" rel="noopener">doi:10.1088/2515-7655/adb0ee</a><a href="https://orbit.dtu.dk/en/publications/shape-engineering-and-manufacturing-of-piezoceramics-for-energy-c/" target="_blank" rel="noopener">DTU Orbit</a></div>
+        <h3>Topology-driven electromechanical actuation in 3D-printed TPMS piezoelectric ceramics</h3>
+        <div class="meta">K. Didilis, G. V. Selicani, V. B. Tinti, M. Mobin, D. Brouczek, L. Staal, D. Marani, A. R. Insinga, A. B. Haugen, V. Esposito. Acta Materialia (2025) 121724.</div>
+        <div class="links"><a href="https://doi.org/10.1016/j.actamat.2025.121724" target="_blank" rel="noopener">doi:10.1016/j.actamat.2025.121724</a><a href="https://orbit.dtu.dk/en/publications/topology-driven-electromechanical-actuation-in-3d-printed-tpms-pi/" target="_blank" rel="noopener">DTU Orbit</a></div>
       </div>
     </article>
   </section>
