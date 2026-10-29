@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shaped Piezoceramics</title>
+<meta name="description" content="Shape engineering and manufacturing of piezoceramics for energy conversion. Selicani et al., J. Phys. Energy 2025, topical review.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img,video{max-width:100%}
+/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. Piezoceramic shapes page. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;
+  --plot:#e9ecef;
+  --night:#07090d;       /* film band, same in both themes */
+  --night-ink:#dfe5ee;
+  --night-muted:#8b95a3;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6}
+.pad{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{padding-block:44px 36px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:end}
+.intro h1{font-size:clamp(2.6rem,7vw,4.2rem);letter-spacing:.12em}
+.intro .sub{font-family:var(--display);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
+.intro p.body{max-width:36em;margin:18px 0 0}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:0;font-family:var(--display);font-size:.88rem}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+
+.film{background:var(--night);color:var(--night-ink)}
+.film .wrap{padding-block:28px 22px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:var(--night);border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--night-muted)}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:var(--night-ink);border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:var(--night-ink)}
+.film button:focus-visible{outline:2px solid var(--night-ink);outline-offset:2px}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+.lede{max-width:44em;margin:0 0 20px}
+
+.tablewrap{overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;font-size:.97rem;min-width:520px}
+table.cmp th,table.cmp td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.cmp thead th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+table.cmp tbody th{font-family:var(--display);font-weight:600;font-size:.92rem;white-space:nowrap}
+table.cmp td.new{color:var(--ink)}
+table.cmp td.old{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:s}
+ol.steps li{counter-increment:s;border-top:2px solid var(--accent);padding-top:12px}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+ol.steps h3{font-size:1rem;margin:4px 0 6px}
+ol.steps p{margin:0;font-size:.95rem;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.two h3{font-size:1.02rem;margin:6px 0 6px}
+.two p{margin:0}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:6px}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:24px;padding-block:32px 28px}
+  ol.steps{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:8px}
+}
+@media (max-width:460px){ol.steps{grid-template-columns:1fr}}
+.lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;padding:22px 24px;border:1px solid var(--rule);border-top:2px solid var(--accent);background:var(--plot);margin-bottom:24px}
+.lead h3{font-size:1.4rem;margin:6px 0 4px}
+.lead .aff{font-family:var(--display);font-size:.88rem;color:var(--muted);margin:0}
+.lead ul{margin:0;padding-left:18px}
+.lead li{margin:2px 0}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:12px;border-top:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 2px}
+.person p{margin:0;font-size:.93rem;color:var(--muted)}
+.funding{margin-top:24px;font-family:var(--display);font-size:.84rem;color:var(--muted);max-width:60em}
+@media (max-width:780px){.lead{grid-template-columns:1fr;gap:12px}.people{grid-template-columns:1fr}}
+
+.award{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin:18px 0 0;padding:10px 14px;border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--plot);font-family:var(--display);font-size:.92rem;max-width:36em}
+.award strong{font-weight:600}
+</style>
+
+</head>
+<body>
+<div class="pad"><div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Shaped piezoceramics</div>
+    <nav aria-label="Sections">
+      <a href="#findings">Key points</a>
+      <a href="#people">People</a>
+      <a href="#paper">Paper</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <span class="label">Journal of Physics: Energy, 2025 · Topical review</span>
+      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Shape engineering and manufacturing of piezoceramics for energy conversion</h1>
+      <p class="body">For most of their history, piezoceramics were discs, plates, rings and stacks, because that is what pressing and tape casting could make. The shape still matters: it selects the vibration mode, the coupling factor and how far a device moves or how well it listens. This review follows piezoceramic geometry from multilayers, benders and flextensional transducers to tubes, spirals, helices, shells, topology-optimised elements and metamaterials, and asks what additive manufacturing now makes possible.</p>
+    </div>
+    <dl class="facts">
+      <dt>Type</dt><dd>Topical review, open access (CC BY 4.0)</dd>
+      <dt>Scope</dt><dd>Device shapes and composite or metamaterial designs, macroscale modelling, figures of merit by application</dd>
+      <dt>Methods</dt><dd>Analytical and FEM models, parametric, shape and topology optimisation</dd>
+      <dt>Manufacturing</dt><dd>Pressing, tape casting, injection moulding; vat photopolymerisation and other AM routes; negative AM</dd>
+    </dl>
+  </div>
+</div></div>
+
+<figure class="film pad" style="margin:0">
+  <div class="wrap">
+    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of how shape sets the response of piezoelectric ceramics, from simple blocks to spirals, shells and printed lattices">
+      <source src="Piezo_shapes.mp4" type="video/mp4">
+    </video>
+    <figcaption><span>Why shape matters for a piezoceramic, in 36 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+  </div>
+</figure>
+
+<div class="pad"><div class="wrap">
+  <section id="findings">
+    <div class="sechead">
+      <h2>Key points</h2>
+      <p>Key quantity on the left.</p>
+    </div>
+    <article class="entry">
+      <div class="num">≤ 30 %<small>drop in measured d<sub>33</sub>,<br>thin PZT discs</small></div>
+      <div><h3>Shape sets the mode and the measured coefficient</h3><p>Aspect ratio decides which vibration modes a piezoelectric element supports. A thin disc has a lower coupling factor (k<sub>t</sub>) than a plate (k<sub>33</sub>′) or a rod (k<sub>33</sub>) of the same ceramic. Off-standard aspect ratios mix modes and complicate impedance analysis, and the effective d<sub>33</sub> of thin discs can fall up to 30&nbsp;% below the material value.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">+50 %<small>radial displacement, zigzag<br>bellows vs straight tubes</small></div>
+      <div><h3>Curvature amplifies motion</h3><p>In a curved cross-section the transverse d<sub>31</sub> strain produces a larger bending moment than in a straight beam, which is why curved benders such as RAINBOW, THUNDER and LIPCA outperform flat ones. Printed bellow tubes with zigzag walls gave up to 50&nbsp;% more radial displacement than straight tubes, at the cost of 20–30&nbsp;% less axial displacement.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">≈ 12×<small>tip motion of a printed PZT spiral<br>vs a strip of the same size</small></div>
+      <div><h3>Spirals and helices accumulate strain</h3><p>A 32&nbsp;mm PZT spiral printed by FDM moved 1.9&nbsp;mm at about 11.6&nbsp;kV&nbsp;cm<sup>−1</sup>, roughly twelve times a straight strip of the same dimensions. Narrow, long spirals also bring resonance down to a few hertz, into the ambient vibration band for energy harvesting; a spiral bimorph powering electronics on a beetle delivered 22&nbsp;µW (1.86&nbsp;mW&nbsp;cm<sup>−3</sup>). Helices and the double-wound super-helix (3&nbsp;mm stroke, 0.2&nbsp;N, 2002) extend the same effect to 3D.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">concave · convex<small>focusing vs omnidirectional<br>acoustic response</small></div>
+      <div><h3>Shells focus and listen</h3><p>Shells and domes amplify stress and spread it more evenly. Concave shells focus ultrasound for therapy, near-field diagnostics and acoustic tweezers. Convex and spherical shells give omnidirectional hydrophones, with the highest sensitivity from thin, radially poled shells.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">up to 1.2 × 10<sup>5</sup><small>d<sub>h</sub>g<sub>h</sub> relative to bulk,<br>auxetic rod lattice design</small></div>
+      <div><h3>Less ceramic, more response</h3><p>Topology-optimised composites, cellular lattices, auxetic structures and TPMS networks raise hydrostatic figures of merit by orders of magnitude over dense ceramic while lowering acoustic impedance. Printed BaTiO<sub>3</sub> spinodoids matched the bulk d<sub>33</sub> with 30&nbsp;% of the material and raised g<sub>33</sub> more than tenfold. The review cautions that many designs do not yet account for manufacturability, strength or cost.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">&gt; 95 %<small>density of conventional ceramics,<br>still hard to reach by AM</small></div>
+      <div><h3>Printed, not machined</h3><p>Vat photopolymerisation is the most established ceramic AM route and has produced PZT, BaTiO<sub>3</sub>, KNN and PMN-PT pillar arrays, annular arrays, shells, helices and gyroids. Machining of conventional parts adds stress, grain pull-out and depolarisation; AM avoids it but still struggles with defects and density. Next steps named in the review: multi-material and 4D printing, printed electrodes for tailored poling, and grain texturing as a design variable alongside shape.</p></div>
+    </article>
+  </section>
+
+  <section id="people">
+    <div class="sechead">
+      <h2>People</h2>
+      <p>All authors at DTU Energy.</p>
+    </div>
+    <div class="lead">
+      <div>
+        <span class="label">First author</span>
+        <h3>Guilherme Victor Selicani</h3>
+        <p class="aff">DTU Energy.</p>
+      </div>
+      <ul>
+        <li>Works on architected piezoelectric ceramics: modelling of poling in complex structures and 3D-printed TPMS piezoceramics</li>
+        <li>Lead author of this review</li>
+      </ul>
+    </div>
+    <div class="people">
+      <div class="person"><h3>Mahmoud Mobin</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Andrea Roberto Insinga</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Astri Bjørnetun Haugen</h3><p>DTU Energy. Corresponding author.</p></div>
+    </div>
+    <p class="funding">Funding acknowledged in the paper: Villum Fonden, research grant 37520.</p>
+  </section>
+
+  <section id="paper">
+    <div class="sechead"><h2>Paper</h2></div>
+    <article class="entry">
+      <div class="num">2025<small>J. Phys. Energy 7, 022004<br>Open access</small></div>
+      <div>
+        <h3>Shape engineering and manufacturing of piezoceramics for energy conversion: a review</h3>
+        <div class="meta">G. V. Selicani, M. Mobin, V. Esposito, A. R. Insinga, A. B. Haugen. Journal of Physics: Energy 7, 022004 (2025).</div>
+        <div class="links"><a href="https://doi.org/10.1088/2515-7655/adb0ee" target="_blank" rel="noopener">doi:10.1088/2515-7655/adb0ee</a><a href="https://orbit.dtu.dk/en/publications/shape-engineering-and-manufacturing-of-piezoceramics-for-energy-c/" target="_blank" rel="noopener">DTU Orbit</a></div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a></p></div>
+    <div><span class="label">Related</span><p><a href="../gyrox/">GYROX</a> · <a href="../hzo/">HZO</a> · <a href="../polaronic-ceria/">Polaronic ceria</a> · <a href="../team/">Team</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div></div>
+
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>
