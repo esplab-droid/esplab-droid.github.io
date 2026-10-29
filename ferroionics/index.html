@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ferroionic CeO₂/BaTiO₃</title>
+<meta name="description" content="A buried BaTiO3 polarization sets the defect chemistry and water response of a 5 nm ceria film. Vasiljevic, Chiabrera et al., ACS Applied Materials &amp; Interfaces 2024.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img,video{max-width:100%}
+/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. Ferroionics page. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;
+  --plot:#e9ecef;
+  --night:#07090d;       /* film band, same in both themes */
+  --night-ink:#dfe5ee;
+  --night-muted:#8b95a3;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6}
+.pad{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{padding-block:44px 36px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:end}
+.intro h1{font-size:clamp(2.6rem,7vw,4.2rem);letter-spacing:.12em}
+.intro .sub{font-family:var(--display);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
+.intro p.body{max-width:36em;margin:18px 0 0}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:0;font-family:var(--display);font-size:.88rem}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+
+.film{background:var(--night);color:var(--night-ink)}
+.film .wrap{padding-block:28px 22px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:var(--night);border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--night-muted)}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:var(--night-ink);border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:var(--night-ink)}
+.film button:focus-visible{outline:2px solid var(--night-ink);outline-offset:2px}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+.lede{max-width:44em;margin:0 0 20px}
+
+.tablewrap{overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;font-size:.97rem;min-width:520px}
+table.cmp th,table.cmp td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.cmp thead th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+table.cmp tbody th{font-family:var(--display);font-weight:600;font-size:.92rem;white-space:nowrap}
+table.cmp td.new{color:var(--ink)}
+table.cmp td.old{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:s}
+ol.steps li{counter-increment:s;border-top:2px solid var(--accent);padding-top:12px}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+ol.steps h3{font-size:1rem;margin:4px 0 6px}
+ol.steps p{margin:0;font-size:.95rem;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.two h3{font-size:1.02rem;margin:6px 0 6px}
+.two p{margin:0}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:6px}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:24px;padding-block:32px 28px}
+  ol.steps{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:8px}
+}
+@media (max-width:460px){ol.steps{grid-template-columns:1fr}}
+.lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;padding:22px 24px;border:1px solid var(--rule);border-top:2px solid var(--accent);background:var(--plot);margin-bottom:24px}
+.lead h3{font-size:1.4rem;margin:6px 0 4px}
+.lead .aff{font-family:var(--display);font-size:.88rem;color:var(--muted);margin:0}
+.lead ul{margin:0;padding-left:18px}
+.lead li{margin:2px 0}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:12px;border-top:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 2px}
+.person p{margin:0;font-size:.93rem;color:var(--muted)}
+.funding{margin-top:24px;font-family:var(--display);font-size:.84rem;color:var(--muted);max-width:60em}
+@media (max-width:780px){.lead{grid-template-columns:1fr;gap:12px}.people{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+<div class="pad"><div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Ferroionic CeO<sub>2</sub>/BaTiO<sub>3</sub></div>
+    <nav aria-label="Sections">
+      <a href="#findings">Findings</a>
+      <a href="#people">People</a>
+      <a href="#paper">Paper</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <span class="label">ACS Applied Materials &amp; Interfaces, 2024</span>
+      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Tunable ferroionic properties in CeO<sub>2</sub>/BaTiO<sub>3</sub> heterostructures</h1>
+      <p class="body">A ferroelectric holds a permanent, built-in electric field. Ceria is a catalyst whose activity comes from its defects, oxygen vacancies and Ce<sup>3+</sup> small polarons, which are usually activated only at high temperature. Here a 5&nbsp;nm ceria layer sits on a 10&nbsp;nm BaTiO<sub>3</sub> film whose polarization is fixed up or down by the bottom interface. The ceria reproduces the buried polarization through its defects, and adsorbed water turns it into opposite surface chemistries: the surface potential differs by about 400&nbsp;mV between the two cases, at room temperature and without any applied bias.</p>
+    </div>
+    <dl class="facts">
+      <dt>Stack</dt><dd>CeO<sub>2</sub> 5 nm / BaTiO<sub>3</sub> 10 nm / (SrRuO<sub>3</sub>) / Nb:SrTiO<sub>3</sub></dd>
+      <dt>Growth</dt><dd>PLD with RHEED, O<sub>2</sub> anneal at 550 °C</dd>
+      <dt>Polarization</dt><dd>Up with SrRuO<sub>3</sub>; down on TiO<sub>2</sub>-terminated Nb:SrTiO<sub>3</sub></dd>
+      <dt>Probes</dt><dd>HAADF-STEM, PFM and SS-PFM in air and argon, XAS and XLD, KPFM vs T, DFT, space-charge model</dd>
+    </dl>
+  </div>
+</div></div>
+
+<figure class="film pad" style="margin:0">
+  <div class="wrap">
+    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of how a buried BaTiO3 polarization sets the defects and water chemistry of a thin ceria layer">
+      <source src="Ferroionic_CeO2_BTO.mp4" type="video/mp4">
+    </video>
+    <figcaption><span>How a buried polarization tells a ceria surface how to react, in 37 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+  </div>
+</figure>
+
+<div class="pad"><div class="wrap">
+  <section id="findings">
+    <div class="sechead">
+      <h2>Findings</h2>
+      <p>Key quantity on the left.</p>
+    </div>
+    <article class="entry">
+      <div class="num">P<sub>up</sub> / P<sub>down</sub><small>set by the bottom interface,<br>BaTiO<sub>3</sub> c = 4.33 Å (bulk 4.04 Å)</small></div>
+      <div><h3>The arrow is fixed at growth</h3><p>Compressively strained, single-domain BaTiO<sub>3</sub> self-polarizes. A SrRuO<sub>3</sub> buffer gives upward polarization, direct growth on TiO<sub>2</sub>-terminated Nb:SrTiO<sub>3</sub> gives downward polarization. The ceria grows epitaxially on top, rotated 45° in plane, and PFM shows it leaves the BaTiO<sub>3</sub> orientation unchanged.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">1–2 %<small>change in Ce<sup>3+</sup> or V<sub>O</sub> population<br>screens ±10 μC cm<sup>−2</sup> (model)</small></div>
+      <div><h3>Ceria mirrors the polarization through its defects</h3><p>Upward polarization is compensated by Ce<sup>3+</sup> accumulation in the ceria, downward polarization by oxygen vacancy accumulation, mainly at growth and annealing temperature. At the Ti L<sub>2,3</sub> edge the interface appears electron-doped for P<sub>up</sub> and hole-doped for P<sub>down</sub>. A small linear dichroism also appears at the Ce M<sub>4,5</sub> edge, not reported before for centrosymmetric fluorite ceria.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">≈ 400 mV<small>surface potential, P<sub>down</sub> +240 mV<br>vs P<sub>up</sub> −150 mV (bare ceria +80 mV)</small></div>
+      <div><h3>Opposite polarizations, opposite water chemistry</h3><p>KPFM shows the P<sub>down</sub> surface richer in H<sup>+</sup> and the P<sub>up</sub> surface richer in OH<sup>−</sup>. Heating to 200&nbsp;°C, well below the Curie temperature of the strained film, removes the difference, and cooling restores it, so dissociatively adsorbed water carries the contrast. After ±5&nbsp;V poling the potential stays imprinted for 12&nbsp;h.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">No switching<small>in dry argon for CeO<sub>2</sub>/BaTiO<sub>3</sub>;<br>bare BaTiO<sub>3</sub> still switches</small></div>
+      <div><h3>Water is part of the switch</h3><p>In air, SS-PFM shows hysteresis for all films, with switching near 5&nbsp;V. In a glovebox below 0.2&nbsp;ppm water and oxygen, the ceria-capped films stop switching while bare BaTiO<sub>3</sub> does not. Oxygen vacancies cannot be redistributed at room temperature, so a polarizable, electrochemically active water layer is needed to compensate the charge.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">−1.01 vs −0.80 eV<small>water binding, surface vs buried<br>oxygen vacancy (DFT)</small></div>
+      <div><h3>Vacancy position sets water adsorption</h3><p>A vacancy at the CeO<sub>2</sub>(100) surface binds water more strongly, oxygen down towards Ce. With the vacancy buried at the BaTiO<sub>3</sub> interface, adsorption resembles pristine ceria with two hydrogen bonds. Shifting the polarization therefore tunes water adsorption and the water ionization overpotentials within ±400&nbsp;mV, pointing to wireless, field-assisted catalysis.</p></div>
+    </article>
+  </section>
+
+  <section id="people">
+    <div class="sechead">
+      <h2>People</h2>
+      <p>Affiliations as stated in the paper.</p>
+    </div>
+    <div class="lead">
+      <div>
+        <span class="label">Equal first authors</span>
+        <h3>Milica Vasiljevic</h3>
+        <p class="aff">DTU Energy. Co-corresponding author.</p>
+        <h3 style="margin-top:14px">Francesco Chiabrera</h3>
+        <p class="aff">Catalonia Institute for Energy Research (IREC), Barcelona.</p>
+      </div>
+      <ul>
+        <li>The two contributed equally to the work, as stated in the paper</li>
+        <li>Elettra beamtime for the XAS and XLD measurements acknowledged to Milica Vasiljevic</li>
+        <li>Nini Pryds is acknowledged for the early conceptualization</li>
+      </ul>
+    </div>
+    <div class="people">
+      <div class="person"><h3>Denis Alikin</h3><p>CICECO, University of Aveiro.</p></div>
+      <div class="person"><h3>Federico Motti</h3><p>CNR-IOM, Trieste.</p></div>
+      <div class="person"><h3>Achilles Bergne</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Javier Zamudio-García</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Xueping Qin</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Deepak Dagur</h3><p>CNR-IOM, Trieste.</p></div>
+      <div class="person"><h3>Shinhee Yun</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>David Marrero-López</h3><p>Universidad de Málaga.</p></div>
+      <div class="person"><h3>Giovanni Vinai</h3><p>CNR-IOM, Trieste.</p></div>
+      <div class="person"><h3>Ivano Castelli</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Andrei Kholkin</h3><p>CICECO, University of Aveiro.</p></div>
+      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy. Co-corresponding author.</p></div>
+    </div>
+    <p class="funding">Funding acknowledged in the paper includes MANTRA (Villum Experiment), the Independent Research Fund Denmark (DFF Research Projects 2), M-ERA.NET (DEMETRA), the Horizon Europe MSCA project PIEZO 2D and CICECO-Aveiro Institute of Materials (FCT/MCTES). Beamtime at APE-HE, Elettra, within the NFFA-MUR facility.</p>
+  </section>
+
+  <section id="paper">
+    <div class="sechead"><h2>Paper</h2></div>
+    <article class="entry">
+      <div class="num">2024<small>ACS Appl. Mater. Interfaces</small></div>
+      <div>
+        <h3>Tunable ferroionic properties in CeO<sub>2</sub>/BaTiO<sub>3</sub> heterostructures</h3>
+        <div class="meta">M. Vasiljevic, F. Chiabrera, D. Alikin, F. Motti, A. Bergne, J. Zamudio-García, X. Qin, D. Dagur, S. Yun, D. Marrero-López, G. Vinai, I. Castelli, A. Kholkin, V. Esposito. ACS Applied Materials &amp; Interfaces, 2024.</div>
+        <div class="links"><a href="https://doi.org/10.1021/acsami.4c09477" target="_blank" rel="noopener">doi:10.1021/acsami.4c09477</a><a href="https://iris.cnr.it/handle/20.500.14243/515363" target="_blank" rel="noopener">Open-access version</a></div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a></p></div>
+    <div><span class="label">Related</span><p><a href="../ysz/">YSZ</a> · <a href="../hzo/">HZO</a> · <a href="../exsolution/">Exsolution</a> · <a href="../gyrox/">GYROX</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div></div>
+
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>
