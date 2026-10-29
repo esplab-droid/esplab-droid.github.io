@@ -85,6 +85,13 @@ table.lines th{font-family:var(--display);font-weight:600;font-size:.95rem;white
 table.lines td.sys{font-family:var(--mono);font-size:.8rem;color:var(--muted);white-space:nowrap}
 table.lines tr:last-child th,table.lines tr:last-child td{border-bottom:0}
 
+.subhead{font-size:1.05rem;margin:36px 0 10px}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:14px;border-top:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 6px}
+.pp{display:grid;grid-template-columns:8.5em minmax(0,1fr);font-family:var(--mono);font-size:.78rem;line-height:1.7}
+.pl{display:flex;flex-wrap:wrap;gap:0 12px}
+.pl a{white-space:nowrap}
 footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
 footer p{margin:4px 0}
 .mail{font-family:var(--mono);user-select:all}
@@ -97,6 +104,7 @@ button.copy:hover{border-color:var(--ink)}
   .entry{grid-template-columns:1fr;gap:8px}
   .qs{grid-template-columns:1fr}
   .pillars{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
 }
 </style>
 
@@ -106,17 +114,10 @@ button.copy:hover{border-color:var(--ink)}
   <header class="top">
     <span class="who">Vincenzo Esposito</span>
     <nav aria-label="Sections">
-      <a href="#defects">Defects and interfaces</a>
+      <a href="#research">Research</a>
       <a href="#results">Results</a>
+      <a href="#team">Team</a>
       <a href="#questions">Open questions</a>
-      <a href="#lines">Research lines</a>
-      <a href="gyrox/">GYROX</a>
-      <a href="exsolution/">Exsolution</a>
-      <a href="hzo/">HZO</a>
-      <a href="hzo-ferroionic/">HZO ferroionic</a>
-      <a href="ysz/">YSZ</a>
-      <a href="ferroionics/">Ferroionics</a>
-      <a href="polaronic-ceria/">Polaronic ceria</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -137,10 +138,10 @@ button.copy:hover{border-color:var(--ink)}
     </figure>
   </div>
 
-  <section id="defects">
+  <section id="research">
     <div class="sechead">
-      <h2>Defects, thin films and heterostructures</h2>
-      <p>The common thread across our work.</p>
+      <h2>Research</h2>
+      <p>Defects, thin films and heterostructures: the common thread.</p>
     </div>
     <p class="lede">Many of the properties we study do not come from the ideal lattice. They come from oxygen vacancies, polarons and dopant–vacancy pairs, and from what happens to them under strain or at an interface. We grow epitaxial films and multilayers to control these defects at the nanometre scale, and we compare them with bulk ceramics of the same composition.</p>
     <div class="pillars">
@@ -163,6 +164,16 @@ button.copy:hover{border-color:var(--ink)}
         <div class="sys">CGO/ESB multilayers, CeO<sub>2</sub>/BaTiO<sub>3</sub></div>
       </div>
     </div>
+    <h3 class="subhead">Research lines</h3>
+    <div class="tablewrap">
+        <table class="lines">
+          <tr><th scope="row">Solid oxide and protonic ceramic cells</th><td>Reversible fuel cells and electrolysers at high and intermediate temperature.</td><td class="sys">YSZ, CGO, BZCY</td></tr>
+          <tr><th scope="row">Architected oxides</th><td>Triply periodic minimal surfaces, printed in one piece and co-sintered.</td><td class="sys">TPMS, LCM</td></tr>
+          <tr><th scope="row">Thin films and heterostructures</th><td>Epitaxial films and multilayers for strain and interface control of defect chemistry.</td><td class="sys">PLD, multilayers</td></tr>
+          <tr><th scope="row">Ferroionics</th><td>Coupling of ferroelectric polarization and mobile ionic defects at oxide interfaces.</td><td class="sys">CeO₂/BaTiO₃</td></tr>
+          <tr><th scope="row">Electro-chemo-mechanics</th><td>Non-classical electrostriction in lead-free, oxygen-defective oxides.</td><td class="sys">doped CeO₂</td></tr>
+        </table>
+      </div>
   </section>
 
   <section id="results">
@@ -272,6 +283,64 @@ button.copy:hover{border-color:var(--ink)}
     </article>
   </section>
 
+  <section id="team">
+    <div class="sechead">
+      <h2>Team</h2>
+      <p>People behind the results above.</p>
+    </div>
+    <div class="people">
+      <div class="person">
+        <h3>Javier Zamudio-García</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="exsolution/">Exsolution</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="ferroionics/">Ferroionics</a> <a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="ysz/">YSZ</a></span></div>
+      </div>
+      <div class="person">
+        <h3>Milica Vasiljevic</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="ferroionics/">Ferroionics</a> <a href="ysz/">YSZ</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="polaronic-ceria/">Polaronic ceria</a></span></div>
+      </div>
+      <div class="person">
+        <h3>Victor Buratto Tinti</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="polaronic-ceria/">Polaronic ceria</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="ysz/">YSZ</a></span></div>
+      </div>
+      <div class="person">
+        <h3>Achilles Bergne</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="ferroionics/">Ferroionics</a></span></div>
+      </div>
+      <div class="person">
+        <h3>Francesco Chiabrera</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="ferroionics/">Ferroionics</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="exsolution/">Exsolution</a></span></div>
+      </div>
+      <div class="person">
+        <h3>Dimitrios Koukoulis</h3>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="ysz/">YSZ</a></span></div>
+      </div>
+      <div class="person">
+        <h3>Armando Morin-Martínez</h3>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="exsolution/">Exsolution</a> <a href="hzo/">HZO</a></span></div>
+      </div>
+      <div class="person">
+        <h3>Ahsanul Kabir</h3>
+      </div>
+      <div class="person">
+        <h3>Shatil Shanto</h3>
+      </div>
+    </div>
+    <h3 class="subhead">Frequent collaborators</h3>
+    <div class="tablewrap">
+      <table class="lines">
+        <tr><th scope="row">DTU Energy</th><td>Ivano E. Castelli, Dennis V. Christensen</td></tr>
+        <tr><th scope="row">DTU Physics</th><td>Henrik Bruus, Mathias Grønborg</td></tr>
+        <tr><th scope="row">Universidad de Málaga</th><td>David Marrero-López</td></tr>
+        <tr><th scope="row">CICECO, University of Aveiro; University of Latvia</th><td>Denis Alikin, Andrei Kholkin</td></tr>
+        <tr><th scope="row">Lund University and MAX IV Laboratory</th><td>Jesper Wallentin, Huaiyu Chen, Leonardo Soares de Oliveira, Megan Landberg Hill</td></tr>
+      </table>
+    </div>
+  </section>
+
   <section id="questions">
     <div class="sechead">
       <h2>Open questions</h2>
@@ -295,20 +364,6 @@ button.copy:hover{border-color:var(--ink)}
     </div>
   </section>
 
-  <section id="lines">
-    <div class="sechead">
-      <h2>Research lines</h2>
-    </div>
-    <div class="tablewrap">
-      <table class="lines">
-        <tr><th scope="row">Solid oxide and protonic ceramic cells</th><td>Reversible fuel cells and electrolysers at high and intermediate temperature.</td><td class="sys">YSZ, CGO, BZCY</td></tr>
-        <tr><th scope="row">Architected oxides</th><td>Triply periodic minimal surfaces, printed in one piece and co-sintered.</td><td class="sys">TPMS, LCM</td></tr>
-        <tr><th scope="row">Thin films and heterostructures</th><td>Epitaxial films and multilayers for strain and interface control of defect chemistry.</td><td class="sys">PLD, multilayers</td></tr>
-        <tr><th scope="row">Ferroionics</th><td>Coupling of ferroelectric polarization and mobile ionic defects at oxide interfaces.</td><td class="sys">CeO₂/BaTiO₃</td></tr>
-        <tr><th scope="row">Electro-chemo-mechanics</th><td>Non-classical electrostriction in lead-free, oxygen-defective oxides.</td><td class="sys">doped CeO₂</td></tr>
-      </table>
-    </div>
-  </section>
 
   <footer id="contact">
     <div>
