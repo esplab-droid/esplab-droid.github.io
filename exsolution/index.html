@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exsolution in VAN Films</title>
+<meta name="description" content="Hierarchical Ni exsolution in vertically aligned SPTNO-CGO heterostructures. Zamudio-García et al., Nature Communications 2024.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img,video{max-width:100%}
+/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;
+  --plot:#e9ecef;
+  --night:#07090d;       /* film band, same in both themes */
+  --night-ink:#dfe5ee;
+  --night-muted:#8b95a3;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6}
+.pad{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{padding-block:44px 36px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:end}
+.intro h1{font-size:clamp(2.6rem,7vw,4.2rem);letter-spacing:.12em}
+.intro .sub{font-family:var(--display);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
+.intro p.body{max-width:36em;margin:18px 0 0}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:0;font-family:var(--display);font-size:.88rem}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+
+.film{background:var(--night);color:var(--night-ink)}
+.film .wrap{padding-block:28px 22px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:var(--night);border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--night-muted)}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:var(--night-ink);border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:var(--night-ink)}
+.film button:focus-visible{outline:2px solid var(--night-ink);outline-offset:2px}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+.lede{max-width:44em;margin:0 0 20px}
+
+.tablewrap{overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;font-size:.97rem;min-width:520px}
+table.cmp th,table.cmp td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.cmp thead th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+table.cmp tbody th{font-family:var(--display);font-weight:600;font-size:.92rem;white-space:nowrap}
+table.cmp td.new{color:var(--ink)}
+table.cmp td.old{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:s}
+ol.steps li{counter-increment:s;border-top:2px solid var(--accent);padding-top:12px}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+ol.steps h3{font-size:1rem;margin:4px 0 6px}
+ol.steps p{margin:0;font-size:.95rem;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.two h3{font-size:1.02rem;margin:6px 0 6px}
+.two p{margin:0}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:6px}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:24px;padding-block:32px 28px}
+  ol.steps{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:8px}
+}
+@media (max-width:460px){ol.steps{grid-template-columns:1fr}}
+.lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;padding:22px 24px;border:1px solid var(--rule);border-top:2px solid var(--accent);background:var(--plot);margin-bottom:24px}
+.lead h3{font-size:1.4rem;margin:6px 0 4px}
+.lead .aff{font-family:var(--display);font-size:.88rem;color:var(--muted);margin:0}
+.lead ul{margin:0;padding-left:18px}
+.lead li{margin:2px 0}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:12px;border-top:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 2px}
+.person p{margin:0;font-size:.93rem;color:var(--muted)}
+.funding{margin-top:24px;font-family:var(--display);font-size:.84rem;color:var(--muted);max-width:60em}
+@media (max-width:780px){.lead{grid-template-columns:1fr;gap:12px}.people{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+<div class="pad"><div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Exsolution in VAN films</div>
+    <nav aria-label="Sections">
+      <a href="#findings">Findings</a>
+      <a href="#people">People</a>
+      <a href="#paper">Paper</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <span class="label">Nature Communications, 2024</span>
+      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Hierarchical exsolution in vertically aligned heterostructures</h1>
+      <p class="body">Exsolution grows metal nanoparticles out of a host oxide under reducing conditions, anchored to the lattice they come from. In single-phase films, much of the metal stays trapped inside. We grew a self-assembled film of two oxides, a Ni-doped perovskite and a fluorite, arranged as vertical nanocolumns. The vertical interfaces between the columns carry Ni to the surface faster and more selectively than the bulk.</p>
+    </div>
+    <dl class="facts">
+      <dt>Host</dt><dd>(Sr<sub>0.9</sub>Pr<sub>0.1</sub>)<sub>0.9</sub>Ti<sub>0.9</sub>Ni<sub>0.1</sub>O<sub>3−δ</sub></dd>
+      <dt>Partner</dt><dd>Ce<sub>0.9</sub>Gd<sub>0.1</sub>O<sub>1.95</sub></dd>
+      <dt>Growth</dt><dd>PLD on SrTiO<sub>3</sub> and LSAT (001)</dd>
+      <dt>Reduction</dt><dd>5% H<sub>2</sub>–Ar, 550 to 650 °C</dd>
+    </dl>
+  </div>
+</div></div>
+
+<figure class="film pad" style="margin:0">
+  <div class="wrap">
+    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of hierarchical Ni exsolution in a vertically aligned nanostructure film">
+      <source src="exsolution_VAN.mp4" type="video/mp4">
+    </video>
+    <figcaption><span>Hierarchical exsolution in 30 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+  </div>
+</figure>
+
+<div class="pad"><div class="wrap">
+  <section id="findings">
+    <div class="sechead">
+      <h2>Findings</h2>
+      <p>Key quantity on the left.</p>
+    </div>
+    <article class="entry">
+      <div class="num">≈ 5 nm<small>column width;<br>≈ 200 nm film thickness</small></div>
+      <div><h3>A self-assembled nano-checkerboard</h3><p>The perovskite (SPTNO) and fluorite (CGO) phases separate into uniform columns through the whole film thickness, with coherent vertical interfaces. The SPTNO columns carry a nominal +1.7% out-of-plane tensile strain.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">1.40 vs 3.68 eV<small>DFT Ni migration barrier,<br>interface vs perovskite bulk</small></div>
+      <div><h3>Interfaces are the fast pathway</h3><p>Calculations show Ni moves far more easily along the perovskite–fluorite interface than through the perovskite lattice. Nucleation happens at the surface, at the column boundaries.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">≈ 80 vs ≈ 33 µm<sup>−2</sup><small>particle density after 1 min<br>at 650 °C, VAN vs single phase</small></div>
+      <div><h3>More particles, faster</h3><p>One minute of reduction gives about 2.5 times the particle density of a conventional epitaxial film, with particles around 17 nm.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">≈ 67 vs ≈ 120 nm<small>particle size after 12 h<br>at 650 °C</small></div>
+      <div><h3>Smaller particles, none trapped, structure intact</h3><p>No Ni particles remain trapped inside the VAN film, while the single-phase film retains them in the bulk. The columnar order and the film density survive the reduction.</p></div>
+    </article>
+  </section>
+
+  <section id="people">
+    <div class="sechead">
+      <h2>People</h2>
+      <p>Roles as stated in the paper.</p>
+    </div>
+    <div class="lead">
+      <div>
+        <span class="label">First author</span>
+        <h3>Javier Zamudio-García</h3>
+        <p class="aff">DTU Energy and Universidad de Málaga</p>
+      </div>
+      <ul>
+        <li>Conceived the idea and designed the experiments</li>
+        <li>Prepared the films and ran the XRD, SEM, TEM and electrochemical characterisation</li>
+        <li>Carried out the reduction treatments, data analysis and figures</li>
+        <li>Wrote the initial draft</li>
+      </ul>
+    </div>
+    <div class="people">
+      <div class="person"><h3>Francesco Chiabrera</h3><p>DTU Energy. Sample preparation and XRD.</p></div>
+      <div class="person"><h3>Armando Morin-Martínez</h3><p>DTU Energy. DFT calculations.</p></div>
+      <div class="person"><h3>Ivano E. Castelli</h3><p>DTU Energy. DFT calculations.</p></div>
+      <div class="person"><h3>Enrique R. Losilla</h3><p>Universidad de Málaga. Supervision.</p></div>
+      <div class="person"><h3>David Marrero-López</h3><p>Universidad de Málaga. Microscopy, electrochemistry, supervision.</p></div>
+      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy. Concept, experimental design, supervision.</p></div>
+    </div>
+    <p class="funding">Funding acknowledged in the paper includes the Independent Research Fund Denmark (9041-00034B), Spanish national research projects, and an FPU fellowship from the Spanish Ministry of Universities to J. Zamudio-García (FPU17/02621).</p>
+  </section>
+
+  <section id="paper">
+    <div class="sechead"><h2>Paper</h2></div>
+    <article class="entry">
+      <div class="num">Open access<small>CC BY-NC-ND 4.0</small></div>
+      <div>
+        <h3>Hierarchical exsolution in vertically aligned heterostructures</h3>
+        <div class="meta">J. Zamudio-García, F. Chiabrera, A. Morin-Martínez, I. E. Castelli, E. R. Losilla, D. Marrero-López, V. Esposito. Nature Communications, 2024.</div>
+        <div class="links"><a href="https://doi.org/10.1038/s41467-024-53252-y" target="_blank" rel="noopener">doi:10.1038/s41467-024-53252-y</a></div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a></p></div>
+    <div><span class="label">Related</span><p><a href="../gyrox/">GYROX</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div></div>
+
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>
