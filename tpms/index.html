@@ -123,12 +123,17 @@ footer p{margin:4px 0}
 
 .award{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin:18px 0 0;padding:10px 14px;border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--plot);font-family:var(--display);font-size:.92rem;max-width:36em}
 .award strong{font-weight:600}
-.tpms-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px;padding:14px;background:#07090d;border:1px solid #1d232c}
+.tpms-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;align-items:start;margin-top:16px;padding:14px;background:#07090d;border:1px solid #1d232c}
 .tpms-row figure{margin:0;text-align:center}
 .tpms-row img{width:100%;height:auto;aspect-ratio:1;object-fit:contain;display:block}
-.tpms-row figcaption{margin-top:6px;font-family:var(--mono);font-size:.7rem;color:#9aa3ae;line-height:1.4}
+.tpms-row figcaption{margin-top:6px;font-family:var(--mono);font-size:.68rem;color:#9aa3ae;line-height:1.45;display:flex;flex-direction:column;gap:1px}
+.tpms-row figcaption strong{font-family:var(--display);font-size:.9rem;font-weight:600;color:#e3e6ea}
+.tpms-row figcaption .v{color:#5fdcec;font-weight:500;font-size:.78rem}
+.tpms-row .best figcaption .v,.tpms-row .best em{color:#f2b84b}
+.tpms-row figcaption em{font-style:normal;font-family:var(--display);font-size:.72rem;color:#c9d0d9;margin-top:4px;line-height:1.35}
+.tpms-row .warn em{color:#ff8a72}
 .note{margin-top:8px!important;font-family:var(--display);font-size:.8rem;color:var(--muted)}
-@media (max-width:560px){.tpms-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.tpms-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
 </head>
@@ -189,13 +194,13 @@ footer p{margin:4px 0}
       <div class="num">957 → 1717<small>|u<sub>z</sub>|/V<sub>0</sub> in pm V<sup>−1</sup>, Primitive<br>to Diamond, modelled at 1 kV</small></div>
       <div><h3>Five lattices, one rule</h3><p>All five TPMS types, printed and tested, contract. At equal volume fraction (0.29) the thinnest walls move most: Schwarz Diamond (h&nbsp;=&nbsp;0.38&nbsp;mm) reaches 1717&nbsp;pm&nbsp;V<sup>−1</sup> and d<sub>eff</sub> ≈ −107&nbsp;pC&nbsp;N<sup>−1</sup>, Schwarz Primitive (0.64&nbsp;mm) 957&nbsp;pm&nbsp;V<sup>−1</sup> and −45&nbsp;pC&nbsp;N<sup>−1</sup>. Thinner walls see a higher field at the same voltage, at the cost of more current.</p>
         <div class="tpms-row">
-          <figure><img src="img/primitive.webp" alt="Schwarz Primitive sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Primitive<br>957 pm V<sup>−1</sup></figcaption></figure>
-          <figure><img src="img/gyroid.webp" alt="Schoen Gyroid sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Gyroid<br>1476</figcaption></figure>
-          <figure><img src="img/iwp.webp" alt="I-WP sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>I-WP<br>1652</figcaption></figure>
-          <figure><img src="img/diamond.webp" alt="Schwarz Diamond sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Diamond<br>1717</figcaption></figure>
-          <figure><img src="img/neovius.webp" alt="Neovius sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Neovius<br>1402</figcaption></figure>
+          <figure class="lat"><img src="img/primitive.webp" alt="Schwarz Primitive sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption><strong>Primitive</strong><span class="v">957 pm V<sup>−1</sup></span><span>h 0.64 mm · A 4.5 cm²</span><span>d<sub>eff</sub> −45 pC N<sup>−1</sup></span><em>Thickest walls, least motion.</em></figcaption></figure>
+          <figure class="lat"><img src="img/gyroid.webp" alt="Schoen Gyroid sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption><strong>Gyroid</strong><span class="v">1476 pm V<sup>−1</sup></span><span>h 0.48 mm · A 6.0 cm²</span><span>d<sub>eff</sub> −83 pC N<sup>−1</sup></span><em>Most uniform walls; beats Neovius at the same mean thickness.</em></figcaption></figure>
+          <figure class="lat"><img src="img/iwp.webp" alt="I-WP sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption><strong>I-WP</strong><span class="v">1652 pm V<sup>−1</sup></span><span>h 0.41 mm · A 6.9 cm²</span><span>d<sub>eff</sub> −93 pC N<sup>−1</sup></span><em>Thin walls, polarization up to 17 µC cm<sup>−2</sup>.</em></figcaption></figure>
+          <figure class="lat best"><img src="img/diamond.webp" alt="Schwarz Diamond sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption><strong>Diamond</strong><span class="v">1717 pm V<sup>−1</sup></span><span>h 0.38 mm · A 7.4 cm²</span><span>d<sub>eff</sub> −107 pC N<sup>−1</sup></span><em>Thinnest walls, largest electrode area, top figure of merit.</em></figcaption></figure>
+          <figure class="lat warn"><img src="img/neovius.webp" alt="Neovius sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption><strong>Neovius</strong><span class="v">1402 pm V<sup>−1</sup></span><span>h 0.47 mm · A 6.2 cm²</span><span>d<sub>eff</sub> −109 pC N<sup>−1</sup></span><em>Highest d<sub>eff</sub>, but uneven walls cost displacement.</em></figcaption></figure>
         </div>
-        <p class="note">3D renders generated from the level-set equations, 2 × 2 × 2 cells at volume fraction 0.29. Cyan and gold: the two electrode surfaces; grey: ceramic cut at the cube faces.</p>
+        <p class="note">Values from Table 1 of the paper, modelled at 1 kV: |u<sub>z</sub>|/V<sub>0</sub>, average wall thickness h, electrode area A and effective coefficient d<sub>eff</sub>. 3D renders generated from the level-set equations, 2 × 2 × 2 cells at volume fraction 0.29. Cyan and gold: the two electrode surfaces; grey: ceramic cut at the cube faces.</p>
       </div>
     </article>
     <article class="entry">
