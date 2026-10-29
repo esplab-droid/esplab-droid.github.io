@@ -256,12 +256,11 @@ button.copy:hover{border-color:var(--ink)}
   <footer id="contact">
     <div>
       <span class="label">Contact</span>
-      <p><span class="mail" id="mail">vies@dtu.dk</span><button class="copy" id="copybtn" type="button">Copy</button></p>
+      <p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a>, with contact details and the full publication list.</p>
       <p>Enquiries from prospective PhD students and postdocs are welcome.</p>
     </div>
     <div>
       <span class="label">Links</span>
-      <p><a href="https://orbit.dtu.dk/" target="_blank" rel="noopener">DTU Orbit publications</a></p>
       <p><a href="https://www.energy.dtu.dk/" target="_blank" rel="noopener">DTU Energy</a></p>
     </div>
   </footer>
@@ -304,12 +303,6 @@ button.copy:hover{border-color:var(--ink)}
   mq.addEventListener&&mq.addEventListener('change',refresh);
   new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
-  const btn=document.getElementById('copybtn');
-  btn.addEventListener('click',()=>{
-    const el=document.getElementById('mail');
-    const sel=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)};
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(el.textContent).then(()=>{btn.textContent='Copied'},sel)}else sel();
-  });
 })();
 </script>
 </body>
