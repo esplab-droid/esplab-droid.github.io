@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Team</title>
+<meta name="description" content="Team and frequent collaborators, functional metal oxides group of Vincenzo Esposito, DTU Energy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: technical report. Narrow masthead with a gyroid cross-section plot, then a two-column ledger: key quantity in the margin, text on the right. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;      /* single accent: links and plot lines */
+  --plot:#e9ecef;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.who{font-family:var(--display);font-weight:600;font-size:1rem}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:48px;align-items:start;padding-block:44px 48px}
+.intro h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+.intro p{max-width:36em;margin:16px 0 0}
+.intro dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:22px 0 0;font-family:var(--display);font-size:.88rem}
+.intro dt{color:var(--muted)}
+.intro dd{margin:0}
+figure.gyro{margin:0}
+figure.gyro canvas{display:block;width:100%;aspect-ratio:1;max-width:100%;background:var(--plot);border:1px solid var(--rule)}
+figure.gyro figcaption{margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--muted);line-height:1.5}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:22px;border-bottom:1px solid var(--rule)}
+.entry:last-child{border-bottom:0}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3;font-variant-numeric:tabular-nums}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.q{padding-block:14px;border-top:1px solid var(--rule)}
+.q h3{font-size:1rem;margin:6px 0 6px}
+.q p{margin:0;font-size:.97rem;color:var(--muted)}
+
+.lede{max-width:44em;margin:0 0 24px}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pillar{border:1px solid var(--rule);border-top:2px solid var(--accent);padding:16px 18px;background:var(--plot)}
+.pillar h3{font-size:1.05rem;margin:6px 0 8px}
+.pillar p{margin:0;font-size:.97rem}
+.pillar .sys{margin-top:12px;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+table.lines{width:100%;border-collapse:collapse;font-size:.97rem}
+.tablewrap{overflow-x:auto}
+table.lines th,table.lines td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.lines th{font-family:var(--display);font-weight:600;font-size:.95rem;white-space:nowrap}
+table.lines td.sys{font-family:var(--mono);font-size:.8rem;color:var(--muted);white-space:nowrap}
+table.collab th{white-space:normal;width:38%}
+table.lines tr:last-child th,table.lines tr:last-child td{border-bottom:0}
+
+.subhead{font-size:1.05rem;margin:36px 0 10px}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:14px;border-top:1px solid var(--rule);display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:start}
+.person h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.person h3 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.av{width:72px;height:72px;display:block;border:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 6px}
+.pp{font-family:var(--mono);font-size:.78rem;line-height:1.6;margin-top:6px}
+.pp .label{display:block;font-size:.66rem}
+.pl{display:flex;flex-wrap:wrap;gap:0 12px}
+.pl a{white-space:nowrap}
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+.mail{font-family:var(--mono);user-select:all}
+button.copy{font-family:var(--mono);font-size:.72rem;margin-left:8px;padding:2px 8px;background:transparent;color:var(--ink);border:1px solid var(--rule);cursor:pointer}
+button.copy:hover{border-color:var(--ink)}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:28px;padding-block:32px 36px}
+  figure.gyro{max-width:300px}
+  .entry{grid-template-columns:1fr;gap:8px}
+  .qs{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
+  table.collab tr,table.collab th,table.collab td{display:block;width:auto}
+  table.collab th{border-bottom:0;padding-bottom:2px}
+  table.collab td{padding-top:0}
+}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Team</div>
+    <nav aria-label="Sections">
+      <a href="#team">Team</a>
+      <a href="#collaborators">Collaborators</a>
+    </nav>
+  </header>
+
+  <section id="team">
+    <div class="sechead">
+      <h2>Team</h2>
+      <p>People behind the results on the <a href="../#results">homepage</a>.</p>
+    </div>
+    <div class="people">
+      <div class="person">
+        <img class="av" src="javier-zamudio-garcia.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3>Javier Zamudio-García</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="../exsolution/">Exsolution</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="../ferroionics/">Ferroionics</a> <a href="../hzo/">HZO</a> <a href="../hzo-ferroionic/">HZO ferroionic</a> <a href="../ysz/">YSZ</a></span></div>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="milica-vasiljevic.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3><a href="https://orbit.dtu.dk/en/persons/milica-vasiljevic/" target="_blank" rel="noopener">Milica Vasiljevic</a></h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="../ferroionics/">Ferroionics</a> <a href="../ysz/">YSZ</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="../hzo/">HZO</a> <a href="../hzo-ferroionic/">HZO ferroionic</a> <a href="../polaronic-ceria/">Polaronic ceria</a></span></div>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="victor-buratto-tinti.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3>Victor Buratto Tinti</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="../polaronic-ceria/">Polaronic ceria</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="../hzo/">HZO</a> <a href="../hzo-ferroionic/">HZO ferroionic</a> <a href="../ysz/">YSZ</a></span></div>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="achilles-bergne.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3>Achilles Bergne</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="../hzo/">HZO</a> <a href="../hzo-ferroionic/">HZO ferroionic</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="../ferroionics/">Ferroionics</a></span></div>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="francesco-chiabrera.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3>Francesco Chiabrera</h3>
+        <div class="pp"><span class="label">First author</span><span class="pl"><a href="../ferroionics/">Ferroionics</a></span></div>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="../exsolution/">Exsolution</a></span></div>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="dimitrios-koukoulis.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3>Dimitrios Koukoulis</h3>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="../hzo/">HZO</a> <a href="../hzo-ferroionic/">HZO ferroionic</a> <a href="../ysz/">YSZ</a></span></div>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="armando-morin-martinez.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3><a href="https://orbit.dtu.dk/en/persons/armando-antonio-morin-martinez/" target="_blank" rel="noopener">Armando Morin-Martínez</a></h3>
+        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="../exsolution/">Exsolution</a> <a href="../hzo/">HZO</a></span></div>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="ahsanul-kabir.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3><a href="https://orbit.dtu.dk/en/persons/ahsanul-kabir/" target="_blank" rel="noopener">Ahsanul Kabir</a></h3>
+        </div>
+      </div>
+      <div class="person">
+        <img class="av" src="md-shatil-islam-shanto.svg" alt="" width="72" height="72" loading="lazy">
+        <div>
+        <h3><a href="https://orbit.dtu.dk/en/persons/md-shatil-islam-shanto/" target="_blank" rel="noopener">Md Shatil Islam Shanto</a></h3>
+        </div>
+      </div>
+    </div>
+    <h3 class="subhead" id="collaborators">Frequent collaborators</h3>
+    <div class="tablewrap">
+      <table class="lines collab">
+        <tr><th scope="row">DTU Energy</th><td><a href="https://orbit.dtu.dk/en/persons/ivano-eligio-castelli/" target="_blank" rel="noopener">Ivano E. Castelli</a>, <a href="https://orbit.dtu.dk/en/persons/dennis-valbj%C3%B8rn-christensen/" target="_blank" rel="noopener">Dennis V. Christensen</a></td></tr>
+        <tr><th scope="row">DTU Physics</th><td><a href="https://orbit.dtu.dk/en/persons/henrik-bruus/" target="_blank" rel="noopener">Henrik Bruus</a>, Mathias Grønborg</td></tr>
+        <tr><th scope="row">Universidad de Málaga</th><td>David Marrero-López</td></tr>
+        <tr><th scope="row">CICECO, University of Aveiro; University of Latvia</th><td>Denis Alikin, Andrei Kholkin</td></tr>
+        <tr><th scope="row">Lund University and MAX IV Laboratory</th><td>Jesper Wallentin, Huaiyu Chen, Leonardo Soares de Oliveira, Megan Landberg Hill</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a>. Enquiries from prospective PhD students and postdocs are welcome.</p></div>
+  </footer>
+</div>
+</body>
+</html>

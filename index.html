@@ -97,6 +97,17 @@ table.lines tr:last-child th,table.lines tr:last-child td{border-bottom:0}
 .pp .label{display:block;font-size:.66rem}
 .pl{display:flex;flex-wrap:wrap;gap:0 12px}
 .pl a{white-space:nowrap}
+.hl{--night:#07090d;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:0;padding:0;margin-bottom:8px;background:var(--night);color:#e3e6ea;border:1px solid #1d232c}
+.hl-film video{display:block;width:100%;aspect-ratio:16/9;background:var(--night)}
+.hl-text{padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.hl-text .label{color:#9aa3ae}
+.hl-text h2{font-size:1.25rem;color:#f2f4f7}
+.hl-text p{margin:0;font-size:.97rem;color:#c9d0d9}
+.hl-text .hl-credit{font-family:var(--display);font-size:.84rem;color:#9aa3ae}
+.hl-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+.hl-links a{color:#86aee6}
+.hl-links button{font-family:var(--mono);font-size:.72rem;background:transparent;color:#e3e6ea;border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.hl-links button:hover{border-color:#e3e6ea}
 footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
 footer p{margin:4px 0}
 .mail{font-family:var(--mono);user-select:all}
@@ -110,6 +121,8 @@ button.copy:hover{border-color:var(--ink)}
   .qs{grid-template-columns:1fr}
   .pillars{grid-template-columns:1fr}
   .people{grid-template-columns:1fr}
+  .hl{grid-template-columns:1fr}
+  .hl-text{padding:18px 16px}
   table.collab tr,table.collab th,table.collab td{display:block;width:auto}
   table.collab th{border-bottom:0;padding-bottom:2px}
   table.collab td{padding-top:0}
@@ -124,7 +137,7 @@ button.copy:hover{border-color:var(--ink)}
     <nav aria-label="Sections">
       <a href="#research">Research</a>
       <a href="#results">Results</a>
-      <a href="#team">Team</a>
+      <a href="team/">Team</a>
       <a href="#questions">Open questions</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -145,6 +158,21 @@ button.copy:hover{border-color:var(--ink)}
       <figcaption>Gyroid, G(x,y,z) = sin x cos y + sin y cos z + sin z cos x. Contours of G at fixed z; bold line G = 0.</figcaption>
     </figure>
   </div>
+
+  <section id="highlight" class="hl" aria-labelledby="hl-title">
+    <div class="hl-film">
+      <video id="hlfilm" autoplay muted loop playsinline preload="metadata" poster="exsolution/poster.jpg" aria-label="Animated summary of hierarchical Ni exsolution in a vertically aligned nanostructure film">
+        <source src="exsolution/exsolution_VAN.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hl-text">
+      <span class="label">Highlight · Nature Communications, 2024</span>
+      <h2 id="hl-title">Hierarchical exsolution in vertically aligned heterostructures</h2>
+      <p>Self-assembled nanocolumns of a Ni-doped perovskite and Gd-doped ceria. The vertical interfaces carry Ni to the surface, giving about 2.5 times more nanoparticles than a single-phase film after one minute at 650&nbsp;°C.</p>
+      <p class="hl-credit">First author Javier Zamudio-García, with Universidad de Málaga.</p>
+      <div class="hl-links"><a href="exsolution/">Project page and film</a><button id="hltoggle" type="button">Pause</button></div>
+    </div>
+  </section>
 
   <section id="research">
     <div class="sechead">
@@ -291,90 +319,6 @@ button.copy:hover{border-color:var(--ink)}
     </article>
   </section>
 
-  <section id="team">
-    <div class="sechead">
-      <h2>Team</h2>
-      <p>People behind the results above.</p>
-    </div>
-    <div class="people">
-      <div class="person">
-        <img class="av" src="team/javier-zamudio-garcia.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3>Javier Zamudio-García</h3>
-        <div class="pp"><span class="label">First author</span><span class="pl"><a href="exsolution/">Exsolution</a></span></div>
-        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="ferroionics/">Ferroionics</a> <a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="ysz/">YSZ</a></span></div>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/milica-vasiljevic.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3><a href="https://orbit.dtu.dk/en/persons/milica-vasiljevic/" target="_blank" rel="noopener">Milica Vasiljevic</a></h3>
-        <div class="pp"><span class="label">First author</span><span class="pl"><a href="ferroionics/">Ferroionics</a> <a href="ysz/">YSZ</a></span></div>
-        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="polaronic-ceria/">Polaronic ceria</a></span></div>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/victor-buratto-tinti.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3>Victor Buratto Tinti</h3>
-        <div class="pp"><span class="label">First author</span><span class="pl"><a href="polaronic-ceria/">Polaronic ceria</a></span></div>
-        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="ysz/">YSZ</a></span></div>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/achilles-bergne.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3>Achilles Bergne</h3>
-        <div class="pp"><span class="label">First author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a></span></div>
-        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="ferroionics/">Ferroionics</a></span></div>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/francesco-chiabrera.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3>Francesco Chiabrera</h3>
-        <div class="pp"><span class="label">First author</span><span class="pl"><a href="ferroionics/">Ferroionics</a></span></div>
-        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="exsolution/">Exsolution</a></span></div>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/dimitrios-koukoulis.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3>Dimitrios Koukoulis</h3>
-        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="hzo/">HZO</a> <a href="hzo-ferroionic/">HZO ferroionic</a> <a href="ysz/">YSZ</a></span></div>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/armando-morin-martinez.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3><a href="https://orbit.dtu.dk/en/persons/armando-antonio-morin-martinez/" target="_blank" rel="noopener">Armando Morin-Martínez</a></h3>
-        <div class="pp"><span class="label">Co-author</span><span class="pl"><a href="exsolution/">Exsolution</a> <a href="hzo/">HZO</a></span></div>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/ahsanul-kabir.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3><a href="https://orbit.dtu.dk/en/persons/ahsanul-kabir/" target="_blank" rel="noopener">Ahsanul Kabir</a></h3>
-        </div>
-      </div>
-      <div class="person">
-        <img class="av" src="team/md-shatil-islam-shanto.svg" alt="" width="72" height="72" loading="lazy">
-        <div>
-        <h3><a href="https://orbit.dtu.dk/en/persons/md-shatil-islam-shanto/" target="_blank" rel="noopener">Md Shatil Islam Shanto</a></h3>
-        </div>
-      </div>
-    </div>
-    <h3 class="subhead">Frequent collaborators</h3>
-    <div class="tablewrap">
-      <table class="lines collab">
-        <tr><th scope="row">DTU Energy</th><td><a href="https://orbit.dtu.dk/en/persons/ivano-eligio-castelli/" target="_blank" rel="noopener">Ivano E. Castelli</a>, <a href="https://orbit.dtu.dk/en/persons/dennis-valbj%C3%B8rn-christensen/" target="_blank" rel="noopener">Dennis V. Christensen</a></td></tr>
-        <tr><th scope="row">DTU Physics</th><td><a href="https://orbit.dtu.dk/en/persons/henrik-bruus/" target="_blank" rel="noopener">Henrik Bruus</a>, Mathias Grønborg</td></tr>
-        <tr><th scope="row">Universidad de Málaga</th><td>David Marrero-López</td></tr>
-        <tr><th scope="row">CICECO, University of Aveiro; University of Latvia</th><td>Denis Alikin, Andrei Kholkin</td></tr>
-        <tr><th scope="row">Lund University and MAX IV Laboratory</th><td>Jesper Wallentin, Huaiyu Chen, Leonardo Soares de Oliveira, Megan Landberg Hill</td></tr>
-      </table>
-    </div>
-  </section>
 
   <section id="questions">
     <div class="sechead">
@@ -408,7 +352,7 @@ button.copy:hover{border-color:var(--ink)}
     </div>
     <div>
       <span class="label">Links</span>
-      <p><a href="https://www.energy.dtu.dk/" target="_blank" rel="noopener">DTU Energy</a></p>
+      <p><a href="team/">Team</a> · <a href="https://www.energy.dtu.dk/" target="_blank" rel="noopener">DTU Energy</a></p>
     </div>
   </footer>
 </div>
@@ -450,6 +394,14 @@ button.copy:hover{border-color:var(--ink)}
   mq.addEventListener&&mq.addEventListener('change',refresh);
   new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
+})();
+</script>
+<script>
+(function(){
+  const v=document.getElementById('hlfilm'), b=document.getElementById('hltoggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
 })();
 </script>
 </body>
