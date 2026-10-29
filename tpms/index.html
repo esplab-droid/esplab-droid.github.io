@@ -123,6 +123,12 @@ footer p{margin:4px 0}
 
 .award{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin:18px 0 0;padding:10px 14px;border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--plot);font-family:var(--display);font-size:.92rem;max-width:36em}
 .award strong{font-weight:600}
+.tpms-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px;padding:14px;background:#07090d;border:1px solid #1d232c}
+.tpms-row figure{margin:0;text-align:center}
+.tpms-row img{width:100%;height:auto;aspect-ratio:1;object-fit:contain;display:block}
+.tpms-row figcaption{margin-top:6px;font-family:var(--mono);font-size:.7rem;color:#9aa3ae;line-height:1.4}
+.note{margin-top:8px!important;font-family:var(--display);font-size:.8rem;color:var(--muted)}
+@media (max-width:560px){.tpms-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 
 </head>
@@ -181,7 +187,16 @@ footer p{margin:4px 0}
     </article>
     <article class="entry">
       <div class="num">957 → 1717<small>|u<sub>z</sub>|/V<sub>0</sub> in pm V<sup>−1</sup>, Primitive<br>to Diamond, modelled at 1 kV</small></div>
-      <div><h3>Five lattices, one rule</h3><p>All five TPMS types, printed and tested, contract. At equal volume fraction (0.29) the thinnest walls move most: Schwarz Diamond (h&nbsp;=&nbsp;0.38&nbsp;mm) reaches 1717&nbsp;pm&nbsp;V<sup>−1</sup> and d<sub>eff</sub> ≈ −107&nbsp;pC&nbsp;N<sup>−1</sup>, Schwarz Primitive (0.64&nbsp;mm) 957&nbsp;pm&nbsp;V<sup>−1</sup> and −45&nbsp;pC&nbsp;N<sup>−1</sup>. Thinner walls see a higher field at the same voltage, at the cost of more current.</p></div>
+      <div><h3>Five lattices, one rule</h3><p>All five TPMS types, printed and tested, contract. At equal volume fraction (0.29) the thinnest walls move most: Schwarz Diamond (h&nbsp;=&nbsp;0.38&nbsp;mm) reaches 1717&nbsp;pm&nbsp;V<sup>−1</sup> and d<sub>eff</sub> ≈ −107&nbsp;pC&nbsp;N<sup>−1</sup>, Schwarz Primitive (0.64&nbsp;mm) 957&nbsp;pm&nbsp;V<sup>−1</sup> and −45&nbsp;pC&nbsp;N<sup>−1</sup>. Thinner walls see a higher field at the same voltage, at the cost of more current.</p>
+        <div class="tpms-row">
+          <figure><img src="img/primitive.webp" alt="Schwarz Primitive sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Primitive<br>957 pm V<sup>−1</sup></figcaption></figure>
+          <figure><img src="img/gyroid.webp" alt="Schoen Gyroid sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Gyroid<br>1476</figcaption></figure>
+          <figure><img src="img/iwp.webp" alt="I-WP sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>I-WP<br>1652</figcaption></figure>
+          <figure><img src="img/diamond.webp" alt="Schwarz Diamond sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Diamond<br>1717</figcaption></figure>
+          <figure><img src="img/neovius.webp" alt="Neovius sheet lattice, 3D render" width="120" height="120" loading="lazy"><figcaption>Neovius<br>1402</figcaption></figure>
+        </div>
+        <p class="note">3D renders generated from the level-set equations, 2 × 2 × 2 cells at volume fraction 0.29. Cyan and gold: the two electrode surfaces; grey: ceramic cut at the cube faces.</p>
+      </div>
     </article>
     <article class="entry">
       <div class="num">Gyroid &gt; Neovius<small>same mean wall thickness,<br>more uniform walls</small></div>
