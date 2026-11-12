@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Interface electrostriction, CGO/ESB | Vincenzo Esposito, DTU Energy</title>
+<meta name="description" content="Alternating Gd-doped ceria and Er-stabilized bismuth oxide layers reach an electrostriction coefficient of 2.38 × 10^-14 m2 V^-2, three orders above the best relaxors. Zhang, Pryds et al., Nature 2022.">
+<link rel="canonical" href="https://esplab-droid.github.io/electrostriction/">
+<meta property="og:site_name" content="Vincenzo Esposito, DTU Energy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Interface electrostriction, CGO/ESB | Vincenzo Esposito, DTU Energy">
+<meta property="og:description" content="Alternating Gd-doped ceria and Er-stabilized bismuth oxide layers reach an electrostriction coefficient of 2.38 × 10^-14 m2 V^-2, three orders above the best relaxors. Zhang, Pryds et al., Nature 2022.">
+<meta property="og:url" content="https://esplab-droid.github.io/electrostriction/">
+<meta property="og:image" content="https://esplab-droid.github.io/electrostriction/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebPage",
+   "@id": "https://esplab-droid.github.io/electrostriction/",
+   "url": "https://esplab-droid.github.io/electrostriction/",
+   "name": "Interface electrostriction in CGO/ESB multilayers",
+   "description": "Alternating Gd-doped ceria and Er-stabilized bismuth oxide layers reach an electrostriction coefficient of 2.38 × 10^-14 m2 V^-2, three orders above the best relaxors. Zhang, Pryds et al., Nature 2022.",
+   "isPartOf": {
+    "@id": "https://esplab-droid.github.io/#website"
+   },
+   "author": {
+    "@id": "https://esplab-droid.github.io/#person"
+   },
+   "mainEntity": {
+    "@type": "ScholarlyArticle",
+    "headline": "Atomically engineered interfaces yield extraordinary electrostriction",
+    "sameAs": "https://doi.org/10.1038/s41586-022-05073-6",
+    "identifier": {
+     "@type": "PropertyValue",
+     "propertyID": "DOI",
+     "value": "10.1038/s41586-022-05073-6"
+    },
+    "isPartOf": {
+     "@type": "Periodical",
+     "name": "Nature"
+    },
+    "datePublished": "2022",
+    "author": [
+     {
+      "@type": "Person",
+      "name": "H. Zhang"
+     },
+     {
+      "@type": "Person",
+      "name": "N. Pryds"
+     },
+     {
+      "@type": "Person",
+      "name": "D.-S. Park"
+     },
+     {
+      "@type": "Person",
+      "name": "N. Gauquelin"
+     },
+     {
+      "@type": "Person",
+      "name": "S. Santucci"
+     },
+     {
+      "@type": "Person",
+      "name": "D. V. Christensen"
+     },
+     {
+      "@type": "Person",
+      "name": "D. Jannis"
+     },
+     {
+      "@type": "Person",
+      "name": "D. Chezganov"
+     },
+     {
+      "@type": "Person",
+      "name": "D. A. Rata"
+     },
+     {
+      "@type": "Person",
+      "name": "A. R. Insinga"
+     },
+     {
+      "@type": "Person",
+      "name": "I. E. Castelli"
+     },
+     {
+      "@type": "Person",
+      "name": "J. Verbeeck"
+     },
+     {
+      "@type": "Person",
+      "name": "I. Lubomirsky"
+     },
+     {
+      "@type": "Person",
+      "name": "P. Muralt"
+     },
+     {
+      "@type": "Person",
+      "name": "D. Damjanovic"
+     },
+     {
+      "@type": "Person",
+      "name": "V. Esposito"
+     }
+    ]
+   },
+   "primaryImageOfPage": "https://esplab-droid.github.io/electrostriction/poster.jpg"
+  }
+ ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img,video{max-width:100%}
+/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. Electrostriction page. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;
+  --plot:#e9ecef;
+  --night:#07090d;       /* film band, same in both themes */
+  --night-ink:#dfe5ee;
+  --night-muted:#8b95a3;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6}
+.pad{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{padding-block:44px 36px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:end}
+.intro h1{font-size:clamp(2.6rem,7vw,4.2rem);letter-spacing:.12em}
+.intro .sub{font-family:var(--display);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
+.intro p.body{max-width:36em;margin:18px 0 0}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:0;font-family:var(--display);font-size:.88rem}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+
+.film{background:var(--night);color:var(--night-ink)}
+.film .wrap{padding-block:28px 22px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:var(--night);border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--night-muted)}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:var(--night-ink);border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:var(--night-ink)}
+.film button:focus-visible{outline:2px solid var(--night-ink);outline-offset:2px}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+.lede{max-width:44em;margin:0 0 20px}
+
+.tablewrap{overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;font-size:.97rem;min-width:520px}
+table.cmp th,table.cmp td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.cmp thead th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+table.cmp tbody th{font-family:var(--display);font-weight:600;font-size:.92rem;white-space:nowrap}
+table.cmp td.new{color:var(--ink)}
+table.cmp td.old{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:s}
+ol.steps li{counter-increment:s;border-top:2px solid var(--accent);padding-top:12px}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+ol.steps h3{font-size:1rem;margin:4px 0 6px}
+ol.steps p{margin:0;font-size:.95rem;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.two h3{font-size:1.02rem;margin:6px 0 6px}
+.two p{margin:0}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:6px}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:24px;padding-block:32px 28px}
+  ol.steps{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:8px}
+}
+@media (max-width:460px){ol.steps{grid-template-columns:1fr}}
+.lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;padding:22px 24px;border:1px solid var(--rule);border-top:2px solid var(--accent);background:var(--plot);margin-bottom:24px}
+.lead h3{font-size:1.4rem;margin:6px 0 4px}
+.lead .aff{font-family:var(--display);font-size:.88rem;color:var(--muted);margin:0}
+.lead ul{margin:0;padding-left:18px}
+.lead li{margin:2px 0}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:12px;border-top:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 2px}
+.person p{margin:0;font-size:.93rem;color:var(--muted)}
+.funding{margin-top:24px;font-family:var(--display);font-size:.84rem;color:var(--muted);max-width:60em}
+@media (max-width:780px){.lead{grid-template-columns:1fr;gap:12px}.people{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+<div class="pad"><div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Interface electrostriction</div>
+    <nav aria-label="Sections">
+      <a href="#findings">Findings</a>
+      <a href="#people">People</a>
+      <a href="#paper">Paper</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <span class="label">Nature, 2022</span>
+      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Atomically engineered interfaces yield extraordinary electrostriction</h1>
+      <p class="body">Electrostriction is the strain a dielectric develops in proportion to the square of an applied field, so it stretches the same way whichever direction the field points. In simple oxides it is tiny, below 10<sup>−19</sup>&nbsp;m<sup>2</sup>&nbsp;V<sup>−2</sup>. Stacking ultrathin layers of Gd-doped ceria and Er-stabilized δ-Bi<sub>2</sub>O<sub>3</sub> with atomically sharp, coherent interfaces raises the coefficient to 2.38&nbsp;×&nbsp;10<sup>−14</sup>&nbsp;m<sup>2</sup>&nbsp;V<sup>−2</sup>, about a thousand times the best relaxor ferroelectrics. The enhancement comes from the interfaces, not from either material on its own.</p>
+    </div>
+    <dl class="facts">
+      <dt>Layers</dt><dd>Ce<sub>0.8</sub>Gd<sub>0.2</sub>O<sub>1.9</sub> (CGO) / Er<sub>0.4</sub>Bi<sub>1.6</sub>O<sub>3</sub> (ESB)</dd>
+      <dt>Substrate</dt><dd>NdGaO<sub>3</sub>, used as a cantilever</dd>
+      <dt>Growth</dt><dd>Pulsed laser deposition, epitaxial</dd>
+      <dt>Probes</dt><dd>XRD, HAADF-STEM, EELS/EDX, cantilever interferometry, atomistic simulations</dd>
+    </dl>
+  </div>
+</div></div>
+
+<figure class="film pad" style="margin:0">
+  <div class="wrap">
+    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of how coherent interfaces in ceria and bismuth oxide multilayers produce extraordinary electrostriction">
+      <source src="Electrostriction_CGO_ESB.mp4" type="video/mp4">
+    </video>
+    <figcaption><span>How atomically engineered interfaces multiply electrostriction, in 45 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+  </div>
+</figure>
+
+<div class="pad"><div class="wrap">
+  <section id="findings">
+    <div class="sechead">
+      <h2>Findings</h2>
+      <p>Key quantity on the left.</p>
+    </div>
+    <article class="entry">
+      <div class="num">2.38 × 10<sup>−14</sup><small>m<sup>2</sup> V<sup>−2</sup>, CGO/ESB multilayer;<br>≈ 10<sup>3</sup> × best relaxors</small></div>
+      <div><h3>A thousand times the best relaxors</h3><p>The multilayers are grown on NdGaO<sub>3</sub> cantilevers with planar gold electrodes on top. A sinusoidal field bends the cantilever, and the free-end displacement is read by laser interferometry at twice the drive frequency, the signature of a quadratic response. Simple oxides sit below 10<sup>−19</sup>&nbsp;m<sup>2</sup>&nbsp;V<sup>−2</sup>.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">≈ 1 %<small>in-plane mismatch, CGO rotated<br>45° on NdGaO<sub>3</sub></small></div>
+      <div><h3>Coherent, atomically sharp interfaces</h3><p>X-ray diffraction and reciprocal space maps show phase-pure, epitaxial films with smooth interfaces. Electron microscopy finds coherent CGO/ESB interfaces without dislocations: the two lattices are forced to share one in-plane spacing, so each interface stores a lattice discontinuity as elastic strain.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">M ↑ as Λ ↓<small>more interfaces per<br>film thickness</small></div>
+      <div><h3>The interfaces do the work</h3><p>Shrinking the CGO/ESB period packs more interfaces into the same film and raises the coefficient, until the layers become too thin to stay chemically distinct. Atomistic calculations trace the enhancement to coherent strain imparted by the interfacial lattice discontinuity.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">p → ε<small>electric dipoles carry<br>a mechanical footprint</small></div>
+      <div><h3>Defect dipoles that steer strain</h3><p>In the simulations, dopants and oxygen vacancies create local electric dipoles through off-centre ion displacements. Without a field they point every way. Under a field they align and grow, and the resulting energy change is dominated by elastic strain. Thinner periods make the dipoles easier to steer. Because each local distortion keeps its axis when the field reverses, the strain follows the square of the field.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">17.4 kV cm<sup>−1</sup><small>cycled at 1, 50 and 200 Hz</small></div>
+      <div><h3>Stable under cycling</h3><p>Under a constant-amplitude sinusoidal field the response shows no degradation over repeated cycles at 1, 50 and 200&nbsp;Hz. The coefficient is largest at low frequency and decreases as the drive gets faster.</p></div>
+    </article>
+  </section>
+
+  <section id="people">
+    <div class="sechead">
+      <h2>People</h2>
+      <p>Affiliations as stated in the paper.</p>
+    </div>
+    <div class="lead">
+      <div>
+        <span class="label">Equal first authors</span>
+        <h3>Haiwu Zhang</h3>
+        <p class="aff">DTU Energy. Co-corresponding author.</p>
+        <h3 style="margin-top:14px">Nini Pryds</h3>
+        <p class="aff">DTU Energy. Co-corresponding author.</p>
+      </div>
+      <ul>
+        <li>The two contributed equally to the work, as stated in the paper</li>
+        <li>Corresponding authors: H. Zhang, N. Pryds and V. Esposito</li>
+        <li>Electron microscopy at EMAT, University of Antwerp; electromechanical expertise from EPFL and the Weizmann Institute</li>
+      </ul>
+    </div>
+    <div class="people">
+      <div class="person"><h3>Dae-Sung Park</h3><p>EPFL, Group for Ferroelectrics and Functional Oxides.</p></div>
+      <div class="person"><h3>Nicolas Gauquelin</h3><p>EMAT, University of Antwerp.</p></div>
+      <div class="person"><h3>Simone Santucci</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Dennis V. Christensen</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Daen Jannis</h3><p>EMAT, University of Antwerp.</p></div>
+      <div class="person"><h3>Dmitry Chezganov</h3><p>EMAT, University of Antwerp.</p></div>
+      <div class="person"><h3>Diana A. Rata</h3><p>Martin-Luther-Universität Halle-Wittenberg.</p></div>
+      <div class="person"><h3>Andrea R. Insinga</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Ivano E. Castelli</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Johan Verbeeck</h3><p>EMAT, University of Antwerp.</p></div>
+      <div class="person"><h3>Igor Lubomirsky</h3><p>Weizmann Institute of Science.</p></div>
+      <div class="person"><h3>Paul Muralt</h3><p>EPFL, Institute of Materials.</p></div>
+      <div class="person"><h3>Dragan Damjanovic</h3><p>EPFL, Group for Ferroelectrics and Functional Oxides.</p></div>
+      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy. Co-corresponding author.</p></div>
+    </div>
+    <p class="funding">Funding acknowledged in the paper includes BioWings (EU Horizon 2020 FET, grant 801267), the Independent Research Fund Denmark (DFF Research Projects 2 and 3), Villum Fonden (NEED; IRIDE), the GOA project Solarpaint (University of Antwerp), the Hercules Fund of the Flemish Government, FWO (G093417N) and TOP/BOF funding (University of Antwerp).</p>
+  </section>
+
+  <section id="paper">
+    <div class="sechead"><h2>Paper</h2></div>
+    <article class="entry">
+      <div class="num">2022<small>Nature 609, 695–700</small></div>
+      <div>
+        <h3>Atomically engineered interfaces yield extraordinary electrostriction</h3>
+        <div class="meta">H. Zhang, N. Pryds, D.-S. Park, N. Gauquelin, S. Santucci, D. V. Christensen, D. Jannis, D. Chezganov, D. A. Rata, A. R. Insinga, I. E. Castelli, J. Verbeeck, I. Lubomirsky, P. Muralt, D. Damjanovic, V. Esposito. Nature 609, 695–700 (2022).</div>
+        <div class="links"><a href="https://doi.org/10.1038/s41586-022-05073-6" target="_blank" rel="noopener">doi:10.1038/s41586-022-05073-6</a><a href="https://orbit.dtu.dk/en/publications/atomically-engineered-interfaces-yield-extraordinary-electrostric/" target="_blank" rel="noopener">DTU Orbit</a></div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a></p></div>
+    <div><span class="label">Related</span><p><a href="../hzo/">HZO</a> · <a href="../ysz/">YSZ</a> · <a href="../ferroionics/">Ferroionics</a> · <a href="../polaronic-ceria/">Polaronic ceria</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div></div>
+
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>
