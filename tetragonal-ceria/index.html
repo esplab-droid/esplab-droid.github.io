@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strained tetragonal ceria | Vincenzo Esposito, DTU Energy</title>
+<meta name="description" content="In-plane compression makes Gd-doped ceria films tetragonal, orients their defect dipoles and raises electrostriction to M11 ≈ 3.6 × 10^-15 m2 V^-2. Santucci, Vasiljevic et al., Nature Communications 2025.">
+<link rel="canonical" href="https://esplab-droid.github.io/tetragonal-ceria/">
+<meta property="og:site_name" content="Vincenzo Esposito, DTU Energy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strained tetragonal ceria | Vincenzo Esposito, DTU Energy">
+<meta property="og:description" content="In-plane compression makes Gd-doped ceria films tetragonal, orients their defect dipoles and raises electrostriction to M11 ≈ 3.6 × 10^-15 m2 V^-2. Santucci, Vasiljevic et al., Nature Communications 2025.">
+<meta property="og:url" content="https://esplab-droid.github.io/tetragonal-ceria/">
+<meta property="og:image" content="https://esplab-droid.github.io/tetragonal-ceria/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebPage",
+   "@id": "https://esplab-droid.github.io/tetragonal-ceria/",
+   "url": "https://esplab-droid.github.io/tetragonal-ceria/",
+   "name": "Electrostriction in strained tetragonal ceria",
+   "description": "In-plane compression makes Gd-doped ceria films tetragonal, orients their defect dipoles and raises electrostriction to M11 ≈ 3.6 × 10^-15 m2 V^-2. Santucci, Vasiljevic et al., Nature Communications 2025.",
+   "isPartOf": {
+    "@id": "https://esplab-droid.github.io/#website"
+   },
+   "author": {
+    "@id": "https://esplab-droid.github.io/#person"
+   },
+   "mainEntity": {
+    "@type": "ScholarlyArticle",
+    "headline": "Enhanced non-classical electrostriction in strained tetragonal ceria",
+    "sameAs": "https://doi.org/10.1038/s41467-024-55393-6",
+    "identifier": {
+     "@type": "PropertyValue",
+     "propertyID": "DOI",
+     "value": "10.1038/s41467-024-55393-6"
+    },
+    "isPartOf": {
+     "@type": "Periodical",
+     "name": "Nature Communications"
+    },
+    "datePublished": "2025",
+    "author": [
+     {
+      "@type": "Person",
+      "name": "S. Santucci"
+     },
+     {
+      "@type": "Person",
+      "name": "M. Vasiljevic"
+     },
+     {
+      "@type": "Person",
+      "name": "H. Zhang"
+     },
+     {
+      "@type": "Person",
+      "name": "V. Buratto Tinti"
+     },
+     {
+      "@type": "Person",
+      "name": "A. Bergne"
+     },
+     {
+      "@type": "Person",
+      "name": "A. A. Morin-Martinez"
+     },
+     {
+      "@type": "Person",
+      "name": "S. K. Chaluvadi"
+     },
+     {
+      "@type": "Person",
+      "name": "P. Orgiani"
+     },
+     {
+      "@type": "Person",
+      "name": "S. Sanna"
+     },
+     {
+      "@type": "Person",
+      "name": "A. Lyksborg-Andersen"
+     },
+     {
+      "@type": "Person",
+      "name": "T. W. Hansen"
+     },
+     {
+      "@type": "Person",
+      "name": "I. E. Castelli"
+     },
+     {
+      "@type": "Person",
+      "name": "N. Pryds"
+     },
+     {
+      "@type": "Person",
+      "name": "V. Esposito"
+     }
+    ]
+   },
+   "primaryImageOfPage": "https://esplab-droid.github.io/tetragonal-ceria/poster.jpg"
+  }
+ ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img,video{max-width:100%}
+/* Layout: same technical-report system as the homepage and GYROX page. Film band, findings ledger, people with the first author featured. Electrostriction page. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;
+  --plot:#e9ecef;
+  --night:#07090d;       /* film band, same in both themes */
+  --night-ink:#dfe5ee;
+  --night-muted:#8b95a3;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6}
+.pad{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{padding-block:44px 36px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:end}
+.intro h1{font-size:clamp(2.6rem,7vw,4.2rem);letter-spacing:.12em}
+.intro .sub{font-family:var(--display);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
+.intro p.body{max-width:36em;margin:18px 0 0}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:0;font-family:var(--display);font-size:.88rem}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+
+.film{background:var(--night);color:var(--night-ink)}
+.film .wrap{padding-block:28px 22px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:var(--night);border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--night-muted)}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:var(--night-ink);border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:var(--night-ink)}
+.film button:focus-visible{outline:2px solid var(--night-ink);outline-offset:2px}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+.lede{max-width:44em;margin:0 0 20px}
+
+.tablewrap{overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;font-size:.97rem;min-width:520px}
+table.cmp th,table.cmp td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.cmp thead th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+table.cmp tbody th{font-family:var(--display);font-weight:600;font-size:.92rem;white-space:nowrap}
+table.cmp td.new{color:var(--ink)}
+table.cmp td.old{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:s}
+ol.steps li{counter-increment:s;border-top:2px solid var(--accent);padding-top:12px}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+ol.steps h3{font-size:1rem;margin:4px 0 6px}
+ol.steps p{margin:0;font-size:.95rem;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.two h3{font-size:1.02rem;margin:6px 0 6px}
+.two p{margin:0}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:6px}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:24px;padding-block:32px 28px}
+  ol.steps{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:8px}
+}
+@media (max-width:460px){ol.steps{grid-template-columns:1fr}}
+.lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;padding:22px 24px;border:1px solid var(--rule);border-top:2px solid var(--accent);background:var(--plot);margin-bottom:24px}
+.lead h3{font-size:1.4rem;margin:6px 0 4px}
+.lead .aff{font-family:var(--display);font-size:.88rem;color:var(--muted);margin:0}
+.lead ul{margin:0;padding-left:18px}
+.lead li{margin:2px 0}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:12px;border-top:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 2px}
+.person p{margin:0;font-size:.93rem;color:var(--muted)}
+.funding{margin-top:24px;font-family:var(--display);font-size:.84rem;color:var(--muted);max-width:60em}
+@media (max-width:780px){.lead{grid-template-columns:1fr;gap:12px}.people{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+<div class="pad"><div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Strained tetragonal ceria</div>
+    <nav aria-label="Sections">
+      <a href="#findings">Findings</a>
+      <a href="#people">People</a>
+      <a href="#paper">Paper</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <span class="label">Nature Communications, 2025</span>
+      <h1 style="letter-spacing:-.01em;font-size:clamp(2rem,5vw,3.1rem);margin-top:10px">Enhanced non-classical electrostriction in strained tetragonal ceria</h1>
+      <p class="body">Gd-doped ceria is a strong electrostrictor because its oxygen vacancies and Ce<sup>3+</sup> ions form defect complexes that distort the lattice locally. Growing thin films on different substrates sets the in-plane lattice and lets the film answer out of plane. Under in-plane compression the films become tetragonal (c/a&nbsp;&gt;&nbsp;1), the defect dipoles line up out of plane, and an in-plane field swings them over together. The in-plane coefficient M<sub>11</sub> reaches about 3.6&nbsp;×&nbsp;10<sup>−15</sup>&nbsp;m<sup>2</sup>&nbsp;V<sup>−2</sup>, more than ten times that of tensile or unstrained films.</p>
+    </div>
+    <dl class="facts">
+      <dt>Films</dt><dd>Ce<sub>0.9</sub>Gd<sub>0.1</sub>O<sub>2−δ</sub> and Ce<sub>0.8</sub>Gd<sub>0.2</sub>O<sub>1.9</sub>, 17, 43 and 170 nm</dd>
+      <dt>Substrates</dt><dd>SrTiO<sub>3</sub>, NdGaO<sub>3</sub>, LaAlO<sub>3</sub> (YSZ for comparison)</dd>
+      <dt>Growth</dt><dd>Pulsed laser deposition at 600 °C</dd>
+      <dt>Probes</dt><dd>XRD and RSM, TEM, Raman, XANES, cantilever interferometry, DFT</dd>
+    </dl>
+  </div>
+</div></div>
+
+<figure class="film pad" style="margin:0">
+  <div class="wrap">
+    <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of how in-plane compression orients defect dipoles in ceria films and raises their electrostriction">
+      <source src="Electrostriction_tetragonal_ceria.mp4" type="video/mp4">
+    </video>
+    <figcaption><span>How compressive strain orients defect dipoles and boosts electrostriction, in 38 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+  </div>
+</figure>
+
+<div class="pad"><div class="wrap">
+  <section id="findings">
+    <div class="sechead">
+      <h2>Findings</h2>
+      <p>Key quantity on the left.</p>
+    </div>
+    <article class="entry">
+      <div class="num">M<sub>11</sub> ≈ 3.6 × 10<sup>−15</sup><small>m<sup>2</sup> V<sup>−2</sup>, 17 nm compressive films<br>vs ≤ 5 × 10<sup>−16</sup> tensile or null</small></div>
+      <div><h3>Compression gives the largest response</h3><p>Thin films with positive tetragonality reach the highest in-plane coefficient, more than an order of magnitude above films under tension or near-zero strain. The films are grown on 0.1&nbsp;mm substrates used as cantilevers, with planar gold electrodes. A 1&nbsp;Hz field along the CGO [110] direction drives the M<sub>11</sub> mode, and the displacement is read by laser interferometry at the second harmonic. Stress scales linearly with E<sup>2</sup>.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">&gt; 3 GPa<small>interface stress, compressive films;<br>t = c/a − 1 up to ≈ 0.76 %</small></div>
+      <div><h3>The substrate sets the strain</h3><p>The nominal mismatch with CGO is +1.6&nbsp;% on SrTiO<sub>3</sub> (tensile), about 0.7&nbsp;% on NdGaO<sub>3</sub> (quasi-null) and −1.1&nbsp;% on LaAlO<sub>3</sub> (compressive). The measured in-plane strain is smaller because the films partly relax out of plane: for CGO20 it is +0.166&nbsp;%, about zero and −0.240&nbsp;%. Compression produces positive tetragonality, tension negative.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">≈ 5 ×<small>Raman anisotropy, compressive<br>vs tensile films</small></div>
+      <div><h3>Compression orients the defect dipoles</h3><p>In compressed films the ceria F<sub>2g</sub> Raman mode splits strongly, and XANES shows more Ce<sup>3+</sup>. Strain reconfigures the vacancy complexes into more polarizable Ce<sup>3+</sup>–vacancy pairs whose elastic dipoles align out of plane. An in-plane field rotates this aligned population, giving a large in-plane strain. Ce<sup>3+</sup> polarons may add to the response beyond the vacancies.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">≈ 2 ×<small>out-of-plane vs in-plane<br>dipole moment (DFT)</small></div>
+      <div><h3>Calculations agree</h3><p>DFT on strained CeO<sub>2</sub> supercells with an oxygen vacancy finds that, under compression, the dipole moment is largest out of plane, about twice its in-plane components. The enhancement under compression was predicted before, but this is the first experimental evidence for the M<sub>11</sub> mode.</p></div>
+    </article>
+    <article class="entry">
+      <div class="num">Strain &gt; doping<small>thicker films relax:<br>≈ 1–4 × 10<sup>−16</sup> m<sup>2</sup> V<sup>−2</sup></small></div>
+      <div><h3>Tetragonality as a descriptor</h3><p>Substrate-induced strain matters far more than dopant or vacancy content, although thin CGO10 gives about twice the response of CGO20. Thickness sets the limit, because thicker films relax and lose the gain. The response decreases between 1 and 100&nbsp;Hz but stays within the same order of magnitude.</p></div>
+    </article>
+  </section>
+
+  <section id="people">
+    <div class="sechead">
+      <h2>People</h2>
+      <p>Affiliations as stated in the paper.</p>
+    </div>
+    <div class="lead">
+      <div>
+        <span class="label">Equal first authors</span>
+        <h3>Simone Santucci</h3>
+        <p class="aff">DTU Energy and Atlant 3D. Co-corresponding author.</p>
+        <h3 style="margin-top:14px">Milica Vasiljevic</h3>
+        <p class="aff">DTU Energy.</p>
+      </div>
+      <ul>
+        <li>The two contributed equally to the work, as stated in the paper</li>
+        <li>Corresponding authors: S. Santucci and V. Esposito</li>
+        <li>Idea and experimental design by S. Santucci and V. Esposito; Raman analysis by M. Vasiljevic</li>
+      </ul>
+    </div>
+    <div class="people">
+      <div class="person"><h3>Haiwu Zhang</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Victor Buratto Tinti</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Achilles Bergne</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Armando A. Morin-Martinez</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Sandeep Kumar Chaluvadi</h3><p>CNR-IOM, Trieste.</p></div>
+      <div class="person"><h3>Pasquale Orgiani</h3><p>CNR-IOM, Trieste.</p></div>
+      <div class="person"><h3>Simone Sanna</h3><p>Università di Roma Tor Vergata and CNR-SPIN.</p></div>
+      <div class="person"><h3>Anton Lyksborg-Andersen</h3><p>DTU Nanolab.</p></div>
+      <div class="person"><h3>Thomas Willum Hansen</h3><p>DTU Nanolab.</p></div>
+      <div class="person"><h3>Ivano E. Castelli</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Nini Pryds</h3><p>DTU Energy.</p></div>
+      <div class="person"><h3>Vincenzo Esposito</h3><p>DTU Energy. Co-corresponding author.</p></div>
+    </div>
+    <p class="funding">Funding acknowledged in the paper includes the Independent Research Fund Denmark (DFF Research Projects 2, grants 48293, 48592 and 1032-00261B; DFF Research Project 3, 00069B), DEMETRA (M-ERA.NET, 2118-00006B), MANTRA (Villum Experiment, 40412), the Novo Nordisk Foundation Challenge Programme (BIOMAG, NNF21OC0066526), the ERC Advanced Grant NEXUS (101054572) and ACOUSOME (European Innovation Council, 101099787).</p>
+  </section>
+
+  <section id="paper">
+    <div class="sechead"><h2>Paper</h2></div>
+    <article class="entry">
+      <div class="num">2025<small>Nat. Commun. 16, 36</small></div>
+      <div>
+        <h3>Enhanced non-classical electrostriction in strained tetragonal ceria</h3>
+        <div class="meta">S. Santucci, M. Vasiljevic, H. Zhang, V. Buratto Tinti, A. Bergne, A. A. Morin-Martinez, S. K. Chaluvadi, P. Orgiani, S. Sanna, A. Lyksborg-Andersen, T. W. Hansen, I. E. Castelli, N. Pryds, V. Esposito. Nature Communications 16, 36 (2025). Open access.</div>
+        <div class="links"><a href="https://doi.org/10.1038/s41467-024-55393-6" target="_blank" rel="noopener">doi:10.1038/s41467-024-55393-6</a><a href="https://orbit.dtu.dk/en/publications/enhanced-non-classical-electrostriction-in-strained-tetragonal-ce/" target="_blank" rel="noopener">DTU Orbit</a></div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a></p></div>
+    <div><span class="label">Related</span><p><a href="../electrostriction/">Interface electrostriction</a> · <a href="../hzo/">HZO</a> · <a href="../ysz/">YSZ</a> · <a href="../polaronic-ceria/">Polaronic ceria</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div></div>
+
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>
