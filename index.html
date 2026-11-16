@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="author" content="Vincenzo Esposito">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vincenzo Esposito | Functional Metal Oxides | DTU Energy</title>
-<meta name="description" content="Vincenzo Esposito, Professor at DTU Energy, Technical University of Denmark. Functional metal oxides: defects, thin films, heterostructures, electrostriction, ferroionics and 3D-printed solid oxide cells.">
+<title>Vincenzo Esposito | Professor, DTU Energy, Technical University of Denmark</title>
+<meta name="description" content="Vincenzo Esposito, Professor of Ceramic Science and Engineering at DTU Energy, Technical University of Denmark (Kongens Lyngby). Functional metal oxides: defects, thin films, heterostructures, electrostriction, ferroionics and 3D-printed solid oxide cells.">
 <link rel="canonical" href="https://esplab-droid.github.io/">
 <meta property="og:site_name" content="Vincenzo Esposito, DTU Energy">
 <meta property="og:type" content="profile">
-<meta property="og:title" content="Vincenzo Esposito | Functional Metal Oxides | DTU Energy">
-<meta property="og:description" content="Vincenzo Esposito, Professor at DTU Energy, Technical University of Denmark. Functional metal oxides: defects, thin films, heterostructures, electrostriction, ferroionics and 3D-printed solid oxide cells.">
+<meta property="og:title" content="Vincenzo Esposito | Professor, DTU Energy, Technical University of Denmark">
+<meta property="og:description" content="Vincenzo Esposito, Professor of Ceramic Science and Engineering at DTU Energy, Technical University of Denmark (Kongens Lyngby). Functional metal oxides: defects, thin films, heterostructures, electrostriction, ferroionics and 3D-printed solid oxide cells.">
 <meta property="og:url" content="https://esplab-droid.github.io/">
 <meta property="og:image" content="https://esplab-droid.github.io/exsolution/poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,23 +18,53 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "ProfilePage",
+   "@id": "https://esplab-droid.github.io/#profile",
+   "url": "https://esplab-droid.github.io/",
+   "name": "Vincenzo Esposito, Professor at DTU Energy, Technical University of Denmark",
+   "mainEntity": {
+    "@id": "https://esplab-droid.github.io/#person"
+   },
+   "isPartOf": {
+    "@id": "https://esplab-droid.github.io/#website"
+   },
+   "dateModified": "2026-11-16"
+  },
+  {
    "@type": "Person",
    "@id": "https://esplab-droid.github.io/#person",
    "name": "Vincenzo Esposito",
-   "jobTitle": "Professor",
+   "jobTitle": "Professor of Ceramic Science and Engineering",
    "url": "https://esplab-droid.github.io/",
    "worksFor": {
     "@type": "Organization",
-    "name": "DTU Energy",
+    "@id": "https://www.energy.dtu.dk/#org",
+    "name": "DTU Energy, Department of Energy Conversion and Storage",
+    "alternateName": "DTU Energy",
     "url": "https://www.energy.dtu.dk/",
+    "address": {
+     "@type": "PostalAddress",
+     "streetAddress": "Fysikvej, Building 310",
+     "postalCode": "2800",
+     "addressLocality": "Kongens Lyngby",
+     "addressCountry": "DK"
+    },
     "parentOrganization": {
      "@type": "CollegeOrUniversity",
+     "@id": "https://www.dtu.dk/#org",
      "name": "Technical University of Denmark",
-     "url": "https://www.dtu.dk/"
+     "alternateName": "DTU",
+     "url": "https://www.dtu.dk/",
+     "sameAs": [
+      "https://en.wikipedia.org/wiki/Technical_University_of_Denmark",
+      "https://www.wikidata.org/wiki/Q1269766"
+     ]
     }
    },
    "sameAs": [
-    "https://orbit.dtu.dk/en/persons/vincenzo-esposito/"
+    "https://orbit.dtu.dk/en/persons/vincenzo-esposito/",
+    "https://orcid.org/0000-0002-9817-7810",
+    "https://www.scopus.com/authid/detail.uri?authorId=36160920600"
    ],
    "knowsAbout": [
     "functional metal oxides",
@@ -44,7 +75,41 @@
     "ferroionics",
     "solid oxide cells",
     "additive manufacturing of ceramics"
-   ]
+   ],
+   "givenName": "Vincenzo",
+   "familyName": "Esposito",
+   "alternateName": [
+    "V. Esposito",
+    "Esposito, V.",
+    "Prof. Vincenzo Esposito"
+   ],
+   "honorificPrefix": "Prof.",
+   "description": "Vincenzo Esposito is Professor at DTU Energy (Department of Energy Conversion and Storage), Technical University of Denmark, working on functional metal oxides.",
+   "image": "https://esplab-droid.github.io/exsolution/poster.jpg",
+   "identifier": [
+    {
+     "@type": "PropertyValue",
+     "propertyID": "ORCID",
+     "value": "0000-0002-9817-7810"
+    },
+    {
+     "@type": "PropertyValue",
+     "propertyID": "Scopus Author ID",
+     "value": "36160920600"
+    }
+   ],
+   "affiliation": {
+    "@id": "https://www.dtu.dk/#org"
+   },
+   "workLocation": {
+    "@type": "Place",
+    "name": "DTU Lyngby Campus",
+    "address": {
+     "@type": "PostalAddress",
+     "addressLocality": "Kongens Lyngby",
+     "addressCountry": "DK"
+    }
+   }
   },
   {
    "@type": "WebSite",
@@ -98,6 +163,8 @@ nav a:hover{color:var(--ink)}
 
 .intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:48px;align-items:start;padding-block:44px 48px}
 .intro h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+.intro .role{font-family:var(--display);font-weight:500;margin:6px 0 0;color:var(--muted)}
+.intro .tagline{font-family:var(--display);font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.3;margin:18px 0 0;text-wrap:balance}
 .intro p{max-width:36em;margin:16px 0 0}
 .intro dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:22px 0 0;font-family:var(--display);font-size:.88rem}
 .intro dt{color:var(--muted)}
@@ -218,8 +285,10 @@ button.copy:hover{border-color:var(--ink)}
   <div class="intro">
     <div>
       <span class="label">DTU Energy, Technical University of Denmark</span>
-      <h1 style="margin-top:10px">Functional metal oxides for energy conversion, electromechanics and ionic devices</h1>
-      <p>ESPLab is the group of Vincenzo Esposito at DTU Energy, Technical University of Denmark. We study how defects, interfaces and 3D architecture shape functional metal oxides, from thin films to solid oxide cells.</p>
+      <h1 style="margin-top:10px">Vincenzo Esposito</h1>
+      <p class="role">Professor at DTU Energy, Technical University of Denmark</p>
+      <p class="tagline">Functional metal oxides for energy conversion, electromechanics and ionic devices</p>
+      <p>ESPLab is the group of Prof. Vincenzo Esposito at DTU Energy (Department of Energy Conversion and Storage), Technical University of Denmark, Kongens Lyngby. We study how defects, interfaces and 3D architecture shape functional metal oxides, from thin films to solid oxide cells.</p>
       <dl>
         <dt>Position</dt><dd>Professor, Ceramic Science and Engineering</dd>
         <dt>Department</dt><dd>DTU Energy, Kongens Lyngby</dd>
@@ -426,12 +495,13 @@ button.copy:hover{border-color:var(--ink)}
   <footer id="contact">
     <div>
       <span class="label">Contact</span>
-      <p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a>, with contact details and the full publication list.</p>
+      <p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="me noopener">DTU Orbit profile</a>, with contact details and the full publication list.</p>
       <p>Enquiries from prospective PhD students and postdocs are welcome.</p>
     </div>
     <div>
       <span class="label">Links</span>
       <p><a href="team/">Team</a> · <a href="https://www.energy.dtu.dk/" target="_blank" rel="noopener">DTU Energy</a></p>
+      <p><a href="https://orcid.org/0000-0002-9817-7810" target="_blank" rel="me noopener">ORCID 0000-0002-9817-7810</a> · <a href="https://www.scopus.com/authid/detail.uri?authorId=36160920600" target="_blank" rel="me noopener">Scopus</a></p>
     </div>
   </footer>
 </div>
