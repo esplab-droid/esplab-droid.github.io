@@ -1,0 +1,297 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-400-italic.woff2);font-style:italic;font-weight:400}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2);font-style:italic;font-weight:500}
+@font-face{font-family:PMono;src:url(fontsource-ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#0a1120}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+const W=1920,H=1080,cv=document.getElementById('c'),x=cv.getContext('2d');
+const C={bg:'#0a1120',ink:'#e6e9ef',muted:'#8c96a8',dim:'#4a5468',gold:'#d8b25c',blue:'#86aee6',green:'#46e38a',red:'#e46a5b',line:'#2a3446'};
+const SANS='Inter, "DejaVu Sans", sans-serif',SERIF='Corm, serif',MONO='PMono, monospace';
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const ease=t=>{t=cl(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+const ramp=(t,a,b)=>ease((t-a)/(b-a));
+const lerp=(a,b,k)=>a+(b-a)*k;
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
+
+// scenes: [start, end]
+const S=[[0,5.5],[5.5,12],[12,18.5],[18.5,25.5],[25.5,32.5],[32.5,41]];
+const DUR=41;
+
+const dust=(()=>{const r=rng(7);return Array.from({length:70},()=>({x:r()*W,y:r()*H,s:r()*1.6+.4,v:r()*6+2,a:r()*.25+.05}))})();
+function bg(t){
+  x.fillStyle=C.bg;x.fillRect(0,0,W,H);
+  const g=x.createRadialGradient(W*.62,H*.45,50,W*.62,H*.45,W*.75);
+  g.addColorStop(0,'rgba(30,48,82,0.55)');g.addColorStop(1,'rgba(10,17,32,0)');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  for(const d of dust){const y=(d.y-d.v*t+H*10)%H;x.fillStyle=`rgba(200,215,240,${d.a})`;x.beginPath();x.arc(d.x,y,d.s,0,7);x.fill()}
+}
+function txt(s,X,Y,font,col,al='left',a=1){x.globalAlpha*=a;x.font=font;x.fillStyle=col;x.textAlign=al;x.textBaseline='alphabetic';x.fillText(s,X,Y);x.globalAlpha/=a||1}
+function spaced(s,X,Y,size,col,sp=3,al='left'){x.font=`${size}px ${MONO}`;x.fillStyle=col;x.textBaseline='alphabetic';
+  let w=0;for(const ch of s)w+=x.measureText(ch).width+sp;let cx=al==='center'?X-w/2:X;x.textAlign='left';for(const ch of s){x.fillText(ch,cx,Y);cx+=x.measureText(ch).width+sp}}
+function para(s,X,Y,maxW,size,col,lh=1.5,a=1){x.font=`300 ${size}px ${SANS}`;x.fillStyle=col;x.textAlign='left';const ws=s.split(' ');let line='',y=Y;x.globalAlpha*=a;
+  for(const w of ws){const tt=line?line+' '+w:w;if(x.measureText(tt).width>maxW){x.fillText(line,X,y);line=w;y+=size*lh}else line=tt}x.fillText(line,X,y);x.globalAlpha/=a||1;return y}
+function chrome(n,label,title,lt,a){
+  x.save();x.globalAlpha=a;
+  const k=ramp(lt,0,.8);
+  x.strokeStyle=C.gold;x.lineWidth=1.5;x.beginPath();x.moveTo(135,112);x.lineTo(135+44*k,112);x.stroke();
+  spaced(label,195,118,17,C.gold,4);
+  x.globalAlpha=a*ramp(lt,.1,.9);
+  txt(title,133,205+12*(1-ramp(lt,.1,.9)),`400 70px ${SERIF}`,C.ink);
+  x.globalAlpha=a*.9;
+  txt('MSc thesis project  ·  DTU Energy',135,1010,`300 17px ${SANS}`,C.dim);
+  x.strokeStyle=rgba(C.gold,.35);x.lineWidth=1;x.beginPath();x.moveTo(135,1026);x.lineTo(560,1026);x.stroke();
+  txt(`0${n}`,1742,1010,`italic 500 30px ${SERIF}`,C.gold,'right');
+  txt(' / 05',1790,1010,`italic 400 26px ${SERIF}`,C.dim,'right');
+  x.restore();
+}
+function sceneAlpha(t,i){const [a,b]=S[i];return Math.min(ramp(t,a,a+.7),1-ramp(t,b-.6,b))}
+
+// ---------- Scene 0: title
+function s0(t,a){
+  x.save();x.globalAlpha=a;
+  // faint laser column
+  const g=x.createLinearGradient(1420,0,1520,0);
+  const p=.5+.5*Math.sin(t*2.2);
+  g.addColorStop(0,'rgba(70,227,138,0)');g.addColorStop(.5,`rgba(70,227,138,${.08+.06*p})`);g.addColorStop(1,'rgba(70,227,138,0)');
+  x.fillStyle=g;x.fillRect(1420,0,100,760);
+  const r=x.createRadialGradient(1470,770,0,1470,770,220);r.addColorStop(0,`rgba(120,255,170,${.25+.1*p})`);r.addColorStop(1,'rgba(70,227,138,0)');
+  x.fillStyle=r;x.fillRect(1200,560,540,420);
+  x.strokeStyle=rgba(C.ink,.12);x.beginPath();x.moveTo(1180,770);x.lineTo(1760,770);x.stroke();
+  const k=ramp(t,.2,1.2);
+  x.strokeStyle=C.gold;x.lineWidth=1.5;x.beginPath();x.moveTo(135,330);x.lineTo(135+44*k,330);x.stroke();
+  x.globalAlpha=a*k;spaced("MASTER'S THESIS PROJECT  ·  DTU ENERGY",195,336,17,C.gold,4);
+  x.globalAlpha=a*ramp(t,.5,1.6);txt('Can a laser pulse',130,450,`400 104px ${SERIF}`,C.ink);
+  x.globalAlpha=a*ramp(t,1,2.1);txt('make an oxide remember?',130,560,`italic 400 104px ${SERIF}`,C.gold);
+  x.globalAlpha=a*ramp(t,1.6,2.6);
+  txt('Nanosecond laser annealing of hafnia–zirconia thin films for ferroelectric memory',135,630,`300 27px ${SANS}`,C.muted);
+  x.globalAlpha=a*ramp(t,2.2,3.2);
+  txt('Prof. Vincenzo Esposito',135,740,`500 26px ${SANS}`,C.ink);
+  spaced('SUPERVISOR',135,772,14,C.gold,4);
+  txt('Builds on SPRINT, a collaboration with ATLANT 3D',135,830,`300 20px ${SANS}`,C.muted);
+  spaced('DTU ENERGY  ·  KONGENS LYNGBY  ·  OPEN PROJECT',135,870,13,C.dim,3);
+  x.restore();
+}
+
+// ---------- Scene 1: memory survives power-off
+function cell(cx,cy,w,h,pol,flipK,powerOn,a){
+  // pol: target direction (+1 up, -1 down), flipK: 0..1 progress of flip from -pol to pol
+  x.save();x.globalAlpha=a;
+  x.fillStyle='#c9a24e';x.fillRect(cx-w/2,cy-h/2-14,w,14);x.fillRect(cx-w/2,cy+h/2,w,14);
+  const g=x.createLinearGradient(0,cy-h/2,0,cy+h/2);g.addColorStop(0,'#1d2a44');g.addColorStop(1,'#16213a');
+  x.fillStyle=g;x.fillRect(cx-w/2,cy-h/2,w,h);
+  x.strokeStyle=rgba(C.blue,.35);x.strokeRect(cx-w/2+.5,cy-h/2+.5,w-1,h-1);
+  const nx=7,ny=4;
+  for(let i=0;i<nx;i++)for(let j=0;j<ny;j++){
+    const px=cx-w/2+w*(i+.5)/nx,py=cy-h/2+h*(j+.5)/ny;
+    const delay=(i+j)*.04,k=cl((flipK-delay)/(1-.4));
+    const ang=lerp(pol>0?Math.PI:0,pol>0?0:Math.PI,ease(k)); // 0=up
+    const L=h/ny*.32;
+    x.save();x.translate(px,py);x.rotate(ang);
+    x.strokeStyle=powerOn?C.blue:rgba(C.blue,.85);x.lineWidth=3;x.beginPath();x.moveTo(0,L);x.lineTo(0,-L);x.stroke();
+    x.fillStyle=x.strokeStyle;x.beginPath();x.moveTo(0,-L-9);x.lineTo(-7,-L+3);x.lineTo(7,-L+3);x.fill();
+    x.restore();
+  }
+  x.restore();
+}
+function s1(t,a){
+  const lt=t-S[1][0];chrome(1,'THE CONTEXT','A bit that survives power-off',lt,a);
+  x.save();x.globalAlpha=a;
+  // timeline of states
+  // 0-1.2 settle up (1); 1.4-2.4 flip down (0); 3.0 power off; stays
+  let pol=1,fk=1;
+  if(lt<1.2){pol=1;fk=ramp(lt,.3,1.2)}
+  else if(lt<1.8){pol=1;fk=1}
+  else{pol=-1;fk=ramp(lt,1.8,2.8)}
+  const powerOn=lt<3.4;
+  const cx=640,cy=560;
+  cell(cx,cy,520,260,pol,fk,powerOn,1);
+  // voltage pulse indicator on the left
+  const pulseUp=Math.exp(-Math.pow((lt-.6)/.25,2)),pulseDn=Math.exp(-Math.pow((lt-2.1)/.25,2));
+  x.strokeStyle=rgba(C.ink,.35);x.lineWidth=1.5;x.beginPath();x.moveTo(cx-260,cy-153);x.lineTo(cx-330,cy-153);x.lineTo(cx-330,cy+153);x.lineTo(cx-260,cy+153);x.stroke();
+  const vy=cy+(pulseUp-pulseDn)*-90;
+  x.fillStyle=powerOn?C.gold:C.dim;x.beginPath();x.arc(cx-330,cy,9,0,7);x.fill();
+  if(powerOn){x.strokeStyle=rgba(C.gold,.9);x.beginPath();x.moveTo(cx-330,cy);x.lineTo(cx-330,vy);x.stroke()}
+  txt(powerOn?'power on':'power off',cx-330,cy+200,`italic 400 28px ${SERIF}`,powerOn?C.gold:C.muted,'center');
+  // bit readout
+  const bit=pol>0?(fk>.5?'1':'0'):(fk>.5?'0':'1');
+  txt(bit,cx+330,cy+30,`500 120px ${SERIF}`,C.ink,'left');
+  spaced('STORED BIT',cx+330,cy+80,14,C.gold,4);
+  if(!powerOn){x.globalAlpha=a*ramp(lt,3.6,4.4);txt('still there',cx+330,cy+130,`italic 400 30px ${SERIF}`,C.green)}
+  x.globalAlpha=a*ramp(lt,.6,1.6);
+  para('A ferroelectric memory stores a bit in the direction of electric polarisation: up for 1, down for 0.',1200,440,560,27,C.ink);
+  x.globalAlpha=a*ramp(lt,3.2,4.2);
+  para('Switch the power off and the polarisation stays. A sensor that sleeps for months wakes up with its settings intact.',1200,600,560,27,C.muted);
+  x.restore();
+}
+
+// ---------- Stack used in scenes 2 & 3
+const amorph=(()=>{const r=rng(11),pts=[];const nx=26,ny=4;for(let i=0;i<nx;i++)for(let j=0;j<ny;j++)pts.push({gx:(i+.5)/nx,gy:(j+.5)/ny,rx:(i+.5)/nx+(r()-.5)*.035,ry:(j+.5)/ny+(r()-.5)*.5,ph:r()*6});return pts})();
+function stack(X,Y,Wd,heat,crys,crysLocal,damage,t){
+  // returns layer rects; heat: function(depthY0..1, xfrac) -> 0..1
+  const L=[{n:'top electrode',h:26,c:'#b8934a'},{n:'HZO film',h:120,c:'#1d2a46'},{n:'bottom electrode',h:26,c:'#b8934a'},{n:'circuits already in place',h:200,c:'#18202e'}];
+  let y=Y;const rects=[];
+  for(const l of L){rects.push({...l,y});y+=l.h}
+  // draw
+  for(const r of rects){x.fillStyle=r.c;x.fillRect(X,r.y,Wd,r.h)}
+  // circuits: transistors
+  const cr=rects[3];
+  for(let i=0;i<7;i++){const gx=X+60+i*(Wd-120)/6;
+    x.fillStyle='#2a3a58';x.fillRect(gx-34,cr.y+70,68,14);
+    x.fillStyle='#3d5580';x.fillRect(gx-14,cr.y+40,28,30);
+    x.strokeStyle=rgba(C.blue,.35);x.lineWidth=2;x.beginPath();x.moveTo(gx,cr.y);x.lineTo(gx,cr.y+40);x.stroke();
+    x.fillStyle='#22304a';x.fillRect(gx-40,cr.y+84,80,6);
+    if(damage>0){const d=damage*(0.6+0.4*Math.sin(i*1.7+2));x.fillStyle=rgba(C.red,.75*d);x.beginPath();x.arc(gx,cr.y+62,26*d+2,0,7);x.fill();
+      x.strokeStyle=rgba(C.red,.9*d);x.lineWidth=2;x.beginPath();x.moveTo(gx-20,cr.y+100);x.lineTo(gx-6,cr.y+122);x.lineTo(gx+8,cr.y+108);x.lineTo(gx+22,cr.y+140);x.stroke();}
+  }
+  // heat overlay
+  if(heat){
+    const img=[];const step=8;
+    for(let yy=Y;yy<y;yy+=step)for(let xx=X;xx<X+Wd;xx+=step){
+      const h=heat((yy-Y)/(y-Y),(xx-X)/Wd);if(h<=.01)continue;
+      x.fillStyle=`rgba(255,${Math.round(150-90*h)},${Math.round(70-50*h)},${.55*h})`;x.fillRect(xx,yy,step,step)}
+  }
+  // HZO atoms
+  const hz=rects[1];
+  for(const p of amorph){
+    const k=Math.max(crys,crysLocal?crysLocal(p.gx):0);
+    const ax=X+Wd*lerp(p.rx+.004*Math.sin(t*3+p.ph),p.gx,k),ay=hz.y+12+(hz.h-24)*lerp(cl(p.ry,.02,.98),p.gy,k);
+    x.fillStyle=k>.6?rgba(C.green,.55+.45*k):rgba('#9fb2d4',.75);
+    x.beginPath();x.arc(ax,ay,k>.6?5.2:4.4,0,7);x.fill();
+  }
+  // labels
+  for(const r of rects){txt(r.n,X+Wd+28,r.y+r.h/2+8,`italic 400 26px ${SERIF}`,r.n==='HZO film'?C.gold:C.muted)}
+  return rects;
+}
+function s2(t,a){
+  const lt=t-S[2][0];chrome(2,'THE PROBLEM','Crystallise the film, spare the circuits',lt,a);
+  x.save();x.globalAlpha=a;
+  const heatK=ramp(lt,1.2,3.2);
+  const rects=stack(150,380,800,(d,f)=>heatK*(.85-.15*d),ramp(lt,2.2,3.6),null,ramp(lt,3.4,4.8),t);
+  // furnace glow frame
+  x.strokeStyle=rgba(C.red,.5*heatK);x.lineWidth=3;x.setLineDash([10,10]);x.strokeRect(120,350,860,432);x.setLineDash([]);
+  x.globalAlpha=a*heatK;txt('furnace: the whole stack gets hot',150,830,`italic 400 30px ${SERIF}`,C.red);
+  x.globalAlpha=a*ramp(lt,.5,1.5);
+  para('HZO remembers only once it crystallises in the right phase. Amorphous films have no switchable polarisation.',1440,430,400,25,C.ink);
+  x.globalAlpha=a*ramp(lt,3.4,4.4);
+  para('A conventional anneal heats everything, including the electronic layers already underneath.',1440,640,400,25,C.muted);
+  x.restore();
+}
+function s3(t,a){
+  const lt=t-S[3][0];chrome(3,'THE IDEA','A green flash, a few nanoseconds long',lt,a);
+  x.save();x.globalAlpha=a;
+  const X=150,Y=420,Wd=800;
+  // spot moves across in steps (raster of pulses)
+  const pulses=[];for(let i=0;i<6;i++)pulses.push({t0:1+i*.75,f:.14+i*.144});
+  let cur=null;for(const p of pulses)if(lt>=p.t0-.05)cur=p;
+  const sp=cur?cur.f:.14;
+  const flash=cur?Math.exp(-Math.pow((lt-cur.t0)/.09,2)):0;
+  const crysLocal=gx=>{let k=0;for(const p of pulses){if(lt<p.t0)continue;const d=Math.abs(gx-p.f);if(d<.075)k=Math.max(k,ramp(lt,p.t0,p.t0+.45))}return k};
+  const heat=(d,f)=>{let h=0;for(const p of pulses){const dt=lt-p.t0;if(dt<0||dt>.7)continue;const g=Math.exp(-Math.pow((f-p.f)/.06,2))*Math.exp(-d*7)*Math.exp(-dt/.18);h=Math.max(h,g)}return cl(h)};
+  stack(X,Y,Wd,heat,0,crysLocal,0,t);
+  // beam
+  const bx=X+Wd*sp,beamA=.25+.75*flash;
+  const g=x.createLinearGradient(bx-40,0,bx+40,0);g.addColorStop(0,'rgba(70,227,138,0)');g.addColorStop(.5,`rgba(120,255,170,${.15+.75*flash})`);g.addColorStop(1,'rgba(70,227,138,0)');
+  x.fillStyle=g;x.fillRect(bx-40,250,80,Y-250);
+  const r=x.createRadialGradient(bx,Y,0,bx,Y,120);r.addColorStop(0,`rgba(160,255,190,${.6*flash})`);r.addColorStop(1,'rgba(70,227,138,0)');x.fillStyle=r;x.fillRect(bx-130,Y-130,260,260);
+  txt('532 nm',bx+52,300,`500 24px ${SANS}`,rgba(C.green,.5+.5*beamA));
+  x.globalAlpha=a*ramp(lt,.5,1.5);
+  para('A nanosecond laser pulse heats only the area and depth it hits, then the heat is gone.',1440,440,400,25,C.ink);
+  x.globalAlpha=a*ramp(lt,3.5,4.5);
+  para('The film under each spot can order into a crystal. Whether it switches, and the circuits stay intact, is what the thesis tests.',1440,640,400,25,C.muted);
+  x.restore();
+}
+
+// ---------- Scene 4: processing map
+function s4(t,a){
+  const lt=t-S[4][0];chrome(4,'THE THESIS','Find the annealing window',lt,a);
+  x.save();x.globalAlpha=a;
+  const X0=200,Y0=880,PW=900,PH=520;
+  x.strokeStyle=rgba(C.ink,.5);x.lineWidth=1.5;x.beginPath();x.moveTo(X0,Y0-PH);x.lineTo(X0,Y0);x.lineTo(X0+PW,Y0);x.stroke();
+  txt('laser energy per unit area  →',X0+PW,Y0+44,`300 20px ${SANS}`,C.muted,'right');
+  x.save();x.translate(X0-30,Y0-PH/2);x.rotate(-Math.PI/2);txt('response',0,0,`300 20px ${SANS}`,C.muted,'center');x.restore();
+  const f={cry:u=>1/(1+Math.exp(-(u-.32)*16)),pol:u=>Math.max(0,1/(1+Math.exp(-(u-.36)*16))-1/(1+Math.exp(-(u-.74)*14)))*.92,leak:u=>1/(1+Math.exp(-(u-.78)*14))};
+  const curves=[['cry',C.blue,'crystallisation',.5],['pol',C.gold,'switchable polarisation',1.3],['leak',C.red,'leakage, damage',2.1]];
+  // window shading
+  const wk=ramp(lt,3.2,4.0);
+  x.fillStyle=rgba(C.green,.08*wk);x.fillRect(X0+PW*.45,Y0-PH,PW*.25,PH);
+  x.strokeStyle=rgba(C.green,.45*wk);x.setLineDash([6,8]);x.beginPath();x.moveTo(X0+PW*.45,Y0-PH);x.lineTo(X0+PW*.45,Y0);x.moveTo(X0+PW*.70,Y0-PH);x.lineTo(X0+PW*.70,Y0);x.stroke();x.setLineDash([]);
+  x.globalAlpha=a*wk;txt('window?',X0+PW*.575,Y0-PH-14,`italic 500 32px ${SERIF}`,C.green,'center');x.globalAlpha=a;
+  curves.forEach(([k,col,name,t0],i)=>{
+    const pr=ramp(lt,t0,t0+1.4);if(pr<=0)return;
+    x.strokeStyle=col;x.lineWidth=3.5;x.beginPath();
+    const N=200;for(let s=0;s<=N*pr;s++){const u=s/N;const px=X0+u*PW,py=Y0-f[k](u)*PH*.85;s?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();
+    x.globalAlpha=a*ramp(lt,t0+.6,t0+1.2);
+    const ly=[0,1,2][i];
+    x.fillStyle=col;x.fillRect(X0+30,Y0-PH+10+ly*34,22,4);
+    txt(name,X0+64,Y0-PH+18+ly*34,`300 20px ${SANS}`,C.ink);x.globalAlpha=a;
+  });
+  // cursor
+  const u=cl(ramp(lt,1.0,6.0)*.95+.02);
+  const cxp=X0+u*PW;
+  x.strokeStyle=rgba(C.ink,.35);x.lineWidth=1;x.beginPath();x.moveTo(cxp,Y0-PH);x.lineTo(cxp,Y0);x.stroke();
+  // P-E inset
+  const IX=1380,IY=420,IS=360;
+  x.strokeStyle=rgba(C.ink,.35);x.lineWidth=1.2;x.beginPath();x.moveTo(IX,IY+IS/2);x.lineTo(IX+IS,IY+IS/2);x.moveTo(IX+IS/2,IY);x.lineTo(IX+IS/2,IY+IS);x.stroke();
+  txt('E',IX+IS+10,IY+IS/2+8,`italic 400 26px ${SERIF}`,C.muted);txt('P',IX+IS/2+10,IY-6,`italic 400 26px ${SERIF}`,C.muted);
+  const Pr=f.pol(u),lk=f.leak(u);
+  x.strokeStyle=C.gold;x.lineWidth=3;x.beginPath();
+  for(let s=0;s<=240;s++){const th=s/240*Math.PI*2;const e=Math.cos(th);const br=Math.sin(th)>0?1:-1;
+    let p=Math.tanh((e+br*.45*Pr*1.1)*3.2)*(.12+.78*Pr)+e*.12;
+    p=p*(1-.6*lk)+lk*.55*Math.sin(th+.4)*.9;
+    const px=IX+IS/2+e*IS*.44,py=IY+IS/2-p*IS*.44;s?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();
+  spaced('POLARISATION LOOP AT THE CURSOR',IX,IY+IS+46,14,C.gold,3);
+  x.globalAlpha=a*ramp(lt,4,5);
+  para('Your result: a processing map that shows whether a useful window exists, and what closes it.',IX,IY+IS+100,440,24,C.muted);
+  x.restore();
+}
+
+// ---------- Scene 5: your work + end
+function s5(t,a){
+  const lt=t-S[5][0];const endK=ramp(lt,4.6,5.4);chrome(5,'YOUR PROJECT','Anneal, inspect, measure',lt,a*(1-endK));
+  x.save();x.globalAlpha=a;
+  const cols=[{n:'1',h:'Anneal',d:'Laser series at rising energy, fixed pulse count. Untreated and furnace references.'},
+              {n:'2',h:'Inspect',d:'Optical microscopy and X-ray diffraction: onset of crystallisation, first cracks.'},
+              {n:'3',h:'Measure',d:'Leakage and paired voltage pulses to separate switched charge, on many capacitors.'}];
+  cols.forEach((c,i)=>{
+    const X=150+i*560,k=ramp(lt,.4+i*.5,1.2+i*.5)*(1-endK);
+    x.globalAlpha=a*k;
+    x.strokeStyle=rgba(C.gold,.5);x.beginPath();x.moveTo(X,330);x.lineTo(X+460,330);x.stroke();
+    txt(c.n,X,420,`italic 500 64px ${SERIF}`,C.gold);
+    txt(c.h,X+60,412,`400 48px ${SERIF}`,C.ink);
+    // icon area
+    const iy=470;
+    if(i===0){for(let s=0;s<6;s++){const e=(s+1)/6;const r=x.createRadialGradient(X+30+s*80,iy+60,0,X+30+s*80,iy+60,34);r.addColorStop(0,rgba(C.green,.2+.8*e));r.addColorStop(1,rgba(C.green,0));x.fillStyle=r;x.fillRect(X-10+s*80,iy+20,80,80)}
+      x.strokeStyle=rgba(C.ink,.3);x.beginPath();x.moveTo(X,iy+120);x.lineTo(X+460,iy+120);x.stroke();}
+    if(i===1){x.strokeStyle=C.blue;x.lineWidth=2.5;x.beginPath();const pk=ramp(lt,1.4,2.6);
+      for(let s=0;s<=230;s++){const u=s/230;const y=iy+110-(Math.exp(-Math.pow((u-.42)/.025,2))*90*pk+Math.exp(-Math.pow((u-.7)/.03,2))*40*pk+4*Math.sin(u*90+3)*.3);const px=X+u*460;s?x.lineTo(px,y):x.moveTo(px,y)}x.stroke();
+      txt('2θ',X+460,iy+150,`italic 400 24px ${SERIF}`,C.muted,'right')}
+    if(i===2){x.strokeStyle=C.gold;x.lineWidth=2.5;x.beginPath();const seq=[[0,0],[.08,0],[.08,1],[.18,1],[.18,0],[.3,0],[.3,1],[.4,1],[.4,0],[.55,0],[.55,-1],[.65,-1],[.65,0],[.77,0],[.77,-1],[.87,-1],[.87,0],[1,0]];
+      seq.forEach(([u,v],s)=>{const px=X+u*460,py=iy+65-v*45;s?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();
+      txt('paired pulses',X+460,iy+150,`italic 400 24px ${SERIF}`,C.muted,'right')}
+    para(c.d,X,iy+210,440,22,C.muted);
+  });
+  // end card
+  x.globalAlpha=a*endK;
+  spaced('OPEN MASTER\'S THESIS  ·  DTU ENERGY',W/2,440,18,C.gold,5,'center');
+  txt('Can a laser pulse make an oxide remember?',W/2,540,`italic 400 76px ${SERIF}`,C.ink,'center');
+  txt('Prof. Vincenzo Esposito  ·  SPRINT, with ATLANT 3D',W/2,620,`300 26px ${SANS}`,C.muted,'center');
+  txt('esplab-droid.github.io/students',W/2,700,`400 22px ${MONO}`,C.blue,'center');
+  x.restore();
+}
+
+const SC=[s0,s1,s2,s3,s4,s5];
+window.render=function(t){
+  bg(t);
+  for(let i=0;i<SC.length;i++){const al=sceneAlpha(t,i);if(al>0.001)SC[i](t,al)}
+};
+window.DUR=DUR;
+window.ready=document.fonts.load('400 70px Corm').then(()=>Promise.all([document.fonts.load('italic 400 70px Corm'),document.fonts.load('italic 500 70px Corm'),document.fonts.load('500 70px Corm'),document.fonts.load('400 20px PMono')])).then(()=>{render(0);return true});
+</script></body></html>
