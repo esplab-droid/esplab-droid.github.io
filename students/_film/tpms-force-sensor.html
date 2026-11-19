@@ -1,0 +1,254 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-400-italic.woff2);font-style:italic;font-weight:400}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2);font-style:italic;font-weight:500}
+@font-face{font-family:PMono;src:url(fontsource-ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#0a1120}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+const W=1920,H=1080,cv=document.getElementById('c'),x=cv.getContext('2d');
+const C={bg:'#0a1120',ink:'#e6e9ef',muted:'#8c96a8',dim:'#4a5468',gold:'#d8b25c',blue:'#86aee6',green:'#46e38a',red:'#e46a5b',line:'#2a3446'};
+const SANS='Inter, "DejaVu Sans", sans-serif',SERIF='Corm, serif',MONO='PMono, monospace';
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const ease=t=>{t=cl(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+const ramp=(t,a,b)=>ease((t-a)/(b-a));
+const lerp=(a,b,k)=>a+(b-a)*k;
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
+
+// scenes: [start, end]
+const S=[[0,5.5],[5.5,12],[12,18.5],[18.5,25.5],[25.5,32.5],[32.5,41]];
+const DUR=41;
+
+const dust=(()=>{const r=rng(7);return Array.from({length:70},()=>({x:r()*W,y:r()*H,s:r()*1.6+.4,v:r()*6+2,a:r()*.25+.05}))})();
+function bg(t){
+  x.fillStyle=C.bg;x.fillRect(0,0,W,H);
+  const g=x.createRadialGradient(W*.62,H*.45,50,W*.62,H*.45,W*.75);
+  g.addColorStop(0,'rgba(30,48,82,0.55)');g.addColorStop(1,'rgba(10,17,32,0)');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  for(const d of dust){const y=(d.y-d.v*t+H*10)%H;x.fillStyle=`rgba(200,215,240,${d.a})`;x.beginPath();x.arc(d.x,y,d.s,0,7);x.fill()}
+}
+function txt(s,X,Y,font,col,al='left',a=1){x.globalAlpha*=a;x.font=font;x.fillStyle=col;x.textAlign=al;x.textBaseline='alphabetic';x.fillText(s,X,Y);x.globalAlpha/=a||1}
+function spaced(s,X,Y,size,col,sp=3,al='left'){x.font=`${size}px ${MONO}`;x.fillStyle=col;x.textBaseline='alphabetic';
+  let w=0;for(const ch of s)w+=x.measureText(ch).width+sp;let cx=al==='center'?X-w/2:X;x.textAlign='left';for(const ch of s){x.fillText(ch,cx,Y);cx+=x.measureText(ch).width+sp}}
+function para(s,X,Y,maxW,size,col,lh=1.5,a=1){x.font=`300 ${size}px ${SANS}`;x.fillStyle=col;x.textAlign='left';const ws=s.split(' ');let line='',y=Y;x.globalAlpha*=a;
+  for(const w of ws){const tt=line?line+' '+w:w;if(x.measureText(tt).width>maxW){x.fillText(line,X,y);line=w;y+=size*lh}else line=tt}x.fillText(line,X,y);x.globalAlpha/=a||1;return y}
+function chrome(n,label,title,lt,a){
+  x.save();x.globalAlpha=a;
+  const k=ramp(lt,0,.8);
+  x.strokeStyle=C.gold;x.lineWidth=1.5;x.beginPath();x.moveTo(135,112);x.lineTo(135+44*k,112);x.stroke();
+  spaced(label,195,118,17,C.gold,4);
+  x.globalAlpha=a*ramp(lt,.1,.9);
+  txt(title,133,205+12*(1-ramp(lt,.1,.9)),`400 70px ${SERIF}`,C.ink);
+  x.globalAlpha=a*.9;
+  txt('MSc thesis project  ·  DTU Energy',135,1010,`300 17px ${SANS}`,C.dim);
+  x.strokeStyle=rgba(C.gold,.35);x.lineWidth=1;x.beginPath();x.moveTo(135,1026);x.lineTo(560,1026);x.stroke();
+  txt(`0${n}`,1742,1010,`italic 500 30px ${SERIF}`,C.gold,'right');
+  txt(' / 05',1790,1010,`italic 400 26px ${SERIF}`,C.dim,'right');
+  x.restore();
+}
+function sceneAlpha(t,i){const [a,b]=S[i];return Math.min(ramp(t,a,a+.7),1-ramp(t,b-.6,b))}
+
+// ---------- Film 3: TPMS piezoceramic three-axis force sensor
+const TEAL='#7fd1b9',FN=C.red,FT1='#46e38a',FT2=C.blue;
+function arrow(x0,y0,x1,y1,col,w=4,hs=16){x.strokeStyle=col;x.fillStyle=col;x.lineWidth=w;x.beginPath();x.moveTo(x0,y0);x.lineTo(x1,y1);x.stroke();
+  const an=Math.atan2(y1-y0,x1-x0);x.beginPath();x.moveTo(x1+Math.cos(an)*4,y1+Math.sin(an)*4);x.lineTo(x1-Math.cos(an-.45)*hs,y1-Math.sin(an-.45)*hs);x.lineTo(x1-Math.cos(an+.45)*hs,y1-Math.sin(an+.45)*hs);x.fill()}
+// gyroid slice drawn into an offscreen canvas
+const GN=300,gOff=document.createElement('canvas');gOff.width=GN;gOff.height=GN;const gctx=gOff.getContext('2d'),gImg=gctx.createImageData(GN,GN);
+function gyroid(X,Y,S,z,a){
+  const d=gImg.data,k=Math.PI*2*1.5/GN,sz=Math.sin(z),cz=Math.cos(z);
+  for(let j=0;j<GN;j++)for(let i=0;i<GN;i++){const xx=i*k,yy=j*k;const g=Math.sin(xx)*Math.cos(yy)+Math.sin(yy)*cz+sz*Math.cos(xx);
+    const p=(j*GN+i)*4;const wall=Math.abs(g)<0.32;const edge=Math.abs(Math.abs(g)-0.32)<0.05;
+    if(edge){d[p]=200;d[p+1]=240;d[p+2]=225;d[p+3]=255}else if(wall){d[p]=60;d[p+1]=130;d[p+2]=115;d[p+3]=235}else{d[p]=14;d[p+1]=22;d[p+2]=38;d[p+3]=255}}
+  gctx.putImageData(gImg,0,0);x.save();x.globalAlpha=a;x.imageSmoothingEnabled=true;x.drawImage(gOff,X,Y,S,S);x.strokeStyle=rgba(TEAL,.5);x.lineWidth=1.5;x.strokeRect(X,Y,S,S);x.restore();
+}
+function s0(t,a){
+  x.save();x.globalAlpha=a;
+  gyroid(1340,300,440,.7+t*.06,a*.6);
+  const k=ramp(t,.2,1.2);
+  x.strokeStyle=C.gold;x.lineWidth=1.5;x.beginPath();x.moveTo(135,330);x.lineTo(135+44*k,330);x.stroke();
+  x.globalAlpha=a*k;spaced("MASTER'S THESIS PROJECT  ·  DTU ENERGY",195,336,17,C.gold,4);
+  x.globalAlpha=a*ramp(t,.5,1.6);txt('Can a printed ceramic',130,450,`400 104px ${SERIF}`,C.ink);
+  x.globalAlpha=a*ramp(t,1,2.1);txt('feel which way it is pushed?',130,560,`italic 400 104px ${SERIF}`,C.gold);
+  x.globalAlpha=a*ramp(t,1.6,2.6);
+  txt('3D-printed piezoelectric ceramics as three-axis force sensors for robotic grippers',135,630,`300 27px ${SANS}`,C.muted);
+  x.globalAlpha=a*ramp(t,2.2,3.2);
+  txt('Prof. Vincenzo Esposito',135,740,`500 26px ${SANS}`,C.ink);
+  spaced('SUPERVISOR',135,772,14,C.gold,4);
+  txt('Lead-free KNN  ·  gyroid architecture  ·  direct piezoelectric effect',135,830,`300 20px ${SANS}`,C.muted);
+  spaced('DTU ENERGY  ·  KONGENS LYNGBY  ·  OPEN PROJECT',135,870,13,C.dim,3);
+  x.restore();
+}
+function s1(t,a){
+  const lt=t-S[1][0];chrome(1,'THE CONTEXT','Squeeze or slip?',lt,a);
+  x.save();x.globalAlpha=a;
+  const cx=620,cy=600;
+  const close=ramp(lt,.4,1.4),slip=ramp(lt,2.8,4.6);
+  // glass
+  const gy=cy+slip*40;
+  x.strokeStyle=rgba('#cfe3ff',.8);x.lineWidth=3;x.fillStyle='rgba(150,190,240,.10)';
+  x.beginPath();x.moveTo(cx-90,gy-170);x.lineTo(cx-70,gy+170);x.lineTo(cx+70,gy+170);x.lineTo(cx+90,gy-170);x.stroke();x.fill();
+  x.fillStyle='rgba(150,190,240,.18)';x.fillRect(cx-82,gy-40,164,6);
+  // fingers
+  const off=lerp(260,92,close);
+  [-1,1].forEach(s=>{const fx=cx+s*off;x.fillStyle='#2b3446';x.strokeStyle=rgba(C.ink,.35);x.lineWidth=1.5;
+    x.fillRect(fx-(s>0?0:60),cy-110,60,220);x.strokeRect(fx-(s>0?0:60),cy-110,60,220);
+    x.fillStyle=rgba(TEAL,.55);x.fillRect(fx-(s>0?0:14),cy-60,14,120);
+    x.fillStyle='#2b3446';x.fillRect(fx-(s>0?0:60)+(s>0?0:0),cy-260,60,150);
+  });
+  x.strokeStyle=rgba(C.ink,.35);x.beginPath();x.moveTo(cx-off-30,cy-260);x.lineTo(cx+off+30,cy-260);x.stroke();
+  // forces at right fingertip
+  const px=cx+92,py=cy;
+  if(close>.9){x.globalAlpha=a*ramp(lt,1.4,2);arrow(px+80,py,px+8,py,FN,5);txt('squeeze',px+90,py+8,`italic 400 30px ${SERIF}`,FN)}
+  if(slip>0){x.globalAlpha=a*ramp(lt,2.8,3.4);arrow(px+30,py+20,px+30,py+20+110*slip,FT1,5);txt('sideways pull',px+80,py+130,`italic 400 30px ${SERIF}`,FT1)}
+  x.globalAlpha=a*ramp(lt,.6,1.6);
+  para('A robot picking up a glass must sense the squeeze of its grip and the sideways pull when the glass starts to slip.',1200,440,560,27,C.ink);
+  x.globalAlpha=a*ramp(lt,3.4,4.4);
+  para('The two forces call for different responses. The fingertip has to tell them apart, and say which way the contact is moving.',1200,640,560,27,C.muted);
+  x.restore();
+}
+function s2(t,a){
+  const lt=t-S[2][0];chrome(2,'THE MATERIAL','A printed gyroid that turns force into charge',lt,a);
+  x.save();x.globalAlpha=a;
+  const GX=150,GY=330,GS=500;
+  gyroid(GX,GY,GS,.7+lt*.08,a);
+  spaced('PRINTED KNN GYROID',GX,GY+GS+40,14,C.gold,3);
+  // zoom lines
+  const zx=GX+GS*.62,zy=GY+GS*.47;const zk=ramp(lt,1,1.8);
+  x.globalAlpha=a*zk;x.strokeStyle=rgba(C.ink,.55);x.lineWidth=1.5;x.strokeRect(zx-14,zy-14,28,28);
+  x.beginPath();x.moveTo(zx+14,zy-14);x.lineTo(820,380);x.moveTo(zx+14,zy+14);x.lineTo(820,800);x.stroke();
+  // curved wall
+  const WX=880,WW=520,WY=560;const press=Math.max(0,Math.sin((lt-2.2)*2.4))*ramp(lt,2.2,2.6);
+  const bend=30+18*press;
+  function arc(y0,col,th){x.fillStyle=col;x.beginPath();x.moveTo(WX,y0);x.quadraticCurveTo(WX+WW/2,y0+bend,WX+WW,y0);x.lineTo(WX+WW,y0+th);x.quadraticCurveTo(WX+WW/2,y0+bend+th,WX,y0+th);x.closePath();x.fill()}
+  arc(WY-110,'#9aa3b2',18);arc(WY-92,rgba(TEAL,.55),150);arc(WY+58,'#9aa3b2',18);
+  txt('electrode',WX+WW+24,WY-95,`italic 400 26px ${SERIF}`,C.muted);
+  txt('poled KNN',WX+WW+24,WY+5,`italic 400 26px ${SERIF}`,TEAL);
+  txt('electrode',WX+WW+24,WY+75,`italic 400 26px ${SERIF}`,C.muted);
+  arrow(WX+WW/2-60,WY+40,WX+WW/2-60,WY-30,FT1,4);txt('P',WX+WW/2-40,WY+14,`italic 500 34px ${SERIF}`,FT1);
+  // force arrows
+  const fa=ramp(lt,2,2.5);x.globalAlpha=a*fa;
+  arrow(WX+WW/2,WY-240,WX+WW/2,WY-140+14*press,C.ink,5,18);
+  arrow(WX+WW/2,WY+250,WX+WW/2,WY+110-14*press+bend*.3,C.ink,5,18);
+  // charges
+  const q=press;x.globalAlpha=a*q;
+  for(let i=0;i<6;i++){const u=(i+.5)/6,xx=WX+u*WW,yt=WY-110+bend*4*u*(1-u)-22,yb=WY+76+bend*4*u*(1-u)+30;
+    txt('−',xx,yt,`500 34px ${SANS}`,C.blue,'center');txt('+',xx,yb,`500 34px ${SANS}`,C.red,'center')}
+  x.globalAlpha=a*ramp(lt,3.4,4.4);
+  para('Press the curved wall and charge appears on its two electrodes: the direct piezoelectric effect, in lead-free KNN.',880,900,840,24,C.muted);
+  x.restore();
+}
+// fingerprint: channel responses for each direction (illustrative)
+const FP={n:[.9,.85,.8],t1:[.7,-.5,.1],t2:[-.2,.4,-.75]};
+function s3(t,a){
+  const lt=t-S[3][0];chrome(3,'THE IDEA','Three channels, three directions',lt,a);
+  x.save();x.globalAlpha=a;
+  // fingertip block with three electrode regions
+  const BX=230,BY=380,BW=360,BH=360;
+  x.fillStyle='#1b2638';x.fillRect(BX,BY,BW,BH);x.strokeStyle=rgba(TEAL,.6);x.lineWidth=2;x.strokeRect(BX,BY,BW,BH);
+  const regs=[[BX+20,BY+20,BW-40,90],[BX+20,BY+130,(BW-50)/2,BH-150],[BX+30+(BW-50)/2,BY+130,(BW-50)/2,BH-150]];
+  const names=['A','B','C'];
+  // direction cycle
+  const dirs=[['n','normal',FN],['t1','tangential 1',FT1],['t2','tangential 2',FT2]];
+  const c=Math.max(0,lt-1.0),di=Math.min(2,Math.floor(c/1.6)),ph=(c%1.6)/1.6;
+  const pulse=lt<1?0:Math.sin(Math.PI*cl(ph*1.4));
+  const [key,label,col]=dirs[di];
+  regs.forEach((r,i)=>{const v=FP[key][i]*pulse;x.fillStyle=v>=0?rgba(C.red,.15+.5*Math.abs(v)):rgba(C.blue,.15+.5*Math.abs(v));x.fillRect(...r);
+    x.strokeStyle=rgba(C.ink,.35);x.lineWidth=1;x.strokeRect(...r);txt(names[i],r[0]+14,r[1]+32,`italic 500 30px ${SERIF}`,C.ink)});
+  // force arrow drawn in pseudo-3D at center
+  const ox=BX+BW/2,oy=BY+BH/2+40;
+  if(lt>1){x.globalAlpha=a*pulse;
+    if(key==='n')arrow(ox-150,oy+150,ox-10,oy+10,col,6,20);
+    if(key==='t1')arrow(ox,oy+140,ox,oy-120,col,6,20);
+    if(key==='t2')arrow(ox-160,oy,ox+150,oy,col,6,20);
+    x.globalAlpha=a;}
+  txt(lt>1?label:'',ox,BY+BH+60,`italic 400 32px ${SERIF}`,col,'center');
+  // bars for channels
+  const GX=800,GY=640,bw=70;
+  x.strokeStyle=rgba(C.ink,.4);x.beginPath();x.moveTo(GX-20,GY);x.lineTo(GX+3*130,GY);x.stroke();
+  names.forEach((n,i)=>{const v=lt>1?FP[key][i]*pulse:0;x.fillStyle=v>=0?C.red:C.blue;const h=-v*170;x.fillRect(GX+i*130,GY,bw,h);
+    txt('channel '+n,GX+i*130+bw/2,GY+220,`300 20px ${SANS}`,C.muted,'center')});
+  spaced('CHARGE PER CHANNEL  ·  ILLUSTRATIVE',GX-20,400,14,C.muted,3);
+  x.globalAlpha=a*ramp(lt,.6,1.6);
+  para('Independent electrode regions read out separately.',1300,450,460,26,C.ink);
+  x.globalAlpha=a*ramp(lt,2.6,3.6);
+  para('The test: does each loading direction leave a distinct pattern, so the three force components can be recovered?',1300,560,460,26,C.muted);
+  x.restore();
+}
+function s4(t,a){
+  const lt=t-S[4][0];chrome(4,'THE TEST','Calibrate, then grip and pull',lt,a);
+  x.save();x.globalAlpha=a;
+  // left: time plot of force components during preload + oblique pull
+  const X0=200,Y0=860,PW=820,PH=440;
+  x.strokeStyle=rgba(C.ink,.5);x.lineWidth=1.5;x.beginPath();x.moveTo(X0,Y0-PH);x.lineTo(X0,Y0);x.lineTo(X0+PW,Y0);x.stroke();
+  txt('time  →',X0+PW,Y0+40,`300 20px ${SANS}`,C.muted,'right');
+  x.save();x.translate(X0-30,Y0-PH/2);x.rotate(-Math.PI/2);txt('force',0,0,`300 20px ${SANS}`,C.muted,'center');x.restore();
+  const fn=u=>.7*ramp(u,.05,.3), ft1=u=>.45*ramp(u,.45,.85), ft2=u=>.28*ramp(u,.5,.9);
+  const pr=ramp(lt,.8,4.2);
+  [[fn,FN,'normal (preload)'],[ft1,FT1,'tangential 1'],[ft2,FT2,'tangential 2']].forEach(([f,col,name],j)=>{
+    x.setLineDash([7,7]);x.strokeStyle=rgba(C.ink,.45);x.lineWidth=1.5;x.beginPath();for(let s=0;s<=200*pr;s++){const u=s/200;const px=X0+u*PW,py=Y0-f(u)*PH;s?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();x.setLineDash([]);
+    x.strokeStyle=col;x.lineWidth=3;x.beginPath();for(let s=0;s<=200*pr;s++){const u=s/200;const e=.03*Math.sin(u*40+j*2)*ramp(u,.05,.2);const px=X0+u*PW,py=Y0-(f(u)*1.04+e)*PH;s?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();
+    x.fillStyle=col;x.fillRect(X0+30,Y0-PH+8+j*32,22,4);txt(name,X0+62,Y0-PH+16+j*32,`300 19px ${SANS}`,C.ink);
+  });
+  x.setLineDash([7,7]);x.strokeStyle=rgba(C.ink,.45);x.beginPath();x.moveTo(X0+PW-250,Y0-PH+14);x.lineTo(X0+PW-228,Y0-PH+14);x.stroke();x.setLineDash([]);
+  txt('reference sensor',X0+PW-218,Y0-PH+20,`300 19px ${SANS}`,C.muted);
+  spaced('ILLUSTRATIVE',X0+PW-218,Y0-PH+50,14,C.muted,3);
+  // right: tangential direction (top view) + normal gauge
+  const ox=1420,oy=560,Rr=200,u=pr;
+  x.strokeStyle=rgba(C.ink,.25);x.lineWidth=1;x.beginPath();x.arc(ox,oy,Rr,0,7);x.stroke();
+  x.beginPath();x.moveTo(ox-Rr,oy);x.lineTo(ox+Rr,oy);x.moveTo(ox,oy-Rr);x.lineTo(ox,oy+Rr);x.stroke();
+  txt('Ft2',ox+Rr+12,oy+8,`italic 400 26px ${SERIF}`,FT2);txt('Ft1',ox-14,oy-Rr-12,`italic 400 26px ${SERIF}`,FT1);
+  spaced('TANGENTIAL FORCE, TOP VIEW',ox-Rr,oy-Rr-60,14,C.muted,3);
+  const tx=ft2(u),ty=ft1(u),sc2=Rr/.5;
+  if(tx+ty>.01){x.setLineDash([7,7]);x.strokeStyle=rgba(C.ink,.7);x.lineWidth=2;x.beginPath();x.moveTo(ox,oy);x.lineTo(ox+tx*sc2,oy-ty*sc2);x.stroke();x.setLineDash([]);
+    const an=Math.atan2(ty,tx)+.09,m=Math.hypot(tx,ty)*1.04;arrow(ox,oy,ox+Math.cos(an)*m*sc2,oy-Math.sin(an)*m*sc2,C.gold,4,16);
+    if(m>.15){x.strokeStyle=rgba(C.gold,.6);x.lineWidth=1.5;x.beginPath();x.arc(ox,oy,70,-an,-(an-.09),false);x.stroke();txt('direction error',ox+80,oy-Math.sin(an)*70-30,`italic 400 22px ${SERIF}`,C.gold)}}
+  // normal gauge
+  const gx=ox+Rr+120,gh=360,gy=oy+gh/2;
+  x.strokeStyle=rgba(C.ink,.4);x.strokeRect(gx,gy-gh,28,gh);
+  x.fillStyle=rgba(FN,.8);x.fillRect(gx+4,gy-fn(u)*1.04*gh/.8,20,fn(u)*1.04*gh/.8);
+  x.strokeStyle=rgba(C.ink,.8);x.setLineDash([5,5]);x.beginPath();x.moveTo(gx-8,gy-fn(u)*gh/.8);x.lineTo(gx+36,gy-fn(u)*gh/.8);x.stroke();x.setLineDash([]);
+  txt('Fn',gx+14,gy+36,`italic 400 26px ${SERIF}`,FN,'center');
+  x.globalAlpha=a*ramp(lt,1,2);txt('gold: estimated  ·  dashed: reference',ox+60,oy+Rr+70,`italic 400 28px ${SERIF}`,C.gold,'center');
+  x.globalAlpha=a*ramp(lt,4.2,5.2);
+  para('Tested on loading directions held back from calibration: which components it resolves, over what range, with what direction error.',1180,870,640,22,C.muted);
+  x.restore();
+}
+function s5(t,a){
+  const lt=t-S[5][0];const endK=ramp(lt,4.6,5.4);chrome(5,'YOUR PROJECT','Prepare, calibrate, test',lt,a*(1-endK));
+  x.save();x.globalAlpha=a;
+  const cols=[{n:'1',h:'Prepare',d:'Mount a printed KNN specimen in a fingertip holder with at least three independent readouts.'},
+              {n:'2',h:'Calibrate',d:'Known forces along three axes against a reference sensor: sensitivity and cross-talk.'},
+              {n:'3',h:'Test',d:'Preload, then pull an object sideways or obliquely; compare the estimated force vector with the reference.'}];
+  cols.forEach((c,i)=>{
+    const X=150+i*560,k=ramp(lt,.4+i*.5,1.2+i*.5)*(1-endK);
+    x.globalAlpha=a*k;
+    x.strokeStyle=rgba(C.gold,.5);x.lineWidth=1.5;x.beginPath();x.moveTo(X,330);x.lineTo(X+460,330);x.stroke();
+    txt(c.n,X,420,`italic 500 64px ${SERIF}`,C.gold);txt(c.h,X+60,412,`400 48px ${SERIF}`,C.ink);
+    const iy=470;
+    if(i===0){gyroid(X+150,iy,150,.7+lt*.1,a*k);x.globalAlpha=a*k;['A','B','C'].forEach((n,q)=>{x.strokeStyle=C.gold;x.beginPath();x.moveTo(X+300,iy+30+q*45);x.lineTo(X+380,iy+30+q*45);x.stroke();txt(n,X+390,iy+38+q*45,`italic 500 24px ${SERIF}`,C.gold)})}
+    if(i===1){const ox=X+230,oy=iy+90;arrow(ox,oy,ox+110,oy,FT2,4);arrow(ox,oy,ox,oy-90,FT1,4);arrow(ox,oy,ox-70,oy+60,FN,4)}
+    if(i===2){const ox=X+230,oy=iy+90;const an=-.6+.3*Math.sin(lt*1.5);arrow(ox,oy,ox+Math.cos(an)*120,oy+Math.sin(an)*120,C.gold,4);x.setLineDash([6,6]);x.strokeStyle=rgba(C.ink,.6);x.beginPath();x.moveTo(ox,oy);x.lineTo(ox+Math.cos(an+.08)*125,oy+Math.sin(an+.08)*125);x.stroke();x.setLineDash([])}
+    x.globalAlpha=a*k;para(c.d,X,iy+210,440,22,C.muted);
+  });
+  x.globalAlpha=a*endK;
+  spaced('OPEN MASTER\'S THESIS  ·  DTU ENERGY',W/2,440,18,C.gold,5,'center');
+  txt('Can a printed ceramic feel which way it is pushed?',W/2,540,`italic 400 70px ${SERIF}`,C.ink,'center');
+  txt('Prof. Vincenzo Esposito  ·  3D-printed KNN force sensors',W/2,620,`300 26px ${SANS}`,C.muted,'center');
+  txt('esplab-droid.github.io/students',W/2,700,`400 22px ${MONO}`,C.blue,'center');
+  x.restore();
+}
+
+const SC=[s0,s1,s2,s3,s4,s5];
+window.render=function(t){
+  bg(t);
+  for(let i=0;i<SC.length;i++){const al=sceneAlpha(t,i);if(al>0.001)SC[i](t,al)}
+};
+window.DUR=DUR;
+window.ready=document.fonts.load('400 70px Corm').then(()=>Promise.all([document.fonts.load('italic 400 70px Corm'),document.fonts.load('italic 500 70px Corm'),document.fonts.load('500 70px Corm'),document.fonts.load('400 20px PMono')])).then(()=>{render(0);return true});
+</script></body></html>
