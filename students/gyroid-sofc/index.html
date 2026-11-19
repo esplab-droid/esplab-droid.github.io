@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3D-printed gyroid solid oxide fuel cells | Student projects, DTU Energy</title>
+<meta name="description" content="Master's thesis project at DTU Energy: testing 3D-printed gyroid solid oxide fuel cells for compact power generation, comparing coarse and fine channel spacing, with Vincenzo Esposito.">
+<link rel="canonical" href="https://esplab-droid.github.io/students/gyroid-sofc/">
+<meta property="og:site_name" content="Vincenzo Esposito, DTU Energy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3D-printed gyroid solid oxide fuel cells | Student projects, DTU Energy">
+<meta property="og:description" content="Master's thesis project at DTU Energy: testing 3D-printed gyroid solid oxide fuel cells for compact power generation, comparing coarse and fine channel spacing, with Vincenzo Esposito.">
+<meta property="og:url" content="https://esplab-droid.github.io/students/gyroid-sofc/">
+<meta property="og:image" content="https://esplab-droid.github.io/students/gyroid-sofc/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebPage",
+   "@id": "https://esplab-droid.github.io/students/gyroid-sofc/",
+   "url": "https://esplab-droid.github.io/students/gyroid-sofc/",
+   "name": "Nanosecond laser annealing of HZO thin films",
+   "description": "Master's thesis project at DTU Energy: testing 3D-printed gyroid solid oxide fuel cells for compact power generation, comparing coarse and fine channel spacing, with Vincenzo Esposito.",
+   "isPartOf": {
+    "@id": "https://esplab-droid.github.io/#website"
+   },
+   "author": {
+    "@id": "https://esplab-droid.github.io/#person"
+   }
+  }
+ ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: technical report. Narrow masthead with a gyroid cross-section plot, then a two-column ledger: key quantity in the margin, text on the right. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;      /* single accent: links and plot lines */
+  --plot:#e9ecef;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.who{font-family:var(--display);font-weight:600;font-size:1rem}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:48px;align-items:start;padding-block:44px 48px}
+.intro h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+.intro p{max-width:36em;margin:16px 0 0}
+.intro dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:22px 0 0;font-family:var(--display);font-size:.88rem}
+.intro dt{color:var(--muted)}
+.intro dd{margin:0}
+figure.gyro{margin:0}
+figure.gyro canvas{display:block;width:100%;aspect-ratio:1;max-width:100%;background:var(--plot);border:1px solid var(--rule)}
+figure.gyro figcaption{margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--muted);line-height:1.5}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:22px;border-bottom:1px solid var(--rule)}
+.entry:last-child{border-bottom:0}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3;font-variant-numeric:tabular-nums}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.q{padding-block:14px;border-top:1px solid var(--rule)}
+.q h3{font-size:1rem;margin:6px 0 6px}
+.q p{margin:0;font-size:.97rem;color:var(--muted)}
+
+.lede{max-width:44em;margin:0 0 24px}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pillar{border:1px solid var(--rule);border-top:2px solid var(--accent);padding:16px 18px;background:var(--plot)}
+.pillar h3{font-size:1.05rem;margin:6px 0 8px}
+.pillar p{margin:0;font-size:.97rem}
+.pillar .sys{margin-top:12px;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+table.lines{width:100%;border-collapse:collapse;font-size:.97rem}
+.tablewrap{overflow-x:auto}
+table.lines th,table.lines td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.lines th{font-family:var(--display);font-weight:600;font-size:.95rem;white-space:nowrap}
+table.lines td.sys{font-family:var(--mono);font-size:.8rem;color:var(--muted);white-space:nowrap}
+table.collab th{white-space:normal;width:38%}
+table.lines tr:last-child th,table.lines tr:last-child td{border-bottom:0}
+
+.subhead{font-size:1.05rem;margin:36px 0 10px}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:14px;border-top:1px solid var(--rule);display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:start}
+.person h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.person h3 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.av{width:72px;height:72px;display:block;border:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 6px}
+.pp{font-family:var(--mono);font-size:.78rem;line-height:1.6;margin-top:6px}
+.pp .label{display:block;font-size:.66rem}
+.pl{display:flex;flex-wrap:wrap;gap:0 12px}
+.pl a{white-space:nowrap}
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+.mail{font-family:var(--mono);user-select:all}
+button.copy{font-family:var(--mono);font-size:.72rem;margin-left:8px;padding:2px 8px;background:transparent;color:var(--ink);border:1px solid var(--rule);cursor:pointer}
+button.copy:hover{border-color:var(--ink)}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:28px;padding-block:32px 36px}
+  figure.gyro{max-width:300px}
+  .entry{grid-template-columns:1fr;gap:8px}
+  .qs{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
+  table.collab tr,table.collab th,table.collab td{display:block;width:auto}
+  table.collab th{border-bottom:0;padding-bottom:2px}
+  table.collab td{padding-top:0}
+}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+.lede{max-width:44em}
+.proj{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:22px;border-top:1px solid var(--rule)}
+.proj h3{font-size:1.08rem;margin:0 0 6px}
+.proj h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.proj h3 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.proj p{margin:0;max-width:40em}
+.proj img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+.lv{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);padding:1px 7px;margin:0 6px 6px 0}
+.side small{display:block;font-family:var(--mono);font-size:.72rem;color:var(--muted);line-height:1.5;margin-top:4px}
+.status{color:var(--accent)}
+.prose{max-width:42em}
+.prose p{margin:0 0 14px}
+.prose h2{font-size:1.15rem;margin:30px 0 10px}
+.prose ol{padding-left:1.2em;margin:0 0 14px}.prose ol li{margin:0 0 10px}
+figure.fig{margin:26px 0 24px}
+figure.fig img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+figure.fig figcaption{margin-top:10px;font-family:var(--display);font-size:.86rem;color:var(--muted);line-height:1.5;max-width:52em}
+.hook{font-size:1.12rem;font-style:italic}
+.refs{list-style:none;padding:0;margin:0}
+.refs li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:.97rem}
+.refs li:last-child{border-bottom:0}
+.refs .lk{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.76rem;margin-top:4px}
+@media (max-width:780px){.proj{grid-template-columns:1fr;gap:10px}}
+.film{background:#07090d;color:#dfe5ee;padding:18px 18px 12px;margin:0 0 34px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:#07090d;border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:#8b95a3}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:#dfe5ee;border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:#dfe5ee}
+.film button:focus-visible{outline:2px solid #dfe5ee;outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../../">Vincenzo Esposito</a><span>/</span><a href="../">Student projects</a><span>/</span>3D-printed fuel cells</div>
+    <nav aria-label="Sections"><a href="#film-wrap">Film</a><a href="#tasks">Tasks</a><a href="#team">Team</a><a href="#reading">Reading</a></nav>
+  </header>
+
+  <section>
+    <span class="label">Master's thesis project at DTU Energy · Open</span>
+    <h1 style="font-size:clamp(1.5rem,3.2vw,2.1rem);margin:10px 0 22px;max-width:30em">Testing 3D-printed solid oxide fuel cells for compact power generation</h1>
+    <figure class="film" id="film-wrap">
+      <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of the project: power per gram and volume, the gyroid cell with interwoven fuel and air channels, the trade-off between electrode area and fuel supply in coarse and fine gyroids, and the planned measurements">
+        <source src="gyroid_sofc.mp4" type="video/mp4">
+      </video>
+      <figcaption><span>How tightly can we pack a fuel cell? The project in 41 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+    </figure>
+    <div class="prose">
+      <p>On a space mission, a fuel cell earns its place by how much usable power it delivers for each gram and cubic centimeter it occupies. At DTU, we have 3D-printed a solid oxide cell in the shape of a gyroid. A thin, curved ceramic wall separates two interwoven networks of channels, one carrying fuel and the other air. This geometry fits a large electrode area into a small volume. Our <i>Nature Energy</i> paper demonstrated cell-level power densities above <b>1 W g⁻¹</b> and <b>3 W cm⁻³</b> in fuel-cell operation. Our <i>Joule</i> paper, <i>Electrochemical energy conversion beyond Earth</i>, provides the wider motivation for lightweight electrochemical devices.</p>
+      <p class="hook">How tightly can we pack the gyroid channels before the difficulty of supplying fuel begins to offset the gain in electrode area?</p>
+      <p>In this project, you will compare two channel sizes in cells with the same external dimensions. You will test them on hydrogen and air and determine which geometry delivers more power at a useful operating voltage.</p>
+    </div>
+    <figure class="fig">
+      <img src="figure1.jpg" alt="Coarse and fine gyroids of the same external size; an enlarged wall section with fuel electrode, dense electrolyte and air electrode between hydrogen and air channels, with oxide ions crossing the electrolyte; a cell with fuel-side pressure drop and power per cell volume indicated." width="1600" height="533">
+      <figcaption><strong>Figure 1. Channel spacing in a 3D-printed solid oxide fuel cell.</strong> Coarse and fine gyroids occupy the same external volume. The enlarged wall section shows the dense electrolyte separating the hydrogen and air channels. The project tests whether finer channels deliver more power per cell volume at matched voltage and fuel utilization, and measures the accompanying fuel-side pressure drop.</figcaption>
+    </figure>
+    <div class="prose">
+      <h2 id="tasks">In this project you will</h2>
+      <ol>
+        <li><b>Prepare and characterize two gyroid designs.</b> Use the group's established ceramic printing and electrode-coating procedures. Keep the materials and nominal electrolyte wall thickness fixed. Measure the sintered dimensions and cell mass, check gas tightness, and estimate the internal electrode area from the geometry.</li>
+        <li><b>Measure the effect of fuel supply.</b> Record voltage–current curves and impedance spectra at one operating temperature. Vary the hydrogen flow while holding the air supply and inlet gas compositions fixed. Measure the fuel-side pressure drop to determine the flow-resistance cost of using finer channels.</li>
+        <li><b>Identify which geometry makes better use of its volume.</b> At a common operating voltage and fuel utilization, compare the power per unit cell volume, per unit mass, and per estimated electrode area. Use the flow dependence of the voltage losses, together with the pressure-drop measurements, to assess whether fuel delivery limits either design.</li>
+      </ol>
+      <p><b>What you will deliver.</b> A measured comparison of two printable designs and a recommendation for the next cell prototype. The most informative result will be whether the finer gyroid's extra internal area translates into more power at the same fuel utilization, and what pressure drop accompanies that gain.</p>
+
+      <h2 id="team">Our team</h2>
+      <p>You will work with <a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">Prof. Vincenzo Esposito</a> and colleagues at DTU Energy on ceramic additive manufacturing and solid oxide cell testing. The thesis focuses on a single cell in fuel-cell mode, from the printed architecture to its electrical performance.</p>
+
+      <h2 id="reading">Selected papers from our team</h2>
+      <ul class="refs">
+        <li>Z. Zhou <i>et al.</i>, “Monolithic gyroidal solid oxide cells by additive manufacturing.” <i>Nature Energy</i> <b>10</b>, 962–970 (2025).
+          <div class="lk"><a href="https://doi.org/10.1038/s41560-025-01811-y" target="_blank" rel="noopener">DOI 10.1038/s41560-025-01811-y</a><a href="../../gyroid-soc/">Project page and film</a></div></li>
+        <li>Z. Zhou, V. K. Nadimpalli, M. Cairoli, M. Ni and V. Esposito, “Electrochemical energy conversion beyond Earth.” <i>Joule</i> <b>10</b>, 102708 (2026).
+          <div class="lk"><a href="https://doi.org/10.1016/j.joule.2026.102708" target="_blank" rel="noopener">DOI 10.1016/j.joule.2026.102708</a></div></li>
+      </ul>
+
+      <h2>Interested?</h2>
+      <p>Get in touch through the <a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a> with a short note and your transcript.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">All student projects</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div>
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>

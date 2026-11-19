@@ -1,0 +1,210 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-400-italic.woff2);font-style:italic;font-weight:400}
+@font-face{font-family:Corm;src:url(fontsource-cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2);font-style:italic;font-weight:500}
+@font-face{font-family:PMono;src:url(fontsource-ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#0a1120}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+const W=1920,H=1080,cv=document.getElementById('c'),x=cv.getContext('2d');
+const C={bg:'#0a1120',ink:'#e6e9ef',muted:'#8c96a8',dim:'#4a5468',gold:'#d8b25c',blue:'#86aee6',green:'#46e38a',red:'#e46a5b',line:'#2a3446'};
+const SANS='Inter, "DejaVu Sans", sans-serif',SERIF='Corm, serif',MONO='PMono, monospace';
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const ease=t=>{t=cl(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+const ramp=(t,a,b)=>ease((t-a)/(b-a));
+const lerp=(a,b,k)=>a+(b-a)*k;
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
+
+// scenes: [start, end]
+const S=[[0,5.5],[5.5,12],[12,18.5],[18.5,25.5],[25.5,32.5],[32.5,41]];
+const DUR=41;
+
+const dust=(()=>{const r=rng(7);return Array.from({length:70},()=>({x:r()*W,y:r()*H,s:r()*1.6+.4,v:r()*6+2,a:r()*.25+.05}))})();
+function bg(t){
+  x.fillStyle=C.bg;x.fillRect(0,0,W,H);
+  const g=x.createRadialGradient(W*.62,H*.45,50,W*.62,H*.45,W*.75);
+  g.addColorStop(0,'rgba(30,48,82,0.55)');g.addColorStop(1,'rgba(10,17,32,0)');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  for(const d of dust){const y=(d.y-d.v*t+H*10)%H;x.fillStyle=`rgba(200,215,240,${d.a})`;x.beginPath();x.arc(d.x,y,d.s,0,7);x.fill()}
+}
+function txt(s,X,Y,font,col,al='left',a=1){x.globalAlpha*=a;x.font=font;x.fillStyle=col;x.textAlign=al;x.textBaseline='alphabetic';x.fillText(s,X,Y);x.globalAlpha/=a||1}
+function spaced(s,X,Y,size,col,sp=3,al='left'){x.font=`${size}px ${MONO}`;x.fillStyle=col;x.textBaseline='alphabetic';
+  let w=0;for(const ch of s)w+=x.measureText(ch).width+sp;let cx=al==='center'?X-w/2:X;x.textAlign='left';for(const ch of s){x.fillText(ch,cx,Y);cx+=x.measureText(ch).width+sp}}
+function para(s,X,Y,maxW,size,col,lh=1.5,a=1){x.font=`300 ${size}px ${SANS}`;x.fillStyle=col;x.textAlign='left';const ws=s.split(' ');let line='',y=Y;x.globalAlpha*=a;
+  for(const w of ws){const tt=line?line+' '+w:w;if(x.measureText(tt).width>maxW){x.fillText(line,X,y);line=w;y+=size*lh}else line=tt}x.fillText(line,X,y);x.globalAlpha/=a||1;return y}
+function chrome(n,label,title,lt,a){
+  x.save();x.globalAlpha=a;
+  const k=ramp(lt,0,.8);
+  x.strokeStyle=C.gold;x.lineWidth=1.5;x.beginPath();x.moveTo(135,112);x.lineTo(135+44*k,112);x.stroke();
+  spaced(label,195,118,17,C.gold,4);
+  x.globalAlpha=a*ramp(lt,.1,.9);
+  txt(title,133,205+12*(1-ramp(lt,.1,.9)),`400 70px ${SERIF}`,C.ink);
+  x.globalAlpha=a*.9;
+  txt('MSc thesis project  ·  DTU Energy',135,1010,`300 17px ${SANS}`,C.dim);
+  x.strokeStyle=rgba(C.gold,.35);x.lineWidth=1;x.beginPath();x.moveTo(135,1026);x.lineTo(560,1026);x.stroke();
+  txt(`0${n}`,1742,1010,`italic 500 30px ${SERIF}`,C.gold,'right');
+  txt(' / 05',1790,1010,`italic 400 26px ${SERIF}`,C.dim,'right');
+  x.restore();
+}
+function sceneAlpha(t,i){const [a,b]=S[i];return Math.min(ramp(t,a,a+.7),1-ramp(t,b-.6,b))}
+
+// ---------- Film 4: 3D-printed gyroid SOFC, channel spacing
+const H2C='#6fa3e8',AIRC='#e8955a',WALL='#e9e2d2';
+function arrow(x0,y0,x1,y1,col,w=4,hs=16){x.strokeStyle=col;x.fillStyle=col;x.lineWidth=w;x.beginPath();x.moveTo(x0,y0);x.lineTo(x1,y1);x.stroke();
+  const an=Math.atan2(y1-y0,x1-x0);x.beginPath();x.moveTo(x1+Math.cos(an)*4,y1+Math.sin(an)*4);x.lineTo(x1-Math.cos(an-.45)*hs,y1-Math.sin(an-.45)*hs);x.lineTo(x1-Math.cos(an+.45)*hs,y1-Math.sin(an+.45)*hs);x.fill()}
+const GN=320,gOff=document.createElement('canvas');gOff.width=GN;gOff.height=GN;const gctx=gOff.getContext('2d'),gImg=gctx.createImageData(GN,GN);
+function gyro2(X,Y,S,z,a,per=1.5,wallW=.16){
+  const d=gImg.data,k=Math.PI*2*per/GN,sz=Math.sin(z),cz=Math.cos(z);
+  const hc=[111,163,232],ac=[232,149,90];
+  for(let j=0;j<GN;j++)for(let i=0;i<GN;i++){const xx=i*k,yy=j*k;const g=Math.sin(xx)*Math.cos(yy)+Math.sin(yy)*cz+sz*Math.cos(xx);
+    const p=(j*GN+i)*4;let c;
+    if(Math.abs(g)<wallW)c=[233,226,210];else if(g>0){const f=.35+.25*cl(g/1.4);c=hc.map(v=>v*f+14*(1-f))}else{const f=.35+.25*cl(-g/1.4);c=ac.map(v=>v*f+14*(1-f))}
+    d[p]=c[0];d[p+1]=c[1];d[p+2]=c[2];d[p+3]=255}
+  gctx.putImageData(gImg,0,0);x.save();x.globalAlpha=a;x.imageSmoothingEnabled=true;x.drawImage(gOff,X,Y,S,S);x.strokeStyle=rgba(WALL,.45);x.lineWidth=1.5;x.strokeRect(X,Y,S,S);x.restore();
+}
+function s0(t,a){
+  x.save();x.globalAlpha=a;
+  gyro2(1340,300,440,.7+t*.06,a*.75);
+  const k=ramp(t,.2,1.2);
+  x.strokeStyle=C.gold;x.lineWidth=1.5;x.beginPath();x.moveTo(135,330);x.lineTo(135+44*k,330);x.stroke();
+  x.globalAlpha=a*k;spaced("MASTER'S THESIS PROJECT  ·  DTU ENERGY",195,336,17,C.gold,4);
+  x.globalAlpha=a*ramp(t,.5,1.6);txt('How tightly can we pack',130,450,`400 104px ${SERIF}`,C.ink);
+  x.globalAlpha=a*ramp(t,1,2.1);txt('a fuel cell?',130,560,`italic 400 104px ${SERIF}`,C.gold);
+  x.globalAlpha=a*ramp(t,1.6,2.6);
+  txt('Testing 3D-printed solid oxide fuel cells for compact power generation',135,630,`300 27px ${SANS}`,C.muted);
+  x.globalAlpha=a*ramp(t,2.2,3.2);
+  txt('Prof. Vincenzo Esposito',135,740,`500 26px ${SANS}`,C.ink);
+  spaced('SUPERVISOR',135,772,14,C.gold,4);
+  txt('Gyroid solid oxide cells  ·  hydrogen and air  ·  power per volume',135,830,`300 20px ${SANS}`,C.muted);
+  spaced('DTU ENERGY  ·  KONGENS LYNGBY  ·  OPEN PROJECT',135,870,13,C.dim,3);
+  x.restore();
+}
+function s1(t,a){
+  const lt=t-S[1][0];chrome(1,'THE CONTEXT','On a mission, every gram counts',lt,a);
+  x.save();x.globalAlpha=a;
+  // balance-like gauge: two counters
+  const cx=560,cy=600;
+  gyro2(cx-170,cy-200,340,.7+lt*.1,a*ramp(lt,.3,1.1));
+  x.globalAlpha=a*ramp(lt,1.4,2.2);
+  txt('> 1 W g⁻¹',cx-170,cy+220,`500 44px ${SERIF}`,C.ink);
+  x.globalAlpha=a*ramp(lt,1.9,2.7);txt('> 3 W cm⁻³',cx+60,cy+220,`500 44px ${SERIF}`,C.ink);x.globalAlpha=a*ramp(lt,1.4,2.2);
+  spaced('CELL LEVEL, FUEL-CELL MODE  ·  NATURE ENERGY 2025',cx-170,cy+262,13,C.gold,3);
+  x.globalAlpha=a*ramp(lt,.6,1.6);
+  para('In space, a fuel cell earns its place by the usable power it delivers for each gram and cubic centimetre it occupies.',1200,440,560,27,C.ink);
+  x.globalAlpha=a*ramp(lt,3.0,4.0);
+  para('Our 3D-printed gyroid cell fits a large electrode area into a small volume.',1200,660,560,27,C.muted);
+  x.restore();
+}
+function s2(t,a){
+  const lt=t-S[2][0];chrome(2,'THE ARCHITECTURE','Two channel networks, one thin wall',lt,a);
+  x.save();x.globalAlpha=a;
+  const GX=150,GY=330,GS=500;
+  gyro2(GX,GY,GS,.7+lt*.08,a);
+  x.fillStyle=H2C;x.fillRect(GX,GY+GS+28,22,6);txt('fuel channels',GX+32,GY+GS+38,`300 20px ${SANS}`,C.ink);
+  x.fillStyle=AIRC;x.fillRect(GX+220,GY+GS+28,22,6);txt('air channels',GX+252,GY+GS+38,`300 20px ${SANS}`,C.ink);
+  const zx=GX+GS*.5,zy=GY+GS*.5;const zk=ramp(lt,1,1.8);
+  x.globalAlpha=a*zk;x.strokeStyle=rgba(C.ink,.55);x.lineWidth=1.5;x.strokeRect(zx-14,zy-14,28,28);
+  x.beginPath();x.moveTo(zx+14,zy-14);x.lineTo(820,360);x.moveTo(zx+14,zy+14);x.lineTo(820,820);x.stroke();
+  // wall section: fuel electrode / electrolyte / air electrode, wavy
+  const WX=860,WW=560,top=470;const wav=u=>18*Math.sin(u*Math.PI*1.6+.4);
+  const band=(y0,h,fill)=>{x.fillStyle=fill;x.beginPath();for(let s=0;s<=60;s++){const u=s/60;const px=WX+u*WW,py=y0+wav(u);s?x.lineTo(px,py):x.moveTo(px,py)}for(let s=60;s>=0;s--){const u=s/60;x.lineTo(WX+u*WW,y0+h+wav(u))}x.closePath();x.fill()};
+  band(top,90,'#5f6b7d');band(top+90,70,WALL);band(top+160,90,'#7d6d5f');
+  // pores
+  const r=rng(3);for(let i=0;i<70;i++){const u=r(),v=r(),lay=i%2;const px=WX+u*WW,py=(lay?top+170:top+8)+v*72+wav(u);x.fillStyle='rgba(10,17,32,.5)';x.beginPath();x.arc(px,py,3+r()*4,0,7);x.fill()}
+  txt('fuel electrode',WX+WW+24,top+50,`italic 400 26px ${SERIF}`,H2C);
+  txt('dense electrolyte',WX+WW+24,top+132,`italic 400 26px ${SERIF}`,C.ink);
+  txt('air electrode',WX+WW+24,top+212,`italic 400 26px ${SERIF}`,AIRC);
+  // gas flows
+  const fk=ramp(lt,1.6,2.4);x.globalAlpha=a*fk;
+  arrow(WX,top-60,WX+WW,top-60,H2C,4);txt('H₂',WX+WW/2,top-80,`italic 500 30px ${SERIF}`,H2C,'center');
+  arrow(WX,top+320,WX+WW,top+320,AIRC,4);txt('air',WX+WW/2,top+360,`italic 500 30px ${SERIF}`,AIRC,'center');
+  // oxide ions moving from air side to fuel side
+  x.globalAlpha=a*ramp(lt,2.4,3);
+  for(let i=0;i<7;i++){const u=(i+.5)/7,ph=((lt*.6+i*.37)%1);const px=WX+u*WW,py=top+230-ph*190+wav(u);x.fillStyle=C.gold;x.beginPath();x.arc(px,py,6,0,7);x.fill()}
+  txt('O²⁻',WX+WW+24,top+290,`italic 500 28px ${SERIF}`,C.gold);
+  x.globalAlpha=a*ramp(lt,3.6,4.6);
+  para('Oxide ions cross the dense wall from the air side to the fuel side; the curved wall packs a large electrode area into the cell.',860,930,860,23,C.muted);
+  x.restore();
+}
+function s3(t,a){
+  const lt=t-S[3][0];chrome(3,'THE TRADE-OFF','Finer channels: more area, harder to feed',lt,a);
+  x.save();x.globalAlpha=a;
+  const S1=380,y0=360;
+  gyro2(170,y0,S1,.7+lt*.06,a*ramp(lt,.3,1),1.2,.16);
+  gyro2(650,y0,S1,.7+lt*.06,a*ramp(lt,.6,1.3),2.6,.30);
+  txt('coarse',170+S1/2,y0+S1+44,`italic 400 32px ${SERIF}`,C.ink,'center');
+  txt('fine',650+S1/2,y0+S1+44,`italic 400 32px ${SERIF}`,C.ink,'center');
+  spaced('SAME EXTERNAL VOLUME',170,y0-24,14,C.gold,3);
+  // qualitative bars
+  const BX=1240,bw=300;const k=ramp(lt,1.6,3.2);
+  const rows=[['electrode area',[.45,.85],C.green],['fuel-side pressure drop',[.3,.8],C.red]];
+  rows.forEach(([n,v,col],i)=>{const by=420+i*200;x.globalAlpha=a*ramp(lt,1.4+i*.6,2+i*.6);
+    txt(n,BX,by,`300 22px ${SANS}`,C.ink);
+    ['coarse','fine'].forEach((lab,j)=>{const yy=by+28+j*46;x.fillStyle=rgba(C.ink,.08);x.fillRect(BX+90,yy,bw,26);x.fillStyle=rgba(col,j?.9:.55);x.fillRect(BX+90,yy,bw*v[j]*k,26);txt(lab,BX,yy+20,`italic 400 24px ${SERIF}`,C.muted)})});
+  x.globalAlpha=a*ramp(lt,1.4,2);spaced('QUALITATIVE',BX,370,14,C.muted,3);
+  x.globalAlpha=a*ramp(lt,3.6,4.6);
+  para('The question: at what point does the extra area stop paying for the harder fuel supply?',BX,860,520,24,C.muted);
+  x.restore();
+}
+function s4(t,a){
+  const lt=t-S[4][0];chrome(4,'THE MEASUREMENT','Power per volume, at matched conditions',lt,a);
+  x.save();x.globalAlpha=a;
+  const X0=220,Y0=880,PW=880,PH=500;
+  x.strokeStyle=rgba(C.ink,.5);x.lineWidth=1.5;x.beginPath();x.moveTo(X0,Y0-PH);x.lineTo(X0,Y0);x.lineTo(X0+PW,Y0);x.stroke();
+  txt('hydrogen flow  →',X0+PW,Y0+44,`300 20px ${SANS}`,C.muted,'right');
+  x.save();x.translate(X0-32,Y0-PH/2);x.rotate(-Math.PI/2);txt('power per cell volume',0,0,`300 20px ${SANS}`,C.muted,'center');x.restore();
+  const co=u=>.6*(1-Math.exp(-u*6)), fi=u=>1.0*(1-Math.exp(-u*1.6));
+  const pr=ramp(lt,.9,3.6);
+  [[co,C.ink,'coarse'],[fi,C.gold,'fine']].forEach(([f,col,n],j)=>{x.strokeStyle=col;x.lineWidth=3.5;x.beginPath();for(let s=0;s<=200*pr;s++){const u=s/200;const px=X0+u*PW,py=Y0-cl(f(u))*PH*.9;s?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();
+    x.fillStyle=col;x.fillRect(X0+30,Y0-PH+10+j*32,22,4);txt(n,X0+62,Y0-PH+18+j*32,`300 20px ${SANS}`,C.ink)});
+  spaced('ILLUSTRATIVE',X0+PW-150,Y0-PH+18,14,C.muted,3);
+  // crossover marker
+  const k=ramp(lt,3.6,4.4);if(k>0){let uc=0;for(let s=1;s<200;s++){const u=s/200;if(fi(u)>co(u)){uc=u;break}}
+    x.globalAlpha=a*k;x.strokeStyle=rgba(C.green,.7);x.setLineDash([6,8]);x.beginPath();x.moveTo(X0+uc*PW,Y0);x.lineTo(X0+uc*PW,Y0-PH);x.stroke();x.setLineDash([]);
+    txt('fuel supply limits the fine cell',X0+uc*PW-14,Y0-PH+150,`italic 400 24px ${SERIF}`,C.green,'right');
+    txt('extra area pays off',X0+uc*PW+14,Y0-PH+90,`italic 400 24px ${SERIF}`,C.green)}
+  x.globalAlpha=a*ramp(lt,.6,1.6);
+  para('Voltage–current curves and impedance at one temperature, with the hydrogen flow varied and the air held fixed.',1300,440,460,25,C.ink);
+  x.globalAlpha=a*ramp(lt,3.0,4.0);
+  para('Compared at a common voltage and fuel utilisation, per volume, per mass and per electrode area, together with the pressure drop.',1300,640,460,25,C.muted);
+  x.restore();
+}
+function s5(t,a){
+  const lt=t-S[5][0];const endK=ramp(lt,4.6,5.4);chrome(5,'YOUR PROJECT','Prepare, measure, compare',lt,a*(1-endK));
+  x.save();x.globalAlpha=a;
+  const cols=[{n:'1',h:'Prepare',d:'Print and coat two gyroid designs; measure dimensions, mass, gas tightness and electrode area.'},
+              {n:'2',h:'Measure',d:'I–V curves and impedance while varying hydrogen flow; fuel-side pressure drop.'},
+              {n:'3',h:'Compare',d:'Power per volume, mass and area at matched voltage and fuel utilisation: which design for the next prototype?'}];
+  cols.forEach((c,i)=>{
+    const X=150+i*560,k=ramp(lt,.4+i*.5,1.2+i*.5)*(1-endK);
+    x.globalAlpha=a*k;
+    x.strokeStyle=rgba(C.gold,.5);x.lineWidth=1.5;x.beginPath();x.moveTo(X,330);x.lineTo(X+460,330);x.stroke();
+    txt(c.n,X,420,`italic 500 64px ${SERIF}`,C.gold);txt(c.h,X+60,412,`400 48px ${SERIF}`,C.ink);
+    const iy=470;
+    if(i===0){gyro2(X+90,iy,140,.7,a*k,1.2,.16);gyro2(X+260,iy,140,.7,a*k,2.6,.3)}
+    if(i===1){x.globalAlpha=a*k;x.strokeStyle=C.gold;x.lineWidth=3;x.beginPath();for(let s=0;s<=100;s++){const u=s/100;const px=X+40+u*380,py=iy+30+u*60+40*u*u*u;s?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();txt('V',X+20,iy+40,`italic 400 24px ${SERIF}`,C.muted);txt('I',X+430,iy+150,`italic 400 24px ${SERIF}`,C.muted)}
+    if(i===2){x.globalAlpha=a*k;[.5,.8].forEach((v,j)=>{x.fillStyle=j?C.gold:rgba(C.ink,.7);x.fillRect(X+140+j*120,iy+150-v*140,70,v*140)});txt('coarse',X+175,iy+180,`italic 400 22px ${SERIF}`,C.muted,'center');txt('fine',X+295,iy+180,`italic 400 22px ${SERIF}`,C.muted,'center')}
+    x.globalAlpha=a*k;para(c.d,X,iy+220,440,22,C.muted);
+  });
+  x.globalAlpha=a*endK;
+  spaced('OPEN MASTER\'S THESIS  ·  DTU ENERGY',W/2,440,18,C.gold,5,'center');
+  txt('How tightly can we pack a fuel cell?',W/2,540,`italic 400 76px ${SERIF}`,C.ink,'center');
+  txt('Prof. Vincenzo Esposito  ·  3D-printed gyroid solid oxide cells',W/2,620,`300 26px ${SANS}`,C.muted,'center');
+  txt('esplab-droid.github.io/students',W/2,700,`400 22px ${MONO}`,C.blue,'center');
+  x.restore();
+}
+
+const SC=[s0,s1,s2,s3,s4,s5];
+window.render=function(t){
+  bg(t);
+  for(let i=0;i<SC.length;i++){const al=sceneAlpha(t,i);if(al>0.001)SC[i](t,al)}
+};
+window.DUR=DUR;
+window.ready=document.fonts.load('400 70px Corm').then(()=>Promise.all([document.fonts.load('italic 400 70px Corm'),document.fonts.load('italic 500 70px Corm'),document.fonts.load('500 70px Corm'),document.fonts.load('400 20px PMono')])).then(()=>{render(0);return true});
+</script></body></html>
