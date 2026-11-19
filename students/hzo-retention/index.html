@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Retention of ferroelectric memory states in HZO thin films | Student projects, DTU Energy</title>
+<meta name="description" content="Master's thesis project at DTU Energy: retention of ferroelectric memory states in hafnia–zirconia (HZO) thin-film capacitors, with Vincenzo Esposito.">
+<link rel="canonical" href="https://esplab-droid.github.io/students/hzo-retention/">
+<meta property="og:site_name" content="Vincenzo Esposito, DTU Energy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retention of ferroelectric memory states in HZO thin films | Student projects, DTU Energy">
+<meta property="og:description" content="Master's thesis project at DTU Energy: retention of ferroelectric memory states in hafnia–zirconia (HZO) thin-film capacitors, with Vincenzo Esposito.">
+<meta property="og:url" content="https://esplab-droid.github.io/students/hzo-retention/">
+<meta property="og:image" content="https://esplab-droid.github.io/students/hzo-retention/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebPage",
+   "@id": "https://esplab-droid.github.io/students/hzo-retention/",
+   "url": "https://esplab-droid.github.io/students/hzo-retention/",
+   "name": "Nanosecond laser annealing of HZO thin films",
+   "description": "Master's thesis project at DTU Energy: retention of ferroelectric memory states in hafnia–zirconia (HZO) thin-film capacitors, with Vincenzo Esposito.",
+   "isPartOf": {
+    "@id": "https://esplab-droid.github.io/#website"
+   },
+   "author": {
+    "@id": "https://esplab-droid.github.io/#person"
+   }
+  }
+ ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: technical report. Narrow masthead with a gyroid cross-section plot, then a two-column ledger: key quantity in the margin, text on the right. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;      /* single accent: links and plot lines */
+  --plot:#e9ecef;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.who{font-family:var(--display);font-weight:600;font-size:1rem}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:48px;align-items:start;padding-block:44px 48px}
+.intro h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+.intro p{max-width:36em;margin:16px 0 0}
+.intro dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:22px 0 0;font-family:var(--display);font-size:.88rem}
+.intro dt{color:var(--muted)}
+.intro dd{margin:0}
+figure.gyro{margin:0}
+figure.gyro canvas{display:block;width:100%;aspect-ratio:1;max-width:100%;background:var(--plot);border:1px solid var(--rule)}
+figure.gyro figcaption{margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--muted);line-height:1.5}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:22px;border-bottom:1px solid var(--rule)}
+.entry:last-child{border-bottom:0}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3;font-variant-numeric:tabular-nums}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.q{padding-block:14px;border-top:1px solid var(--rule)}
+.q h3{font-size:1rem;margin:6px 0 6px}
+.q p{margin:0;font-size:.97rem;color:var(--muted)}
+
+.lede{max-width:44em;margin:0 0 24px}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pillar{border:1px solid var(--rule);border-top:2px solid var(--accent);padding:16px 18px;background:var(--plot)}
+.pillar h3{font-size:1.05rem;margin:6px 0 8px}
+.pillar p{margin:0;font-size:.97rem}
+.pillar .sys{margin-top:12px;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+table.lines{width:100%;border-collapse:collapse;font-size:.97rem}
+.tablewrap{overflow-x:auto}
+table.lines th,table.lines td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.lines th{font-family:var(--display);font-weight:600;font-size:.95rem;white-space:nowrap}
+table.lines td.sys{font-family:var(--mono);font-size:.8rem;color:var(--muted);white-space:nowrap}
+table.collab th{white-space:normal;width:38%}
+table.lines tr:last-child th,table.lines tr:last-child td{border-bottom:0}
+
+.subhead{font-size:1.05rem;margin:36px 0 10px}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:14px;border-top:1px solid var(--rule);display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:start}
+.person h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.person h3 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.av{width:72px;height:72px;display:block;border:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 6px}
+.pp{font-family:var(--mono);font-size:.78rem;line-height:1.6;margin-top:6px}
+.pp .label{display:block;font-size:.66rem}
+.pl{display:flex;flex-wrap:wrap;gap:0 12px}
+.pl a{white-space:nowrap}
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+.mail{font-family:var(--mono);user-select:all}
+button.copy{font-family:var(--mono);font-size:.72rem;margin-left:8px;padding:2px 8px;background:transparent;color:var(--ink);border:1px solid var(--rule);cursor:pointer}
+button.copy:hover{border-color:var(--ink)}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:28px;padding-block:32px 36px}
+  figure.gyro{max-width:300px}
+  .entry{grid-template-columns:1fr;gap:8px}
+  .qs{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
+  table.collab tr,table.collab th,table.collab td{display:block;width:auto}
+  table.collab th{border-bottom:0;padding-bottom:2px}
+  table.collab td{padding-top:0}
+}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+.lede{max-width:44em}
+.proj{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:22px;border-top:1px solid var(--rule)}
+.proj h3{font-size:1.08rem;margin:0 0 6px}
+.proj h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.proj h3 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.proj p{margin:0;max-width:40em}
+.proj img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+.lv{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);padding:1px 7px;margin:0 6px 6px 0}
+.side small{display:block;font-family:var(--mono);font-size:.72rem;color:var(--muted);line-height:1.5;margin-top:4px}
+.status{color:var(--accent)}
+.prose{max-width:42em}
+.prose p{margin:0 0 14px}
+.prose h2{font-size:1.15rem;margin:30px 0 10px}
+.prose ol{padding-left:1.2em;margin:0 0 14px}.prose ol li{margin:0 0 10px}
+figure.fig{margin:26px 0 24px}
+figure.fig img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+figure.fig figcaption{margin-top:10px;font-family:var(--display);font-size:.86rem;color:var(--muted);line-height:1.5;max-width:52em}
+.hook{font-size:1.12rem;font-style:italic}
+.refs{list-style:none;padding:0;margin:0}
+.refs li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:.97rem}
+.refs li:last-child{border-bottom:0}
+.refs .lk{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.76rem;margin-top:4px}
+@media (max-width:780px){.proj{grid-template-columns:1fr;gap:10px}}
+.film{background:#07090d;color:#dfe5ee;padding:18px 18px 12px;margin:0 0 34px}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:#07090d;border:1px solid #1d232c}
+.film figcaption{margin-top:10px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:#8b95a3}
+.film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:#dfe5ee;border:1px solid #39424f;padding:3px 10px;cursor:pointer}
+.film button:hover{border-color:#dfe5ee}
+.film button:focus-visible{outline:2px solid #dfe5ee;outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../../">Vincenzo Esposito</a><span>/</span><a href="../">Student projects</a><span>/</span>Retention in HZO</div>
+    <nav aria-label="Sections"><a href="#film-wrap">Film</a><a href="#tasks">Tasks</a><a href="#team">Team</a><a href="#reading">Reading</a></nav>
+  </header>
+
+  <section>
+    <span class="label">Master's thesis project at DTU Energy · Open</span>
+    <h1 style="font-size:clamp(1.5rem,3.2vw,2.1rem);margin:10px 0 22px;max-width:30em">Retention of ferroelectric memory states in hafnia–zirconia thin films</h1>
+    <figure class="film" id="film-wrap">
+      <video id="film" autoplay muted loop playsinline preload="metadata" poster="poster.jpg" aria-label="Animated summary of the project: writing a ferroelectric state, waiting at zero bias, reading it back, and comparing retention of the two polarisation directions">
+        <source src="retention_HZO.mp4" type="video/mp4">
+      </video>
+      <figcaption><span>How long does a written bit last? The project in 41 s. No sound.</span><button id="toggle" type="button">Pause</button></figcaption>
+    </figure>
+    <div class="prose">
+      <p>A wireless sensor can spend hours without power between measurements. When it starts again, it needs to recover its last setting. A ferroelectric film can store that information in the direction of its electric polarisation. Writing the state takes a voltage pulse. The practical question is what happens afterward:</p>
+      <p class="hook">How long can we still distinguish the two written states once the voltage is removed?</p>
+      <p>In this project, you will investigate how well hafnia–zirconia (HZO) capacitors retain their polarisation. You will work with one film composition, thickness, and electrode stack. The main variable will be the time between writing and reading, with measurements in both polarisation directions. The project can start with conventionally annealed capacitors and run independently of the <a href="../laser-annealing-hzo/">laser-annealing thesis</a>.</p>
+    </div>
+    <figure class="fig">
+      <img src="figure1.jpg" alt="Upper row: polar orthorhombic HZO structure, a TiN/HZO/TiN retention test capacitor (10 nm HZO, 50–200 µm diameter) and a ferroelectric memory transistor. Lower row: write opposite states, wait at zero bias, read the state with voltage pulses." width="1438" height="959">
+      <figcaption><strong>Figure 1. Ferroelectric memory retention in hafnia–zirconia devices.</strong> The upper panels show the polar orthorhombic structure of Hf₀.₅Zr₀.₅O₂ (Pca2₁), the TiN/HZO/TiN capacitor used to measure retention, and a ferroelectric transistor illustrating the memory application. The 10 nm HZO thickness and 50–200 µm contact diameter are representative dimensions from published test capacitors.</figcaption>
+    </figure>
+    <div class="prose">
+      <h2 id="tasks">In this project you will</h2>
+      <ol>
+        <li><b>Establish how to write and read a memory state.</b> Use voltage pulses to write each polarisation direction. Apply paired read pulses to estimate the switched charge and identify write conditions that give a reproducible response.</li>
+        <li><b>Measure how the written state changes with time.</b> After writing, hold the capacitor at zero bias for a defined interval, then read it. Repeat for progressively longer delays, writing the state afresh before each read.</li>
+        <li><b>Determine how reliably the two states can be distinguished.</b> Compare the retained charge for both writing directions across several capacitors. Test whether one direction loses its written state faster than the other and whether the difference exceeds the variation between devices.</li>
+      </ol>
+      <p>Your result will be a pair of retention curves and an experimental estimate of the longest <i>measured</i> delay at which the two states remain distinguishable. If both states persist throughout the experiment, you will establish a lower bound on retention under the tested conditions.</p>
+
+      <h2 id="team">Our team</h2>
+      <p>You will work with <a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">Prof. Vincenzo Esposito</a> at DTU Energy. The project builds on our group's research into how crystal structure, interfaces, and oxygen vacancies influence the electrical response of HZO thin films. It complements the work on ferroelectric memory by addressing what happens after a memory state has been written.</p>
+
+      <h2 id="reading">Selected papers from our team</h2>
+      <ul class="refs">
+        <li>A. Bergne <i>et al.</i>, “Electro-Chemo-Mechanical Coupling in Hf₀.₅Zr₀.₅O₂ Ferroionic Heterostructures.” <i>Advanced Functional Materials</i> <b>36</b>, e30176 (2026).
+          <div class="lk"><a href="https://doi.org/10.1002/adfm.202530176" target="_blank" rel="noopener">DOI 10.1002/adfm.202530176</a><a href="../../hzo-ferroionic/">Project page and film</a></div></li>
+        <li>A. Bergne <i>et al.</i>, “Electrostriction-driven phase instability enables giant pseudo-piezoelectricity in Hf₀.₅Zr₀.₅O₂.” <i>Science Advances</i> <b>12</b>, eaea0750 (2026).
+          <div class="lk"><a href="https://doi.org/10.1126/sciadv.aea0750" target="_blank" rel="noopener">DOI 10.1126/sciadv.aea0750</a><a href="../../hzo/">Project page and film</a></div></li>
+      </ul>
+
+      <h2>Interested?</h2>
+      <p>Get in touch through the <a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a> with a short note and your transcript.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">All student projects</a></p></div>
+    <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
+  </footer>
+</div>
+<script>
+(function(){
+  const v=document.getElementById('film'), b=document.getElementById('toggle');
+  if(!v||!b) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
+  b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+</body>
+</html>
