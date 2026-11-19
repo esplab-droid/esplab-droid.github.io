@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nanosecond laser annealing of HZO thin films | Student projects, DTU Energy</title>
 <meta name="description" content="Master's thesis project at DTU Energy: nanosecond laser annealing of hafnia–zirconia (HZO) thin films for ferroelectric memory, with Vincenzo Esposito.">
@@ -173,6 +174,19 @@ figure.fig figcaption{margin-top:10px;font-family:var(--display);font-size:.86re
 .film button{font-family:var(--mono);font-size:.72rem;background:transparent;color:#dfe5ee;border:1px solid #39424f;padding:3px 10px;cursor:pointer}
 .film button:hover{border-color:#dfe5ee}
 .film button:focus-visible{outline:2px solid #dfe5ee;outline-offset:2px}
+
+/* Student pages: white background and own palette, in light and dark mode alike */
+:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+  --paper:#ffffff !important;--ink:#12161b !important;--muted:#5a636e !important;--rule:#e2e6ea !important;
+  --accent:#0b7a6e !important;--plot:#f3f7f6 !important;color-scheme:light !important}
+.label{color:#8a5a12}
+.lv{border-color:#0b7a6e;color:#0b7a6e;background:#eef7f5}
+.status{color:#0b7a6e;font-weight:500}
+header.top{border-bottom-color:#0b7a6e}
+footer{border-top-color:#0b7a6e}
+.hook{color:#0b7a6e}
+.proj h3 a:hover{color:#0b7a6e}
+.fig img,.proj img{border-color:#e2e6ea}
 </style>
 </head>
 <body>

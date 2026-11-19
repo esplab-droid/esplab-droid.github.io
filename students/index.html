@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Student projects | Vincenzo Esposito, DTU Energy</title>
 <meta name="description" content="Master's thesis and student projects on functional metal oxides with Vincenzo Esposito at DTU Energy, Technical University of Denmark.">
@@ -166,6 +167,19 @@ figure.fig figcaption{margin-top:10px;font-family:var(--display);font-size:.86re
 .refs li:last-child{border-bottom:0}
 .refs .lk{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.76rem;margin-top:4px}
 @media (max-width:780px){.proj{grid-template-columns:1fr;gap:10px}}
+
+/* Student pages: white background and own palette, in light and dark mode alike */
+:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+  --paper:#ffffff !important;--ink:#12161b !important;--muted:#5a636e !important;--rule:#e2e6ea !important;
+  --accent:#0b7a6e !important;--plot:#f3f7f6 !important;color-scheme:light !important}
+.label{color:#8a5a12}
+.lv{border-color:#0b7a6e;color:#0b7a6e;background:#eef7f5}
+.status{color:#0b7a6e;font-weight:500}
+header.top{border-bottom-color:#0b7a6e}
+footer{border-top-color:#0b7a6e}
+.hook{color:#0b7a6e}
+.proj h3 a:hover{color:#0b7a6e}
+.fig img,.proj img{border-color:#e2e6ea}
 </style>
 </head>
 <body>
