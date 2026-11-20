@@ -616,12 +616,12 @@ button.copy:hover{border-color:var(--ink)}
     dpr=Math.min(2,window.devicePixelRatio||1); W=Math.ceil(r.width+PAD*2); H=Math.ceil(r.height+PAD*2);
     cv.width=W*dpr; cv.height=H*dpr; cv.style.width=W+'px'; cv.style.height=H+'px';
     cv.style.left=(r.left-hr.left-PAD)+'px'; cv.style.top=(r.top-hr.top-PAD)+'px';
-    // Sample the text at 2x so dots can sit 1.5 px apart.
+    // Sample the text at 2x so dots can sit 1 px apart.
     const S=2, OW=W*S, OH=H*S, o=document.createElement('canvas'); o.width=OW; o.height=OH; const c=o.getContext('2d'); c.scale(S,S);
     c.font=cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily; if('letterSpacing' in c) c.letterSpacing=cs.letterSpacing;
     const m=c.measureText(a.textContent), asc=m.fontBoundingBoxAscent, desc=m.fontBoundingBoxDescent;
     c.fillText(a.textContent, PAD, PAD+(r.height-(asc+desc))/2+asc);
-    const d=c.getImageData(0,0,OW,OH).data, step=3; P=[];
+    const d=c.getImageData(0,0,OW,OH).data, step=2; P=[];
     for(let y=0;y<OH;y+=step)for(let x=0;x<OW;x+=step){ if(d[(y*OW+x)*4+3]>110){
       const hx=x/S, hy=y/S, ang=Math.random()*6.283, rad=8+Math.random()*22;
       P.push({hx,hy,x:hx+Math.cos(ang)*rad,y:hy+Math.sin(ang)*rad,vx:0,vy:0}); } }
@@ -637,7 +637,7 @@ button.copy:hover{border-color:var(--ink)}
       if(q<R2&&q>0.01){const dd=Math.sqrt(q), f=(1-dd/R); fx+=dx/dd*f*f*0.7; fy+=dy/dd*f*f*0.7}
       p.vx=(p.vx+fx)*0.84; p.vy=(p.vy+fy)*0.84; p.x+=p.vx; p.y+=p.vy;
       if(Math.abs(p.vx)+Math.abs(p.vy)>0.02||Math.abs(p.x-p.hx)+Math.abs(p.y-p.hy)>0.3) moving=true;
-      ctx.fillRect(p.x-0.7,p.y-0.7,1.4,1.4);
+      ctx.fillRect(p.x-0.55,p.y-0.55,1.1,1.1);
     }
     if(moving) kick();
   }
