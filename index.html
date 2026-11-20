@@ -226,7 +226,7 @@ section{padding-block:40px;border-top:1px solid var(--rule)}
 @media (hover:hover) and (pointer:fine){.pillars:hover .pillar::before,.pillars:hover .pillar::after{opacity:1}}
 /* Name heading: links to the bio; a canvas redraws it as particles on mouse devices */
 .pname{position:relative}
-.pname a{color:inherit;text-decoration:none}
+.pname a{color:var(--gold);text-decoration:none}
 .pname a:hover{color:var(--accent)}
 .pname canvas{position:absolute;pointer-events:none}
 .pname.pfx a{color:transparent}
@@ -660,7 +660,7 @@ button.copy:hover{border-color:var(--ink)}
     if(!cv.parentNode) h.appendChild(cv); h.classList.add('pfx'); kick();
   }
   function frame(){
-    raf=0; const cs=getComputedStyle(a), col=hover?getComputedStyle(document.documentElement).getPropertyValue('--accent').trim():getComputedStyle(h).color;
+    raf=0; const rs=getComputedStyle(document.documentElement), col=rs.getPropertyValue(hover?'--accent':'--gold').trim();
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H); ctx.fillStyle=col;
     const R=48, R2=R*R; let moving=false;
     for(const p of P){
