@@ -198,6 +198,12 @@ section{padding-block:40px;border-top:1px solid var(--rule)}
 .pillar h3{font-size:1.05rem;margin:6px 0 8px}
 .pillar p{margin:0;font-size:.97rem}
 .pillar .sys{margin-top:12px;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+/* Cursor spotlight on the research pillars: a soft accent glow and a lit border follow the pointer across the whole row */
+.pillar{position:relative;isolation:isolate}
+.pillar::before,.pillar::after{content:"";position:absolute;pointer-events:none;opacity:0;transition:opacity .35s ease}
+.pillar::before{inset:0;z-index:-1;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 26%,transparent),transparent 65%)}
+.pillar::after{inset:-2px -1px -1px;padding:1.5px;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),var(--accent) 20%,transparent 75%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+@media (hover:hover) and (pointer:fine){.pillars:hover .pillar::before,.pillars:hover .pillar::after{opacity:1}}
 table.lines{width:100%;max-width:640px;border-collapse:collapse;font-size:.97rem}
 .tablewrap{overflow-x:auto}
 table.lines th,table.lines td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
@@ -562,6 +568,17 @@ button.copy:hover{border-color:var(--ink)}
   if(!v||!b) return;
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();b.textContent='Play'}
   b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause'}else{v.pause();b.textContent='Play'}});
+})();
+</script>
+<script>
+(function(){
+  // Cursor spotlight: pass the pointer position to every pillar, so the glow spills onto neighbouring cards.
+  const grid=document.querySelector('.pillars');
+  if(!grid||!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const cards=[...grid.querySelectorAll('.pillar')];
+  let x=0,y=0,raf=0;
+  function paint(){raf=0;for(const c of cards){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(x-r.left)+'px');c.style.setProperty('--my',(y-r.top)+'px')}}
+  grid.addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;if(!raf)raf=requestAnimationFrame(paint)});
 })();
 </script>
 </body>
