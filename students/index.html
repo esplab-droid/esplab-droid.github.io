@@ -192,6 +192,12 @@ footer{border-top-color:#0b7a6e}
 .sphero-bg i:nth-child(4){background:#0b7a6e;right:30%;bottom:-8%;opacity:.16;animation-duration:22s;animation-delay:-4s}
 @keyframes spdrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(14%,10%) scale(1.18)}100%{transform:translate(-10%,16%) scale(.92)}}
 @media (prefers-reduced-motion:reduce){.sphero-bg i{animation:none}}
+/* 3D tilt on the film posters: the script adds .tilt on mouse devices only */
+.tilt{display:block;position:relative;transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--s,1));transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s ease;will-change:transform}
+.tilt img{display:block}
+.tilt::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s ease;background:radial-gradient(460px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.16),transparent 60%)}
+.tilt.on{--s:1.015;transition:transform .12s ease-out,box-shadow .4s ease;box-shadow:0 26px 50px -22px rgba(7,9,13,.6)}
+.tilt.on::after{opacity:1}
 @media (max-width:780px){.sphero{padding:40px 20px 36px}.sphero-bg i{width:58%;opacity:.45}.sphero-bg i:nth-child(1){left:6%;top:6%}.sphero-bg i:nth-child(2){right:4%;top:auto;bottom:4%}.sphero-bg i:nth-child(3){left:auto;right:8%;top:2%;bottom:auto}.sphero-bg i:nth-child(4){display:none}}
 </style>
 </head>
@@ -249,5 +255,21 @@ footer{border-top-color:#0b7a6e}
     <div><span class="label">Contact</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="noopener">DTU Orbit profile</a></p></div>
   </footer>
 </div>
+<script>
+(function(){
+  // 3D tilt on the film posters, mouse devices only and not with reduced motion.
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for(const a of document.querySelectorAll('.proj a[href$="#film-wrap"]')){
+    a.classList.add('tilt');
+    a.addEventListener('pointermove',e=>{
+      const r=a.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      a.classList.add('on');
+      a.style.setProperty('--ry',((x-.5)*10).toFixed(2)+'deg');a.style.setProperty('--rx',((.5-y)*8).toFixed(2)+'deg');
+      a.style.setProperty('--gx',(x*100)+'%');a.style.setProperty('--gy',(y*100)+'%');
+    });
+    a.addEventListener('pointerleave',()=>{a.classList.remove('on');a.style.setProperty('--rx','0deg');a.style.setProperty('--ry','0deg')});
+  }
+})();
+</script>
 </body>
 </html>
