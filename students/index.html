@@ -180,6 +180,19 @@ footer{border-top-color:#0b7a6e}
 .hook{color:#0b7a6e}
 .proj h3 a:hover{color:#0b7a6e}
 .fig img,.proj img{border-color:#e2e6ea}
+/* Animated gradient hero: soft colour fields drift slowly behind the title */
+.sphero{position:relative;isolation:isolate;overflow:hidden;margin:0 0 28px;padding:56px 36px 50px;border:1px solid var(--rule);background:#f4faf9}
+.sphero h1{font-size:clamp(2rem,4.5vw,2.9rem);letter-spacing:-.015em;margin-top:10px}
+.sphero p{margin:10px 0 0;font-family:var(--display);font-size:1.05rem;color:#3d4650;max-width:32em}
+.sphero-bg{position:absolute;inset:-20%;z-index:-1;filter:blur(56px) saturate(1.1)}
+.sphero-bg i{position:absolute;width:max(240px,30%);aspect-ratio:1;border-radius:50%;opacity:.5;animation:spdrift 20s ease-in-out infinite alternate}
+.sphero-bg i:nth-child(1){background:#4fc2b1;left:8%;top:5%}
+.sphero-bg i:nth-child(2){background:#f3c46a;right:12%;top:8%;opacity:.6;animation-duration:24s;animation-delay:-7s}
+.sphero-bg i:nth-child(3){background:#93c2ee;left:40%;bottom:0;animation-duration:28s;animation-delay:-13s}
+.sphero-bg i:nth-child(4){background:#0b7a6e;right:30%;bottom:-8%;opacity:.16;animation-duration:22s;animation-delay:-4s}
+@keyframes spdrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(14%,10%) scale(1.18)}100%{transform:translate(-10%,16%) scale(.92)}}
+@media (prefers-reduced-motion:reduce){.sphero-bg i{animation:none}}
+@media (max-width:780px){.sphero{padding:40px 20px 36px}.sphero-bg i{width:58%;opacity:.45}.sphero-bg i:nth-child(1){left:6%;top:6%}.sphero-bg i:nth-child(2){right:4%;top:auto;bottom:4%}.sphero-bg i:nth-child(3){left:auto;right:8%;top:2%;bottom:auto}.sphero-bg i:nth-child(4){display:none}}
 </style>
 </head>
 <body>
@@ -190,8 +203,10 @@ footer{border-top-color:#0b7a6e}
   </header>
 
   <section id="open">
-    <div class="sechead">
-      <h1 style="font-size:1.35rem;letter-spacing:0">Student projects</h1>
+    <div class="sphero">
+      <div class="sphero-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <span class="label">Open now · DTU Energy</span>
+      <h1>Student projects</h1>
       <p>Master's thesis and student projects at DTU Energy.</p>
     </div>
     <p class="lede">Each project sits inside our running research. Follow the title for the full description, figure and background reading.</p>
