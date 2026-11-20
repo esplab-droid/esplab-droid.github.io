@@ -204,6 +204,12 @@ section{padding-block:40px;border-top:1px solid var(--rule)}
 .pillar::before{inset:0;z-index:-1;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 26%,transparent),transparent 65%)}
 .pillar::after{inset:-2px -1px -1px;padding:1.5px;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),var(--accent) 20%,transparent 75%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 @media (hover:hover) and (pointer:fine){.pillars:hover .pillar::before,.pillars:hover .pillar::after{opacity:1}}
+/* Name heading: links to the bio; a canvas redraws it as particles on mouse devices */
+.pname{position:relative}
+.pname a{color:inherit;text-decoration:none}
+.pname a:hover{color:var(--accent)}
+.pname canvas{position:absolute;pointer-events:none}
+.pname.pfx a{color:transparent}
 /* Same spotlight on the result figures; the script wraps each svg.fg in span.fgspot */
 .fgspot{display:block;position:relative;isolation:isolate;width:100%;max-width:260px;margin-top:14px;background:var(--plot)}
 .fgspot .fg{margin-top:0;max-width:none;background:transparent}
@@ -314,7 +320,7 @@ button.copy:hover{border-color:var(--ink)}
   <div class="intro">
     <div>
       <span class="label">DTU Energy, Technical University of Denmark</span>
-      <h1 style="margin-top:10px">Vincenzo Esposito</h1>
+      <h1 class="pname" style="margin-top:10px"><a href="bio/" title="Biography">Vincenzo Esposito</a></h1>
       <p class="role">Professor at DTU Energy, Technical University of Denmark</p>
       <p class="tagline">Functional metal oxides for energy conversion, electromechanics and ionic devices</p>
       <p>ESPLab is the group of Prof. Vincenzo Esposito at DTU Energy (Department of Energy Conversion and Storage), Technical University of Denmark, Kongens Lyngby. We study how defects, interfaces and 3D architecture shape functional metal oxides, from thin films to solid oxide cells.</p>
@@ -594,6 +600,54 @@ button.copy:hover{border-color:var(--ink)}
     svg.parentNode.insertBefore(w,svg);w.appendChild(svg);
     w.addEventListener('pointermove',e=>{const r=w.getBoundingClientRect();w.style.setProperty('--mx',(e.clientX-r.left)+'px');w.style.setProperty('--my',(e.clientY-r.top)+'px')});
   }
+})();
+</script>
+<script>
+(function(){
+  // Gentle particle headline: the name assembles on load; dots near the cursor drift aside and spring back.
+  const h=document.querySelector('.pname'), a=h&&h.querySelector('a');
+  if(!h||!matchMedia('(hover:hover) and (pointer:fine)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const PAD=40, cv=document.createElement('canvas'), ctx=cv.getContext('2d');
+  let P=[], dpr=1, W=0, H=0, mx=-1e4, my=-1e4, hover=false, raf=0, t0=0;
+  function build(){
+    const range=document.createRange(); range.selectNodeContents(a);
+    const rects=range.getClientRects(); if(rects.length!==1){h.classList.remove('pfx');cv.remove();P=[];return}
+    const r=rects[0], hr=h.getBoundingClientRect(), cs=getComputedStyle(a);
+    dpr=Math.min(2,window.devicePixelRatio||1); W=Math.ceil(r.width+PAD*2); H=Math.ceil(r.height+PAD*2);
+    cv.width=W*dpr; cv.height=H*dpr; cv.style.width=W+'px'; cv.style.height=H+'px';
+    cv.style.left=(r.left-hr.left-PAD)+'px'; cv.style.top=(r.top-hr.top-PAD)+'px';
+    const o=document.createElement('canvas'); o.width=W; o.height=H; const c=o.getContext('2d');
+    c.font=cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily; if('letterSpacing' in c) c.letterSpacing=cs.letterSpacing;
+    const m=c.measureText(a.textContent), asc=m.fontBoundingBoxAscent, desc=m.fontBoundingBoxDescent;
+    c.fillText(a.textContent, PAD, PAD+(r.height-(asc+desc))/2+asc);
+    const d=c.getImageData(0,0,W,H).data, step=2; P=[];
+    for(let y=0;y<H;y+=step)for(let x=0;x<W;x+=step){ if(d[(y*W+x)*4+3]>110){
+      const ang=Math.random()*6.283, rad=8+Math.random()*22;
+      P.push({hx:x,hy:y,x:x+Math.cos(ang)*rad,y:y+Math.sin(ang)*rad,vx:0,vy:0}); } }
+    if(!cv.parentNode) h.appendChild(cv); h.classList.add('pfx'); kick();
+  }
+  function frame(){
+    raf=0; const cs=getComputedStyle(a), col=hover?getComputedStyle(document.documentElement).getPropertyValue('--accent').trim():getComputedStyle(h).color;
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H); ctx.fillStyle=col;
+    const R=48, R2=R*R; let moving=false;
+    for(const p of P){
+      let fx=(p.hx-p.x)*0.06, fy=(p.hy-p.y)*0.06;
+      const dx=p.x-mx, dy=p.y-my, q=dx*dx+dy*dy;
+      if(q<R2&&q>0.01){const dd=Math.sqrt(q), f=(1-dd/R); fx+=dx/dd*f*f*0.7; fy+=dy/dd*f*f*0.7}
+      p.vx=(p.vx+fx)*0.84; p.vy=(p.vy+fy)*0.84; p.x+=p.vx; p.y+=p.vy;
+      if(Math.abs(p.vx)+Math.abs(p.vy)>0.02||Math.abs(p.x-p.hx)+Math.abs(p.y-p.hy)>0.3) moving=true;
+      ctx.fillRect(p.x-1.1,p.y-1.1,2.2,2.2);
+    }
+    if(moving) kick();
+  }
+  function kick(){ if(!raf) raf=requestAnimationFrame(frame) }
+  window.addEventListener('pointermove',e=>{ if(!P.length) return; const r=cv.getBoundingClientRect();
+    const x=e.clientX-r.left, y=e.clientY-r.top, near=x>-80&&y>-80&&x<W+80&&y<H+80;
+    if(near||mx>-1e3){ mx=near?x:-1e4; my=near?y:-1e4; kick(); } },{passive:true});
+  a.addEventListener('pointerenter',()=>{hover=true;kick()}); a.addEventListener('pointerleave',()=>{hover=false;kick()});
+  let rt; window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,150)});
+  new MutationObserver(kick).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(build);
 })();
 </script>
 </body>
