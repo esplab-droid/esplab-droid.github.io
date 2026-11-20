@@ -54,6 +54,95 @@ function chrome(n,label,title,lt,a){
 }
 function sceneAlpha(t,i){const [a,b]=S[i];return Math.min(ramp(t,a,a+.7),1-ramp(t,b-.6,b))}
 
+// ---------- 3D gyroid renderer (WebGL2 ray marching), drawn into the 2D canvas
+const G3={};
+(function(){
+  const N=640;const c=document.createElement('canvas');c.width=N;c.height=N;
+  const gl=c.getContext('webgl2',{premultipliedAlpha:true,preserveDrawingBuffer:true,antialias:false});
+  const vs=`#version 300 es
+in vec2 p;out vec2 uv;void main(){uv=p;gl_Position=vec4(p,0.,1.);}`;
+  const fs=`#version 300 es
+precision highp float;in vec2 uv;out vec4 o;
+uniform float yaw,pitch,per,th,mode,amp,ph,elec,foc;
+const float PI=3.14159265;
+float gy(vec3 q){return sin(q.x)*cos(q.y)+sin(q.y)*cos(q.z)+sin(q.z)*cos(q.x);}
+float sdBox(vec3 p,vec3 b){vec3 d=abs(p)-b;return length(max(d,0.))+min(max(d.x,max(d.y,d.z)),0.);}
+float bumpF(vec3 p){vec3 c=vec3(.45,.05,.55);return exp(-dot(p-c,p-c)/.10);}
+vec3 deform(vec3 p){
+  float s=sin(ph)*amp;
+  if(mode>.5&&mode<1.5){float a=-s*.32*p.y;float cs=cos(a),sn=sin(a);p.xz=mat2(cs,-sn,sn,cs)*p.xz;}
+  else if(mode>1.5&&mode<2.5){p.y-=s*.16*bumpF(p);}
+  else if(mode>2.5){p.xz/=1.+.07*s;p.y/=1.-.07*s;}
+  return p;}
+float hiF(vec3 p){float s=abs(sin(ph))*amp;
+  if(mode>.5&&mode<1.5)return s*smoothstep(0.,1.,abs(p.y));
+  if(mode>1.5&&mode<2.5)return s*bumpF(p)*1.6;
+  if(mode>2.5)return s*.6*length(p.xz)/1.4;return 0.;}
+float sheet(vec3 p){float k=PI*per;float g=gy(p*k);return (abs(g)-th)/(k*1.8);}
+float plate(vec3 p){vec3 q=vec3(abs(p.x)-1.07,p.y,p.z);return sdBox(q,vec3(.035,.78,.78))-.01;}
+float mapS(vec3 p,out float id){vec3 q=deform(p);float d=max(sheet(q),sdBox(q,vec3(1.)));id=0.;
+  if(elec>.5){float e=plate(p);if(e<d){d=e;id=1.;}}return d;}
+float mapD(vec3 p){float id;return mapS(p,id);}
+void main(){
+  vec3 ro=vec3(0.,0.,5.);
+  float cp=cos(pitch),sp=sin(pitch);ro=vec3(ro.x,ro.y*cp-ro.z*sp,ro.y*sp+ro.z*cp);
+  float cy=cos(yaw),sy=sin(yaw);ro=vec3(ro.x*cy+ro.z*sy,ro.y,-ro.x*sy+ro.z*cy);
+  vec3 f=normalize(-ro),r=normalize(cross(f,vec3(0.,1.,0.))),u=cross(r,f);
+  vec3 rd=normalize(f*foc+r*uv.x+u*uv.y);
+  // bounding sphere
+  float b=dot(ro,rd),cc=dot(ro,ro)-4.;float h=b*b-cc;if(h<0.){o=vec4(0.);return;}
+  float t=max(0.,-b-sqrt(h)),tmax=-b+sqrt(h);float id=0.;bool hit=false;
+  for(int i=0;i<160;i++){vec3 p=ro+rd*t;float d=mapS(p,id);if(d<.0015){hit=true;break;}t+=d*.8;if(t>tmax)break;}
+  if(!hit){o=vec4(0.);return;}
+  vec3 p=ro+rd*t;vec2 e=vec2(.0025,0.);
+  vec3 n=normalize(vec3(mapD(p+e.xyy)-mapD(p-e.xyy),mapD(p+e.yxy)-mapD(p-e.yxy),mapD(p+e.yyx)-mapD(p-e.yyx)));
+  vec3 L=normalize(vec3(-.5,.8,.6));float dif=max(dot(n,L),0.);float amb=.55+.2*n.y;
+  // ambient occlusion
+  float ao=0.,sc=1.;for(int k=1;k<6;k++){float hh=.04*float(k);ao+=(hh-mapD(p+n*hh))*sc;sc*=.6;}ao=clamp(1.-3.*ao,0.,1.);
+  vec3 col;
+  if(id>.5){col=vec3(.80,.52,.33);}
+  else{vec3 q=deform(p);float k=PI*per;float g=gy(q*k);
+    vec3 cream=vec3(.96,.92,.85),blue=vec3(.45,.62,.88),orng=vec3(.90,.60,.40);
+    float side=smoothstep(th*.6,th*1.02,abs(g));
+    col=mix(cream,g>0.?blue:orng,.7*side);
+    float hi=clamp(hiF(q),0.,1.);col=mix(col,vec3(.18,.42,.78),hi);}
+  vec3 lit=col*(amb*ao+.6*dif);lit=pow(lit,vec3(.9));
+  float rim=pow(1.-max(dot(n,-rd),0.),3.);lit+=.12*rim;
+  o=vec4(lit,1.);
+}`;
+  function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(x);return x}
+  const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);gl.useProgram(pr);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const U={};['yaw','pitch','per','th','mode','amp','ph','elec','foc'].forEach(k=>U[k]=gl.getUniformLocation(pr,k));
+  G3.FOC=2.55;
+  G3.draw=function(X,Y,S,o,a=1){
+    const d=Object.assign({wire:1,yaw:.7,pitch:.55,per:1,th:.85,mode:0,amp:0,ph:0,elec:0},o);
+    gl.viewport(0,0,N,N);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+    for(const k in U)gl.uniform1f(U[k],k==='foc'?G3.FOC:d[k]);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    x.save();x.globalAlpha=a;x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';
+    // soft shadow
+    const sg=x.createRadialGradient(X+S/2,Y+S*.9,0,X+S/2,Y+S*.9,S*.42);sg.addColorStop(0,'rgba(0,0,0,.45)');sg.addColorStop(1,'rgba(0,0,0,0)');
+    x.fillStyle=sg;x.fillRect(X,Y+S*.6,S,S*.45);
+    x.drawImage(c,X,Y,S,S);
+    if(d.wire){const V=[];for(const i of [-1,1])for(const j of [-1,1])for(const k of [-1,1])V.push([i*1.04,j*1.04,k*1.04]);
+      const P=V.map(v=>G3.proj(v,X,Y,S,d));x.strokeStyle='rgba(220,230,245,.35)';x.lineWidth=1.2;x.setLineDash([6,6]);x.beginPath();
+      for(let a2=0;a2<8;a2++)for(let b2=a2+1;b2<8;b2++){let df=0;for(let q=0;q<3;q++)if(V[a2][q]!==V[b2][q])df++;if(df===1){x.moveTo(...P[a2]);x.lineTo(...P[b2])}}
+      x.stroke();x.setLineDash([]);}
+    x.restore();
+  };
+  // project a world point to canvas coords for the same camera
+  G3.proj=function(P,X,Y,S,o){
+    const d=Object.assign({yaw:.7,pitch:.55},o);
+    let ro=[0,0,5];const cp=Math.cos(d.pitch),sp=Math.sin(d.pitch);ro=[ro[0],ro[1]*cp-ro[2]*sp,ro[1]*sp+ro[2]*cp];
+    const cy=Math.cos(d.yaw),sy=Math.sin(d.yaw);ro=[ro[0]*cy+ro[2]*sy,ro[1],-ro[0]*sy+ro[2]*cy];
+    const nrm=v=>{const l=Math.hypot(...v);return v.map(z=>z/l)};const cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];const dt=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+    const f=nrm(ro.map(z=>-z)),r=nrm(cr(f,[0,1,0])),u=cr(r,f);const q=[P[0]-ro[0],P[1]-ro[1],P[2]-ro[2]];
+    const z=dt(q,f);const sx=dt(q,r)/z*G3.FOC,sy2=dt(q,u)/z*G3.FOC;
+    return [X+(sx+1)/2*S,Y+(1-sy2)/2*S];
+  };
+})();
 // ---------- Film 5: TPMS ultrasonic resonators (COMSOL)
 const TEAL='#7fd1b9';
 function arrow(x0,y0,x1,y1,col,w=4,hs=16){x.strokeStyle=col;x.fillStyle=col;x.lineWidth=w;x.beginPath();x.moveTo(x0,y0);x.lineTo(x1,y1);x.stroke();
@@ -70,7 +159,7 @@ function gyroid(X,Y,S,z,a,per=1.5,wall=.32,sq=0){
 }
 function s0(t,a){
   x.save();x.globalAlpha=a;
-  gyroid(1340,300,440,.7,a*.6,1.5,.32,Math.sin(t*9));
+  G3.draw(1250,210,600,{yaw:.5+t*.12,per:1,mode:3,amp:.5,ph:t*9},a);
   const k=ramp(t,.2,1.2);
   x.strokeStyle=C.gold;x.lineWidth=1.5;x.beginPath();x.moveTo(135,330);x.lineTo(135+44*k,330);x.stroke();
   x.globalAlpha=a*k;spaced("MASTER'S THESIS PROJECT  ·  DTU ENERGY",195,336,17,C.gold,4);
@@ -89,8 +178,8 @@ function s1(t,a){
   const lt=t-S[1][0];chrome(1,'THE QUESTION','Same space, same ceramic, different note',lt,a);
   x.save();x.globalAlpha=a;
   const on=ramp(lt,1.2,1.8);
-  gyroid(150,340,400,.7,a*ramp(lt,.2,.9),1.1,.32,on*Math.sin(lt*7));
-  gyroid(650,340,400,.7,a*ramp(lt,.5,1.2),2.4,.36,on*Math.sin(lt*16));
+  G3.draw(110,300,460,{yaw:.55+lt*.08,per:1,mode:3,amp:on,ph:lt*7},a*ramp(lt,.2,.9));
+  G3.draw(610,300,460,{yaw:.55+lt*.08,per:2.2,th:.85,mode:3,amp:on,ph:lt*16},a*ramp(lt,.5,1.2));
   txt('coarse pitch',350,800,`italic 400 30px ${SERIF}`,C.ink,'center');
   txt('fine pitch',850,800,`italic 400 30px ${SERIF}`,C.ink,'center');
   // little traces
@@ -102,36 +191,29 @@ function s1(t,a){
   x.restore();
 }
 function s2(t,a){
-  const lt=t-S[2][0];chrome(2,'THE DEVICE','Electrodes on a curved piezoelectric wall',lt,a);
+  const lt=t-S[2][0];chrome(2,'THE DEVICE','Electrodes on opposite faces, two kinds of mode',lt,a);
   x.save();x.globalAlpha=a;
-  // wall section with AC drive
-  const WX=200,WW=640,WY=560;const drive=ramp(lt,1.4,2)*Math.sin(lt*10);
-  const bend=36+22*drive;
-  function arc(y0,col,th){x.fillStyle=col;x.beginPath();x.moveTo(WX,y0);x.quadraticCurveTo(WX+WW/2,y0+bend,WX+WW,y0);x.lineTo(WX+WW,y0+th);x.quadraticCurveTo(WX+WW/2,y0+bend+th,WX,y0+th);x.closePath();x.fill()}
-  arc(WY-110,'#9aa3b2',18);arc(WY-92,rgba(TEAL,.55),150);arc(WY+58,'#9aa3b2',18);
-  txt('electrode',WX-20,WY-95,`italic 400 26px ${SERIF}`,C.muted,'right');
-  txt('KNN wall',WX-20,WY+5,`italic 400 26px ${SERIF}`,TEAL,'right');
-  txt('electrode',WX-20,WY+75,`italic 400 26px ${SERIF}`,C.muted,'right');
-  // poling through the wall
-  for(let i=0;i<4;i++){const u=(i+.5)/4,px=WX+u*WW,yo=bend*4*u*(1-u);arrow(px,WY+40+yo,px,WY-40+yo,rgba(C.green,.85),3,12)}
-  txt('poling through the wall',WX+WW/2,WY+140+bend,`italic 400 24px ${SERIF}`,C.green,'center');
-  // AC source
-  const sx=WX+WW+90;x.strokeStyle=rgba(C.ink,.4);x.lineWidth=1.5;x.beginPath();x.moveTo(WX+WW,WY-101);x.lineTo(sx,WY-101);x.lineTo(sx,WY+67);x.lineTo(WX+WW,WY+67);x.stroke();
-  x.fillStyle=C.bg;x.beginPath();x.arc(sx,WY-17,30,0,7);x.fill();x.strokeStyle=C.gold;x.lineWidth=2;x.stroke();
-  x.beginPath();for(let s=0;s<=30;s++){const u=s/30;const px=sx-18+u*36,py=WY-17-10*Math.sin(u*Math.PI*2);s?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();
-  // two kinds of mode
-  const mk=ramp(lt,2.6,3.4);x.globalAlpha=a*mk;
-  const mx=1220,my=430;
-  spaced('TWO KINDS OF MODE',mx,my-40,14,C.gold,3);
-  // whole device breathing
-  const br=Math.sin(lt*6);x.strokeStyle=TEAL;x.lineWidth=2.5;const bw=150*(1+.08*br),bh=150*(1-.08*br);x.strokeRect(mx+75-bw/2,my+75-bh/2,bw,bh);
-  txt('whole device',mx+75,my+200,`italic 400 26px ${SERIF}`,C.ink,'center');
-  // single wall bending
-  const ox=mx+300;x.strokeStyle=rgba(C.ink,.35);x.strokeRect(ox,my,150,150);
-  x.strokeStyle=TEAL;x.lineWidth=3;x.beginPath();x.moveTo(ox,my+75);x.quadraticCurveTo(ox+75,my+75+40*Math.sin(lt*14),ox+150,my+75);x.stroke();
-  txt('one wall bending',ox+75,my+200,`italic 400 26px ${SERIF}`,C.ink,'center');
+  const drive=ramp(lt,1.2,1.8);const o={yaw:.62,pitch:.5,per:1,elec:1,mode:1,amp:.8*drive,ph:lt*9};
+  const CX=110,CY=250,CS=600;
+  G3.draw(CX,CY,CS,o,a*ramp(lt,.2,.9));
+  // wires to an AC source below the cube
+  const A=G3.proj([1.11,-.55,0],CX,CY,CS,o),B=G3.proj([-1.11,-.55,0],CX,CY,CS,o);
+  const sx=CX+CS/2,sy=905;
+  x.globalAlpha=a*ramp(lt,.6,1.2);x.strokeStyle=rgba(C.ink,.55);x.lineWidth=2;
+  x.beginPath();x.moveTo(A[0],A[1]);x.lineTo(A[0]+40,A[1]);x.lineTo(A[0]+40,sy);x.lineTo(sx+28,sy);x.moveTo(B[0],B[1]);x.lineTo(B[0]-40,B[1]);x.lineTo(B[0]-40,sy);x.lineTo(sx-28,sy);x.stroke();
+  x.fillStyle=C.bg;x.beginPath();x.arc(sx,sy,28,0,7);x.fill();x.strokeStyle=C.gold;x.lineWidth=2;x.stroke();
+  x.beginPath();for(let k=0;k<=30;k++){const u=k/30;const px=sx-17+u*34,py=sy-10*Math.sin(u*Math.PI*2+lt*9*drive);k?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();
+  txt('electrode',B[0]-52,(B[1]+sy)/2,`italic 400 24px ${SERIF}`,'#d9a07a','right');txt('electrode',A[0]+52,(A[1]+sy)/2,`italic 400 24px ${SERIF}`,'#d9a07a');
+  x.globalAlpha=a*ramp(lt,.6,1.6);
+  para('Electrodes on opposite faces drive the printed KNN, poled through its curved wall.',1000,300,760,25,C.ink);
+  // the two kinds of mode
+  const mk=ramp(lt,2.4,3.2);
+  G3.draw(960,390,380,{yaw:.62,pitch:.5,per:1,mode:1,amp:1,ph:lt*8},a*mk);
+  G3.draw(1370,390,380,{yaw:.62,pitch:.5,per:1,mode:2,amp:1,ph:lt*12},a*ramp(lt,2.8,3.6));
+  x.globalAlpha=a*mk;txt('global mode',1150,800,`italic 400 30px ${SERIF}`,C.ink,'center');
+  x.globalAlpha=a*ramp(lt,2.8,3.6);txt('local wall mode',1560,800,`italic 400 30px ${SERIF}`,C.ink,'center');
   x.globalAlpha=a*ramp(lt,3.6,4.6);
-  para('An alternating voltage drives the wall. Some modes move the whole device, others bend individual walls.',1220,720,520,24,C.muted);
+  para('Blue marks where the ceramic moves most: the whole device, or a single wall.',1000,870,760,23,C.muted);
   x.restore();
 }
 // illustrative frequency field: rises with wall thickness, falls with pitch
@@ -165,8 +247,8 @@ function s3(t,a){
     x.fillStyle=C.gold;x.beginPath();x.arc(cx,cy,7,0,7);x.fill();
     // ticks on axes
     x.fillStyle='#ffffff';x.beginPath();x.arc(cx,Y0,5,0,7);x.arc(X0,cy,5,0,7);x.fill();
-    gyroid(1240,330,300,.7,a,2.6-1.6*p,.2+.25*w,Math.sin(lt*(6+14*fmap(p,w))));
-    txt('pitch '+(p<.4?'fine':p<.7?'medium':'coarse')+'  ·  wall '+(w<.42?'thin':w<.62?'medium':'thick'),1390,680,`italic 400 26px ${SERIF}`,C.ink,'center')}
+    G3.draw(1200,250,400,{yaw:.55+lt*.1,per:2.6-1.6*p,th:.5+.5*w,mode:3,amp:.7,ph:lt*(6+14*fmap(p,w))},a);
+    txt('pitch '+(p<.4?'fine':p<.7?'medium':'coarse')+'  ·  wall '+(w<.42?'thin':w<.62?'medium':'thick'),1400,690,`italic 400 26px ${SERIF}`,C.ink,'center')}
   x.globalAlpha=a*ramp(lt,.6,1.6);
   para('Vary cell pitch and wall thickness, and follow each mode by its deformation pattern.',1180,770,600,24,C.muted);
   x.restore();
@@ -196,10 +278,16 @@ function s4(t,a){
   const k3=ramp(lt,4.8,5.6);x.globalAlpha=a*k3;x.strokeStyle=C.gold;x.lineWidth=2.5;x.setLineDash([8,6]);x.beginPath();
   for(let s=0;s<=200;s++){const u=.78+s/200*.14;const py=Y0-(.08+.82*Math.exp(-Math.pow((u-.862)/.014,2)))*PH*.85;s?x.lineTo(X0+u*PW,py):x.moveTo(X0+u*PW,py)}x.stroke();x.setLineDash([]);
   txt('printed specimen',X0+.9*PW+14,Y0-PH*.6,`italic 400 24px ${SERIF}`,C.gold);
+  {const drv=[[.3,1,'global mode'],[.58,2,'local wall mode'],[.85,3,'breathing mode']];const u=lt<4?pr:.85;let best=drv[0],bv=0;
+   drv.forEach(d=>{const v=Math.exp(-Math.pow((u-d[0])/.035,2));if(v>bv){bv=v;best=d}});
+   const amp=lt<4?bv:1;x.globalAlpha=a*ramp(lt,1.4,2);
+   if(lt<4){x.strokeStyle=rgba(C.gold,.8);x.lineWidth=1.5;x.beginPath();x.moveTo(X0+u*PW,Y0);x.lineTo(X0+u*PW,Y0-PH);x.stroke();}
+   G3.draw(1320,540,300,{yaw:.6+lt*.1,per:1,mode:best[1],amp:amp,ph:lt*12},a*ramp(lt,1.4,2));
+   txt(amp>.3?best[2]:'no response',1470,860,`italic 400 26px ${SERIF}`,amp>.3?TEAL:C.muted,'center');}
   x.globalAlpha=a*ramp(lt,.6,1.6);
   para('Not every mode answers the electrodes. A frequency sweep of the electrical admittance shows which ones do.',1300,440,460,25,C.ink);
   x.globalAlpha=a*ramp(lt,4.8,5.8);
-  para('Where printed specimens exist, measured peaks test the model.',1300,640,460,25,C.muted);
+  para('Where printed specimens exist, measured peaks test the model.',1300,920,520,22,C.muted);
   x.restore();
 }
 function s5(t,a){
@@ -214,7 +302,7 @@ function s5(t,a){
     x.strokeStyle=rgba(C.gold,.5);x.lineWidth=1.5;x.beginPath();x.moveTo(X,330);x.lineTo(X+460,330);x.stroke();
     txt(c.n,X,420,`italic 500 64px ${SERIF}`,C.gold);txt(c.h,X+60,412,`400 48px ${SERIF}`,C.ink);
     const iy=470;
-    if(i===0){gyroid(X+150,iy,150,.7,a*k,1.5,.32,Math.sin(lt*8))}
+    if(i===0){G3.draw(X+120,iy-30,210,{yaw:.6+lt*.2,per:1},a*k)}
     if(i===1){const N=10;for(let p=0;p<N;p++)for(let w=0;w<N;w++){const f=fmap((p+.5)/N,(w+.5)/N);x.fillStyle=fcol(f);x.fillRect(X+150+p*15,iy+150-(w+1)*15,15,15)}}
     if(i===2){x.globalAlpha=a*k;x.strokeStyle=TEAL;x.lineWidth=3;x.beginPath();for(let s=0;s<=100;s++){const u=s/100;const py=iy+150-130*Math.exp(-Math.pow((u-.5)/.07,2));s?x.lineTo(X+80+u*300,py):x.moveTo(X+80+u*300,py)}x.stroke();
       x.strokeStyle=C.gold;x.setLineDash([7,6]);x.beginPath();for(let s=0;s<=100;s++){const u=s/100;const py=iy+150-118*Math.exp(-Math.pow((u-.54)/.07,2));s?x.lineTo(X+80+u*300,py):x.moveTo(X+80+u*300,py)}x.stroke();x.setLineDash([])}
