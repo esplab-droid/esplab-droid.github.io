@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#000000">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Biography | Vincenzo Esposito, Professor at DTU Energy</title>
+<meta name="description" content="Biography of Vincenzo Esposito, Professor of Ceramic Science and Engineering at DTU Energy, Technical University of Denmark: career, research on functional metal oxides, nanoionics and 3D-printed ceramics, and selected results.">
+<link rel="canonical" href="https://esplab-droid.github.io/bio/">
+<meta property="og:site_name" content="Vincenzo Esposito, DTU Energy">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Biography | Vincenzo Esposito, Professor at DTU Energy">
+<meta property="og:description" content="Professor of Ceramic Science and Engineering at DTU Energy, Technical University of Denmark. Functional metal oxides, nanoionics, thin films and 3D-printed ceramics.">
+<meta property="og:url" content="https://esplab-droid.github.io/bio/">
+<meta property="og:image" content="https://esplab-droid.github.io/bio/portrait.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "ProfilePage",
+   "@id": "https://esplab-droid.github.io/bio/",
+   "url": "https://esplab-droid.github.io/bio/",
+   "name": "Biography of Vincenzo Esposito",
+   "mainEntity": {"@id": "https://esplab-droid.github.io/#person"},
+   "isPartOf": {"@id": "https://esplab-droid.github.io/#website"},
+   "dateModified": "2026-11-20",
+   "primaryImageOfPage": "https://esplab-droid.github.io/bio/portrait.jpg"
+  }
+ ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: technical report. Narrow masthead with a gyroid cross-section plot, then a two-column ledger: key quantity in the margin, text on the right. */
+:root{
+  --paper:#f5f6f7;
+  --ink:#16191d;
+  --muted:#5b636e;
+  --rule:#d3d8de;
+  --accent:#1f4f8f;      /* single accent: links and plot lines */
+  --plot:#e9ecef;
+  --display:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417;--ink:#e3e6ea;--muted:#9aa3ae;--rule:#2a2f36;--accent:#86aee6;--plot:#1a1e23;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.06rem;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1000px;margin:0 auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0;font-weight:600}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:20px;border-bottom:1px solid var(--ink)}
+.who{font-family:var(--display);font-weight:600;font-size:1rem}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{font-family:var(--display);font-size:.88rem;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+.intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:48px;align-items:start;padding-block:44px 48px}
+.intro h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+.intro p{max-width:36em;margin:16px 0 0}
+.intro dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:22px 0 0;font-family:var(--display);font-size:.88rem}
+.intro dt{color:var(--muted)}
+.intro dd{margin:0}
+figure.gyro{margin:0}
+figure.gyro canvas{display:block;width:100%;aspect-ratio:1;max-width:100%;background:var(--plot);border:1px solid var(--rule)}
+figure.gyro figcaption{margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--muted);line-height:1.5}
+
+section{padding-block:40px;border-top:1px solid var(--rule)}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.sechead h2{font-size:1.35rem}
+.sechead p{margin:0;color:var(--muted);font-size:.95rem}
+
+.entry{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:22px;border-bottom:1px solid var(--rule)}
+.entry:last-child{border-bottom:0}
+.num{font-family:var(--mono);font-size:1.15rem;font-weight:500;line-height:1.3;font-variant-numeric:tabular-nums}
+.num small{display:block;margin-top:6px;font-weight:400;font-size:.72rem;color:var(--muted);line-height:1.45}
+.entry h3{font-size:1.08rem}
+.entry .meta{margin:4px 0 8px;font-family:var(--display);font-size:.84rem;color:var(--muted)}
+.entry p{margin:0;max-width:40em}
+.entry .links{margin-top:8px;display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+
+.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.q{padding-block:14px;border-top:1px solid var(--rule)}
+.q h3{font-size:1rem;margin:6px 0 6px}
+.q p{margin:0;font-size:.97rem;color:var(--muted)}
+
+.lede{max-width:44em;margin:0 0 24px}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pillar{border:1px solid var(--rule);border-top:2px solid var(--accent);padding:16px 18px;background:var(--plot)}
+.pillar h3{font-size:1.05rem;margin:6px 0 8px}
+.pillar p{margin:0;font-size:.97rem}
+.pillar .sys{margin-top:12px;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+table.lines{width:100%;border-collapse:collapse;font-size:.97rem}
+.tablewrap{overflow-x:auto}
+table.lines th,table.lines td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
+table.lines th{font-family:var(--display);font-weight:600;font-size:.95rem;white-space:nowrap}
+table.lines td.sys{font-family:var(--mono);font-size:.8rem;color:var(--muted);white-space:nowrap}
+table.collab th{white-space:normal;width:38%}
+table.lines tr:last-child th,table.lines tr:last-child td{border-bottom:0}
+
+.subhead{font-size:1.05rem;margin:36px 0 10px}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.person{padding-block:14px;border-top:1px solid var(--rule);display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:start}
+.person h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.person h3 a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.av{width:72px;height:72px;display:block;border:1px solid var(--rule)}
+.person h3{font-size:1rem;margin:0 0 6px}
+.pp{font-family:var(--mono);font-size:.78rem;line-height:1.6;margin-top:6px}
+.pp .label{display:block;font-size:.66rem}
+.pl{display:flex;flex-wrap:wrap;gap:0 12px}
+.pl a{white-space:nowrap}
+footer{padding-block:36px 56px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:var(--display);font-size:.9rem}
+footer p{margin:4px 0}
+.mail{font-family:var(--mono);user-select:all}
+button.copy{font-family:var(--mono);font-size:.72rem;margin-left:8px;padding:2px 8px;background:transparent;color:var(--ink);border:1px solid var(--rule);cursor:pointer}
+button.copy:hover{border-color:var(--ink)}
+
+@media (max-width:780px){
+  .intro{grid-template-columns:1fr;gap:28px;padding-block:32px 36px}
+  figure.gyro{max-width:300px}
+  .entry{grid-template-columns:1fr;gap:8px}
+  .qs{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
+  table.collab tr,table.collab th,table.collab td{display:block;width:auto}
+  table.collab th{border-bottom:0;padding-bottom:2px}
+  table.collab td{padding-top:0}
+}
+.crumb{font-family:var(--display);font-size:1rem}
+.crumb a{color:var(--ink);text-decoration:none;font-weight:600}
+.crumb a:hover{color:var(--accent)}
+.crumb span{color:var(--muted);margin:0 8px}
+</style>
+<style>
+/* Bio page */
+.bhero{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:start;padding-block:44px 40px}
+.bhero h1{font-size:clamp(2rem,4.4vw,2.9rem);letter-spacing:-.01em;margin-top:10px}
+.bhero .role{font-family:var(--display);font-weight:500;color:var(--muted);margin:6px 0 0}
+.bhero .lead{font-size:1.14rem;max-width:34em;margin:20px 0 0}
+.photo{margin:0 0 0 auto;max-width:200px}.photo img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:var(--plot)}.photo figcaption{margin-top:6px;font-family:var(--mono);font-size:.66rem;color:var(--muted)}
+.facts{border:1px solid var(--rule);border-top:2px solid var(--accent);background:var(--plot);padding:16px 18px}
+.facts{margin-top:28px;max-width:34em}.facts dl{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.facts dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:2px 0 0;font-family:var(--mono);font-size:1.25rem;font-weight:500;font-variant-numeric:tabular-nums}
+.facts small{display:block;margin-top:14px;font-family:var(--mono);font-size:.68rem;color:var(--muted);line-height:1.5}
+.prose{max-width:42em}
+.prose p{margin:0 0 14px}
+.path{list-style:none;margin:0;padding:0;max-width:44em}
+.path li{display:grid;grid-template-columns:190px minmax(0,1fr);gap:32px;padding-block:14px;border-top:1px solid var(--rule)}
+.path li:first-child{border-top:0}
+.path .where{font-family:var(--display);font-weight:600;font-size:.98rem}
+.path .what{font-size:.98rem}
+.path .what span{display:block;font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-top:2px}
+.sel{list-style:none;margin:0;padding:0;max-width:46em}
+.sel li{padding-block:12px;border-top:1px solid var(--rule)}
+.sel li:first-child{border-top:0}
+.sel .j{font-family:var(--mono);font-size:.76rem;color:var(--muted);display:block}
+.sel a{font-family:var(--display);font-weight:600;color:var(--ink);text-decoration-color:var(--rule)}
+.sel a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.short{max-width:44em;border:1px solid var(--rule);background:var(--plot);padding:18px 20px}
+.short p{margin:0}
+.short .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+/* Bio page: black background in light and dark mode alike */
+:root,:root[data-theme="light"],:root[data-theme="dark"],:root:not([data-theme="light"]){
+  --paper:#000000 !important;--ink:#e8eaed !important;--muted:#9aa3ae !important;--rule:#262a30 !important;
+  --accent:#86aee6 !important;--plot:#0e1013 !important;color-scheme:dark !important}
+header.top,footer{border-color:#3a4048}
+@media (max-width:780px){.facts dl{grid-template-columns:repeat(2,minmax(0,1fr))}.photo{max-width:240px}.bhero{grid-template-columns:1fr;gap:24px;padding-block:32px}.path li{grid-template-columns:1fr;gap:4px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Biography</div>
+    <nav aria-label="Sections">
+      <a href="#career">Career</a>
+      <a href="#research">Research</a>
+      <a href="#short-bio">Short bio</a>
+      <a href="../team/">Team</a>
+    </nav>
+  </header>
+
+  <div class="bhero">
+    <div>
+      <span class="label">Biography</span>
+      <h1>Vincenzo Esposito</h1>
+      <p class="role">Professor of Ceramic Science and Engineering, DTU Energy, Technical University of Denmark</p>
+      <p class="lead">Materials scientist working on functional metal oxides: how their defects, interfaces and architecture set the way they conduct ions, store energy and respond to electric fields.</p>
+
+      <aside class="facts" aria-label="Key figures">
+        <dl>
+          <div><dt>Publications</dt><dd>213</dd></div>
+          <div><dt>Journal articles</dt><dd>140</dd></div>
+          <div><dt>Patents</dt><dd>7</dd></div>
+          <div><dt>Projects</dt><dd>31</dd></div>
+        </dl>
+        <small>Counts from the DTU Orbit record, November 2026.</small>
+      </aside>
+    </div>
+    <div class="side">
+    <figure class="photo"><img src="portrait.jpg" alt="Portrait of Vincenzo Esposito" width="160" height="214"><figcaption>Photo: DTU Energy</figcaption></figure>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="sechead"><h2>About</h2></div>
+    <div class="prose">
+      <p>Vincenzo Esposito is Professor of Ceramic Science and Engineering at DTU Energy, the Department of Energy Conversion and Storage of the Technical University of Denmark, in Kongens Lyngby. He leads ESPLab, a group working on functional metal oxides for energy conversion, electromechanics and ionic devices.</p>
+      <p>His research sits between nanoionics, solid-state chemistry and advanced materials processing. A recurring theme is that the useful properties of an oxide often come from its defects rather than from the ideal lattice. Confining highly defective oxides at the nanoscale opens new stability domains and lets their electrical and electromechanical properties be tuned; the arrangement of oxygen defects in nano-domains can produce very large electro-chemo-mechanical responses in materials such as cerium oxide.</p>
+      <p>The group combines thin films and heterostructures grown by pulsed laser deposition with ceramic additive manufacturing, including gyroid and other triply periodic minimal surface architectures printed as complete solid oxide cells and piezoelectric devices.</p>
+    </div>
+  </section>
+
+  <section id="career">
+    <div class="sechead"><h2>Career</h2><p>Institutions where his research developed.</p></div>
+    <ul class="path">
+      <li><div class="where">DTU Energy</div><div class="what">Professor of Ceramic Science and Engineering, Department of Energy Conversion and Storage, Technical University of Denmark<span>Kongens Lyngby, Denmark · current</span></div></li>
+      <li><div class="where">Risø DTU</div><div class="what">National Laboratory for Sustainable Energy, Technical University of Denmark<span>Roskilde, Denmark</span></div></li>
+      <li><div class="where">University of Rome Tor Vergata</div><div class="what">University of Rome Tor Vergata<span>Rome, Italy</span></div></li>
+      <li><div class="where">University of Florida</div><div class="what">University of Florida<span>Gainesville, USA</span></div></li>
+      <li><div class="where">IPEN</div><div class="what">Instituto de Pesquisas Energéticas e Nucleares<span>São Paulo, Brazil</span></div></li>
+    </ul>
+  </section>
+
+  <section id="research">
+    <div class="sechead"><h2>Research</h2><p>Defects, films, interfaces, architecture.</p></div>
+    <table class="lines" style="max-width:640px">
+      <tr><th scope="row">Nanoionics and defect chemistry</th><td class="sys">doped CeO<sub>2</sub>, YSZ</td></tr>
+      <tr><th scope="row">Electro-chemo-mechanics</th><td class="sys">electrostriction</td></tr>
+      <tr><th scope="row">Thin films and heterostructures</th><td class="sys">PLD, multilayers</td></tr>
+      <tr><th scope="row">Ferroionics</th><td class="sys">CeO₂/BaTiO₃, HZO</td></tr>
+      <tr><th scope="row">Solid oxide and protonic ceramic cells</th><td class="sys">YSZ, CGO, BZCY</td></tr>
+      <tr><th scope="row">Architected oxides</th><td class="sys">TPMS, 3D printing</td></tr>
+    </table>
+    <h3 class="subhead">Selected results</h3>
+    <ul class="sel">
+      <li><span class="j">Nature, 2022</span><a href="../electrostriction/">Atomically engineered interfaces yield extraordinary electrostriction</a></li>
+      <li><span class="j">Nature Energy, 2025</span><a href="../gyroid-soc/">Monolithic gyroidal solid oxide cells by additive manufacturing</a></li>
+      <li><span class="j">Nature Communications, 2025</span><a href="../tetragonal-ceria/">Enhanced non-classical electrostriction in strained tetragonal ceria</a></li>
+      <li><span class="j">Nature Communications, 2024</span><a href="../exsolution/">Hierarchical exsolution in vertically aligned heterostructures</a></li>
+      <li><span class="j">Science Advances, 2026</span><a href="../hzo/">Electrostriction-driven phase instability enables giant pseudo-piezoelectricity in Hf<sub>0.5</sub>Zr<sub>0.5</sub>O<sub>2</sub></a></li>
+    </ul>
+    <p style="margin-top:16px;font-family:var(--display);font-size:.95rem"><a href="../#results">All recent results with films →</a></p>
+  </section>
+
+  <section id="short-bio">
+    <div class="sechead"><h2>Short bio</h2><p>For talks, panels and proposals.</p></div>
+    <div class="short">
+      <div class="row"><span class="label">About 70 words</span><button class="copy" type="button" id="copybio">Copy</button></div>
+      <p id="bio-text">Vincenzo Esposito is Professor of Ceramic Science and Engineering at DTU Energy, Technical University of Denmark, where he leads ESPLab. He developed his career at Risø DTU, the University of Rome Tor Vergata, the University of Florida and IPEN in Brazil. His research lies between nanoionics, solid-state chemistry and advanced materials processing, with a focus on defective functional metal oxides, thin-film heterostructures and 3D-printed ceramics for energy conversion, electromechanics and ionic devices.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div><span class="label">Back</span><p><a href="../">Vincenzo Esposito, homepage</a> · <a href="../team/">Team</a> · <a href="../students/">Student projects</a></p></div>
+    <div><span class="label">Profiles</span><p><a href="https://orbit.dtu.dk/en/persons/vincenzo-esposito/" target="_blank" rel="me noopener">DTU Orbit</a> · <a href="https://orcid.org/0000-0002-9817-7810" target="_blank" rel="me noopener">ORCID</a> · <a href="https://www.scopus.com/authid/detail.uri?authorId=36160920600" target="_blank" rel="me noopener">Scopus</a></p></div>
+  </footer>
+</div>
+<script>
+(function(){
+  const b=document.getElementById('copybio'),t=document.getElementById('bio-text');
+  if(!b||!t) return;
+  b.addEventListener('click',()=>{navigator.clipboard.writeText(t.textContent.trim()).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1600)}).catch(()=>{})});
+})();
+</script>
+</body>
+</html>
