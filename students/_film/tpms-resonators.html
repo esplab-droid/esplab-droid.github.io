@@ -135,24 +135,36 @@ function s2(t,a){
   x.restore();
 }
 // illustrative frequency field: rises with wall thickness, falls with pitch
-const fmap=(p,w)=>cl(.15+.75*(w*.9+(1-p)*.6)/1.5);
+const fmap=(p,w)=>cl(.05+.95*(w*.9+(1-p)*.6)/1.5);
+function fcol(f){const st=[[22,34,64],[30,96,110],[70,170,150],[200,240,220]];const u=cl(f)*(st.length-1),i=Math.min(st.length-2,Math.floor(u)),k=u-i;const c=st[i].map((v,j)=>Math.round(v+(st[i+1][j]-v)*k));return `rgb(${c[0]},${c[1]},${c[2]})`}
 function s3(t,a){
   const lt=t-S[3][0];chrome(3,'THE MAP','Resonance frequency against geometry',lt,a);
   x.save();x.globalAlpha=a;
   const X0=230,Y0=870,PW=560,PH=520;
   const k=ramp(lt,.6,2.2);
   const N=28;for(let i=0;i<N;i++)for(let j=0;j<N;j++){const p=(i+.5)/N,w=(j+.5)/N;if(p>k)continue;const f=fmap(p,w);
-    x.fillStyle=`rgb(${Math.round(20+40*f)},${Math.round(40+150*f)},${Math.round(60+110*f)})`;x.fillRect(X0+i*PW/N,Y0-(j+1)*PH/N,PW/N+1,PH/N+1)}
+    x.fillStyle=fcol(f);x.fillRect(X0+i*PW/N,Y0-(j+1)*PH/N,PW/N+1,PH/N+1)}
   x.strokeStyle=rgba(C.ink,.5);x.lineWidth=1.5;x.beginPath();x.moveTo(X0,Y0-PH);x.lineTo(X0,Y0);x.lineTo(X0+PW,Y0);x.stroke();
   txt('cell pitch  →',X0+PW,Y0+44,`300 20px ${SANS}`,C.muted,'right');
   x.save();x.translate(X0-32,Y0-PH/2);x.rotate(-Math.PI/2);txt('wall thickness  →',0,0,`300 20px ${SANS}`,C.muted,'center');x.restore();
   spaced('RESONANCE FREQUENCY  ·  ILLUSTRATIVE',X0,Y0-PH-24,14,C.muted,3);
   // colour bar
-  const cbx=X0+PW+24;for(let s=0;s<100;s++){const f=s/99;x.fillStyle=`rgb(${Math.round(20+40*f)},${Math.round(40+150*f)},${Math.round(60+110*f)})`;x.fillRect(cbx,Y0-(s+1)*PH/100,16,PH/100+1)}
+  const cbx=X0+PW+24;for(let s=0;s<100;s++){const f=s/99;x.fillStyle=fcol(f);x.fillRect(cbx,Y0-(s+1)*PH/100,16,PH/100+1)}
   txt('high',cbx+24,Y0-PH+14,`italic 400 22px ${SERIF}`,C.muted);txt('low',cbx+24,Y0,`italic 400 22px ${SERIF}`,C.muted);
   // cursor path and preview
   const c=ramp(lt,2.2,6.0);const p=.15+.7*c,w=.25+.5*(.5+.5*Math.sin(c*Math.PI*1.6));
-  if(lt>2.2){x.strokeStyle=C.gold;x.lineWidth=2.5;x.beginPath();x.arc(X0+p*PW,Y0-w*PH,13,0,7);x.stroke();
+  if(lt>2.2){const cx=X0+p*PW,cy=Y0-w*PH;
+    // trail
+    x.strokeStyle='rgba(255,255,255,.45)';x.lineWidth=2;x.setLineDash([3,7]);x.beginPath();
+    for(let s2=0;s2<=60;s2++){const cc=c*s2/60,pp=.15+.7*cc,ww=.25+.5*(.5+.5*Math.sin(cc*Math.PI*1.6));const px=X0+pp*PW,py=Y0-ww*PH;s2?x.lineTo(px,py):x.moveTo(px,py)}x.stroke();
+    // guides to the axes
+    x.strokeStyle='rgba(255,255,255,.8)';x.lineWidth=1.5;x.setLineDash([6,6]);x.beginPath();x.moveTo(cx,cy);x.lineTo(cx,Y0);x.moveTo(cx,cy);x.lineTo(X0,cy);x.stroke();x.setLineDash([]);
+    // marker: dark halo, white ring, gold core
+    x.fillStyle='rgba(7,9,13,.55)';x.beginPath();x.arc(cx,cy,24,0,7);x.fill();
+    x.strokeStyle='#ffffff';x.lineWidth=4;x.beginPath();x.arc(cx,cy,15,0,7);x.stroke();
+    x.fillStyle=C.gold;x.beginPath();x.arc(cx,cy,7,0,7);x.fill();
+    // ticks on axes
+    x.fillStyle='#ffffff';x.beginPath();x.arc(cx,Y0,5,0,7);x.arc(X0,cy,5,0,7);x.fill();
     gyroid(1240,330,300,.7,a,2.6-1.6*p,.2+.25*w,Math.sin(lt*(6+14*fmap(p,w))));
     txt('pitch '+(p<.4?'fine':p<.7?'medium':'coarse')+'  ·  wall '+(w<.42?'thin':w<.62?'medium':'thick'),1390,680,`italic 400 26px ${SERIF}`,C.ink,'center')}
   x.globalAlpha=a*ramp(lt,.6,1.6);
@@ -203,7 +215,7 @@ function s5(t,a){
     txt(c.n,X,420,`italic 500 64px ${SERIF}`,C.gold);txt(c.h,X+60,412,`400 48px ${SERIF}`,C.ink);
     const iy=470;
     if(i===0){gyroid(X+150,iy,150,.7,a*k,1.5,.32,Math.sin(lt*8))}
-    if(i===1){const N=10;for(let p=0;p<N;p++)for(let w=0;w<N;w++){const f=fmap((p+.5)/N,(w+.5)/N);x.fillStyle=`rgb(${Math.round(20+40*f)},${Math.round(40+150*f)},${Math.round(60+110*f)})`;x.fillRect(X+150+p*15,iy+150-(w+1)*15,15,15)}}
+    if(i===1){const N=10;for(let p=0;p<N;p++)for(let w=0;w<N;w++){const f=fmap((p+.5)/N,(w+.5)/N);x.fillStyle=fcol(f);x.fillRect(X+150+p*15,iy+150-(w+1)*15,15,15)}}
     if(i===2){x.globalAlpha=a*k;x.strokeStyle=TEAL;x.lineWidth=3;x.beginPath();for(let s=0;s<=100;s++){const u=s/100;const py=iy+150-130*Math.exp(-Math.pow((u-.5)/.07,2));s?x.lineTo(X+80+u*300,py):x.moveTo(X+80+u*300,py)}x.stroke();
       x.strokeStyle=C.gold;x.setLineDash([7,6]);x.beginPath();for(let s=0;s<=100;s++){const u=s/100;const py=iy+150-118*Math.exp(-Math.pow((u-.54)/.07,2));s?x.lineTo(X+80+u*300,py):x.moveTo(X+80+u*300,py)}x.stroke();x.setLineDash([])}
     x.globalAlpha=a*k;para(c.d,X,iy+220,440,22,C.muted);
