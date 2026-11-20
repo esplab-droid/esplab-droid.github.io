@@ -180,28 +180,29 @@ footer{border-top-color:#0b7a6e}
 .hook{color:#0b7a6e}
 .proj h3 a:hover{color:#0b7a6e}
 .fig img,.proj img{border-color:#e2e6ea}
-/* Animated gradient hero: soft colour fields drift slowly behind the title */
-.sphero{position:relative;isolation:isolate;overflow:hidden;margin:0 0 28px;padding:56px 36px 50px;border:1px solid var(--rule);background:#f4faf9}
-.sphero h1{font-size:clamp(2rem,4.5vw,2.9rem);letter-spacing:-.015em;margin-top:10px}
-.sphero p{margin:10px 0 0;font-family:var(--display);font-size:1.05rem;color:#3d4650;max-width:32em}
-.sphero-bg{position:absolute;inset:-20%;z-index:-1;filter:blur(56px) saturate(1.1)}
-.sphero-bg i{position:absolute;width:max(240px,30%);aspect-ratio:1;border-radius:50%;opacity:.5;animation:spdrift 20s ease-in-out infinite alternate}
-.sphero-bg i:nth-child(1){background:#4fc2b1;left:8%;top:5%}
-.sphero-bg i:nth-child(2){background:#f3c46a;right:12%;top:8%;opacity:.6;animation-duration:24s;animation-delay:-7s}
-.sphero-bg i:nth-child(3){background:#93c2ee;left:40%;bottom:0;animation-duration:28s;animation-delay:-13s}
-.sphero-bg i:nth-child(4){background:#0b7a6e;right:30%;bottom:-8%;opacity:.16;animation-duration:22s;animation-delay:-4s}
-@keyframes spdrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(14%,10%) scale(1.18)}100%{transform:translate(-10%,16%) scale(.92)}}
-@media (prefers-reduced-motion:reduce){.sphero-bg i{animation:none}}
+/* Animated gradient: soft colour fields drift behind the whole page; the title band is transparent over it */
+.sphero{position:relative;margin:0 0 28px;padding:44px 0 30px}
+.sphero h1{font-size:clamp(2.2rem,5vw,3.2rem);letter-spacing:-.015em;margin-top:10px}
+.sphero p{margin:10px 0 0;font-family:var(--display);font-size:1.08rem;color:#3d4650;max-width:32em}
+.spbg{position:fixed;inset:-15%;z-index:-1;pointer-events:none;filter:blur(70px) saturate(1.15)}
+.spbg i{position:absolute;width:46vmax;aspect-ratio:1;border-radius:50%;opacity:.5;animation:spdrift 11s ease-in-out infinite alternate}
+.spbg i:nth-child(1){background:#4fc2b1;left:2%;top:2%}
+.spbg i:nth-child(2){background:#f3c46a;right:4%;top:6%;animation-duration:13s;animation-delay:-4s}
+.spbg i:nth-child(3){background:#93c2ee;left:30%;top:40%;animation-duration:15s;animation-delay:-8s}
+.spbg i:nth-child(4){background:#7fd6c9;right:10%;bottom:0;opacity:.45;animation-duration:12s;animation-delay:-2s}
+@keyframes spdrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(18vw,10vh) scale(1.2)}66%{transform:translate(-12vw,18vh) scale(.9)}100%{transform:translate(8vw,-12vh) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){.spbg i{animation:none}}
+@media (max-width:780px){.sphero{padding:32px 0 20px}.spbg i{opacity:.4}}
 /* 3D tilt on the film posters: the script adds .tilt on mouse devices only */
 .tilt{display:block;position:relative;transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--s,1));transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s ease;will-change:transform}
 .tilt img{display:block}
 .tilt::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s ease;background:radial-gradient(460px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.16),transparent 60%)}
 .tilt.on{--s:1.015;transition:transform .12s ease-out,box-shadow .4s ease;box-shadow:0 26px 50px -22px rgba(7,9,13,.6)}
 .tilt.on::after{opacity:1}
-@media (max-width:780px){.sphero{padding:40px 20px 36px}.sphero-bg i{width:58%;opacity:.45}.sphero-bg i:nth-child(1){left:6%;top:6%}.sphero-bg i:nth-child(2){right:4%;top:auto;bottom:4%}.sphero-bg i:nth-child(3){left:auto;right:8%;top:2%;bottom:auto}.sphero-bg i:nth-child(4){display:none}}
 </style>
 </head>
 <body>
+<div class="spbg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 <div class="wrap">
   <header class="top">
     <div class="crumb"><a href="../">Vincenzo Esposito</a><span>/</span>Student projects</div>
@@ -210,7 +211,6 @@ footer{border-top-color:#0b7a6e}
 
   <section id="open">
     <div class="sphero">
-      <div class="sphero-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       <span class="label">Open now · DTU Energy</span>
       <h1>Student projects</h1>
       <p>Master's thesis and student projects at DTU Energy.</p>
