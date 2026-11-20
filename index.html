@@ -204,6 +204,14 @@ section{padding-block:40px;border-top:1px solid var(--rule)}
 .pillar::before{inset:0;z-index:-1;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 26%,transparent),transparent 65%)}
 .pillar::after{inset:-2px -1px -1px;padding:1.5px;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),var(--accent) 20%,transparent 75%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 @media (hover:hover) and (pointer:fine){.pillars:hover .pillar::before,.pillars:hover .pillar::after{opacity:1}}
+/* Same spotlight on the result figures; the script wraps each svg.fg in span.fgspot */
+.fgspot{display:block;position:relative;isolation:isolate;width:100%;max-width:260px;margin-top:14px;background:var(--plot)}
+.fgspot .fg{margin-top:0;max-width:none;background:transparent}
+.fgspot::before,.fgspot::after{content:"";position:absolute;pointer-events:none;opacity:0;transition:opacity .35s ease}
+.fgspot::before{inset:0;z-index:-1;background:radial-gradient(200px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 28%,transparent),transparent 70%)}
+.fgspot::after{inset:0;padding:1.5px;background:radial-gradient(170px circle at var(--mx,50%) var(--my,50%),var(--accent) 20%,transparent 75%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+@media (hover:hover) and (pointer:fine){.fgspot:hover::before,.fgspot:hover::after{opacity:1}}
+@media (max-width:780px){.fgspot{max-width:320px}}
 table.lines{width:100%;max-width:640px;border-collapse:collapse;font-size:.97rem}
 .tablewrap{overflow-x:auto}
 table.lines th,table.lines td{text-align:left;vertical-align:top;padding:10px 16px 10px 0;border-bottom:1px solid var(--rule)}
@@ -579,6 +587,12 @@ button.copy:hover{border-color:var(--ink)}
   let x=0,y=0,raf=0;
   function paint(){raf=0;for(const c of cards){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(x-r.left)+'px');c.style.setProperty('--my',(y-r.top)+'px')}}
   grid.addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;if(!raf)raf=requestAnimationFrame(paint)});
+  // Result figures: wrap each one so it can carry the glow layers, then track the pointer inside it.
+  for(const svg of document.querySelectorAll('svg.fg')){
+    const w=document.createElement('span');w.className='fgspot';
+    svg.parentNode.insertBefore(w,svg);w.appendChild(svg);
+    w.addEventListener('pointermove',e=>{const r=w.getBoundingClientRect();w.style.setProperty('--mx',(e.clientX-r.left)+'px');w.style.setProperty('--my',(e.clientY-r.top)+'px')});
+  }
 })();
 </script>
 </body>
